@@ -2,7 +2,7 @@ import { Flex, Text } from "@chakra-ui/react";
 
 
 
-export function Home(){
+export function SignUpUserHomeless(){
     return(
     <Flex  
         height={'100vh'}
@@ -10,7 +10,7 @@ export function Home(){
         justifyContent={'center'} 
         alignItems={'center'}
      >
-        <Text>homes</Text>        
+        <Text>SignUp User Homeless</Text>        
     </Flex>
     )
 }

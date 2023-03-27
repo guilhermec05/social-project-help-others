@@ -1,19 +1,28 @@
 import { Button, ButtonProps } from '@chakra-ui/react'
 
-interface IButtonMain{
+interface IButtonMain extends ButtonProps{
     title:string;
-    props?:ButtonProps
+    isLoading?:boolean
 }
 
-export function ButtonMain({title, ...props}:IButtonMain){
+export function ButtonMain({title, isLoading,...rest}:IButtonMain){
     return (
-        <>
-            <Button 
-                bg={'#2CAE8C'}
-                color={'#ffff'}
-            {...props}>
-                {title}
-            </Button>
-        </>
+    
+        <Button 
+            bg={'primary'}
+            color={'secondary'}
+            _hover={{
+                    bg:'primaryDark'
+                }
+            }
+            _active={{
+                bg:'primaryLight'
+            }}
+            isLoading={isLoading || false }
+            {...rest}
+        >
+            {title}
+        </Button>
+    
     )
 }
