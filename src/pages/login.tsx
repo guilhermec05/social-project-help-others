@@ -13,20 +13,7 @@ export function Login(){
         flexDirection={'column'}
      >
         <Header />
-        {/* <Back  /> */}
-        {/* <Box  
-            border={'1px solid red'}
-            display={'flex'}
-            flexWrap={'wrap'}
-            p={10}
-            justifyContent={'flex-start'}
-            gap={10}
-        >
-
-                
-
-            </Box> */}
-            <Footer />
+        <Footer />
          
     </Flex>
     )

@@ -1,25 +1,24 @@
 
 import {
     FormControl,
-    Input ,
     FormErrorMessage,
-    InputProps,
-    border,
-    Box
+    TextareaProps,
+    
+    Textarea,
     // FormLabel,
     // FormHelperText,
   } from '@chakra-ui/react'
 
-interface inputMainProps extends InputProps{
+interface inputMainProps extends TextareaProps{
   name:string;
   messageError?:string;
   isError?:boolean;
 }  
 
-export function InputMain({name, messageError, isError, ...rest }:inputMainProps){
+export function TextAreaMain({name, messageError, isError, ...rest }:inputMainProps){
     return <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} >
         
-          <Input 
+          <Textarea 
             placeholder={name}
             _focus={{
               border:'2px solid',

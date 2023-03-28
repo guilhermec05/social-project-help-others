@@ -27,7 +27,7 @@ export function Header(){
             flexDirection={'column'}        
             position={'sticky'}
             top={'0px'}
-           
+            zIndex={1}           
         >
             <Box p={'3px'} bg={'primaryDark'}/>
             <Flex 
@@ -69,7 +69,7 @@ export function Header(){
                                 />
                         </MenuButton>
                      <MenuList bg={'secondary'}>
-                        <MenuItem><Link to='profile'>Minha Conta</Link></MenuItem>
+                        <MenuItem><Link to='/profile'>Minha Conta</Link></MenuItem>
                         <MenuItem>Sair</MenuItem>
                      </MenuList>
                 </Menu>
@@ -79,9 +79,9 @@ export function Header(){
         
             </Flex> 
         </Box>
-        <Drawer placement="left"  onClose={onClose} isOpen={isOpen}>
+        <Drawer placement="left"  onClose={onClose} isOpen={isOpen} >
             <DrawerOverlay />
-            <DrawerContent>
+            <DrawerContent >
                 <DrawerCloseButton />
                 <DrawerHeader borderBottomWidth='1px'>Menu</DrawerHeader>
                
@@ -95,7 +95,7 @@ export function Header(){
                         }}
                         p={'10px'}
                         cursor={'pointer'}
-                    ><Link to='SignUpHomeless'>Cadastrar Morador</Link></Box>                    
+                    ><Link to='/SignUpHomeless'>Cadastrar Morador</Link></Box>                    
                     <Box 
                         w={'100%'}
                         textAlign={'center'}
@@ -106,7 +106,7 @@ export function Header(){
                         }}
                         p={'10px'}
                         cursor={'pointer'}
-                    ><Link to='myDonation'>Minhas Doações</Link></Box> 
+                    ><Link to='/myDonation'>Minhas Doações</Link></Box> 
                      {/*<Box 
                         w={'100%'}
                         textAlign={'center'}
