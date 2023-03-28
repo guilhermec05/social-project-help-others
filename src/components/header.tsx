@@ -69,7 +69,7 @@ export function Header(){
                                 />
                         </MenuButton>
                      <MenuList bg={'secondary'}>
-                        <MenuItem>Minha Conta</MenuItem>
+                        <MenuItem><Link to='profile'>Minha Conta</Link></MenuItem>
                         <MenuItem>Sair</MenuItem>
                      </MenuList>
                 </Menu>
@@ -95,7 +95,7 @@ export function Header(){
                         }}
                         p={'10px'}
                         cursor={'pointer'}
-                    ><Link to='SignUpUserHomeless'>Cadastrar de Sem Teto</Link></Box>                    
+                    ><Link to='SignUpHomeless'>Cadastrar Morador</Link></Box>                    
                     <Box 
                         w={'100%'}
                         textAlign={'center'}
@@ -106,8 +106,8 @@ export function Header(){
                         }}
                         p={'10px'}
                         cursor={'pointer'}
-                    >Minhas Doações</Box> 
-                    <Box 
+                    ><Link to='myDonation'>Minhas Doações</Link></Box> 
+                     {/*<Box 
                         w={'100%'}
                         textAlign={'center'}
                         transition={'all 0.2s'}
@@ -117,7 +117,7 @@ export function Header(){
                         }}
                         p={'10px'}
                         cursor={'pointer'}
-                    >Fale Conosco</Box> 
+                    >Fale Conosco</Box>  */}
             </DrawerContent>
         </Drawer>
     </>

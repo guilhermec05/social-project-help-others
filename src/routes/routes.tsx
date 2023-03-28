@@ -1,6 +1,7 @@
 import {
     createBrowserRouter,
 } from "react-router-dom";
+import { ErrorPage } from "../pages/404_page";
 import { Home } from "../pages/home";
 import { Login } from "../pages/login";
 import { SignUpUser } from "../pages/signUpUser";
@@ -15,13 +16,22 @@ const router = createBrowserRouter([
     {
       path: "/",
       element: <Login/>,
+      errorElement:<ErrorPage/>
     },
     {
       path: "/SignUpUser",
       element: <SignUpUser/>,
     },
     {
-      path: "/SignUpUserHomeless",
+      path: "/SignUpHomeless",
+      element: <SignUpUserHomeless/>,
+    },
+    {
+      path: "/profile",
+      element: <SignUpUserHomeless/>,
+    },
+    {
+      path: "/myDonation",
       element: <SignUpUserHomeless/>,
     },
   ]);
