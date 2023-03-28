@@ -2,6 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 // import { CardHomerless } from "../components/cardHomeless";
 import { Back } from './../components/back';
 import { Header } from './../components/header';
+import { Footer } from './../components/footer';
 
 
 
@@ -12,8 +13,8 @@ export function Login(){
         flexDirection={'column'}
      >
         <Header />
-        <Back  />
-        <Box  
+        {/* <Back  /> */}
+        {/* <Box  
             border={'1px solid red'}
             display={'flex'}
             flexWrap={'wrap'}
@@ -24,7 +25,8 @@ export function Login(){
 
                 
 
-            </Box>
+            </Box> */}
+            <Footer />
          
     </Flex>
     )
