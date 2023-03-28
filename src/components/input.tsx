@@ -4,7 +4,8 @@ import {
     Input ,
     FormErrorMessage,
     InputProps,
-    border
+    border,
+    Box
     // FormLabel,
     // FormHelperText,
   } from '@chakra-ui/react'
@@ -16,14 +17,15 @@ interface inputMainProps extends InputProps{
 }  
 
 export function InputMain({name, messageError, isError, ...rest }:inputMainProps){
-    return <FormControl isInvalid={isError}>
-         <Input 
-          placeholder={name}
-          _focus={{
-            border:'2px solid',
-            borderColor:'primary'
-          }} 
-         {...rest}/>
-         <FormErrorMessage>{messageError}</FormErrorMessage>
-    </FormControl>
+    return <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} >
+          <Input 
+            placeholder={name}
+            _focus={{
+              border:'2px solid',
+              borderColor:'primary'
+            }} 
+          {...rest}/>
+          <FormErrorMessage>{messageError}</FormErrorMessage>
+      </FormControl>
+   
 } 

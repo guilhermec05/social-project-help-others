@@ -12,11 +12,6 @@ import {
     DrawerCloseButton,
   } from '@chakra-ui/react'
 
-  import {
-    Menu,
-    MenuList,
-    MenuItem
-  } from '@chakra-ui/react'
 
 export function Header(){
 
@@ -26,13 +21,16 @@ export function Header(){
          <Box
             display={'flex'}
             flexDirection={'column'}        
+            position={'sticky'}
+            top={'0px'}
+           
         >
             <Box p={'3px'} bg={'primaryDark'}/>
             <Flex 
                 bg={'primary'}
                 justifyContent={'space-between'}
-                w={'100vw'}
-                p={'15px'}
+               
+                p={'20px'}
             >
                 <HamburgerIcon  
                     onClick={onOpen}
@@ -52,6 +50,7 @@ export function Header(){
         <Drawer placement="left"  onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay />
             <DrawerContent>
+                <DrawerCloseButton />
                 <DrawerHeader borderBottomWidth='1px'>Menu</DrawerHeader>
                
                     <Box 

@@ -3,8 +3,8 @@ import {
 } from "react-router-dom";
 import { Home } from "../pages/home";
 import { Login } from "../pages/login";
-import { SignUpUser } from "../pages/SignUpUser";
-import { SignUpUserHomeless } from "../pages/SignUpUserHomeless";
+import { SignUpUser } from "../pages/signUpUser";
+import { SignUpUserHomeless } from "../pages/signUpUserHomeless";
 
 
 const router = createBrowserRouter([
