@@ -8,7 +8,7 @@ export function Footer(){
             >
         <Box border={'1px solid'} borderColor={'dark_light'} opacity={'0.2'}/>
             <Box    
-                    height={'100px'}
+                    height={'120px'}
                     width={'100%'}
                     display={'flex'}
                     alignItems={'center'}
@@ -17,8 +17,7 @@ export function Footer(){
                     gap={5}
                 >
                         
-
-                <Logo height={'50px'}/>
+                    <Logo height={'50px'}/>
                 <Text color={'dark_light'} fontSize={'small'}>© 2023 PSAP - Projeto Social Ajude o Próximo.  Todos os Direitos Reservados.</Text>
             </Box>
     </Box>

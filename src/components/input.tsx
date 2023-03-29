@@ -12,12 +12,13 @@ import {
 
 interface inputMainProps extends InputProps{
   name:string;
+  widthForm?:string
   messageError?:string;
   isError?:boolean;
 }  
 
-export function InputMain({name, messageError, isError, ...rest }:inputMainProps){
-    return <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} >
+export function InputMain({name, messageError, isError,widthForm, ...rest }:inputMainProps){
+    return <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
         
           <Input 
             placeholder={name}

@@ -69,7 +69,7 @@ export function Header(){
                                 />
                         </MenuButton>
                      <MenuList bg={'secondary'}>
-                        <MenuItem><Link to='/profile'>Minha Conta</Link></MenuItem>
+                     <Link to='/profile'><MenuItem>Minha Conta</MenuItem></Link>
                         <MenuItem>Sair</MenuItem>
                      </MenuList>
                 </Menu>
@@ -85,7 +85,7 @@ export function Header(){
                 <DrawerCloseButton />
                 <DrawerHeader borderBottomWidth='1px'>Menu</DrawerHeader>
                
-                    <Box 
+                <Link to='/SignUpHomeless'> <Box 
                         w={'100%'}
                         textAlign={'center'}
                         transition={'all 0.5s'}
@@ -95,8 +95,8 @@ export function Header(){
                         }}
                         p={'10px'}
                         cursor={'pointer'}
-                    ><Link to='/SignUpHomeless'>Cadastrar Morador</Link></Box>                    
-                    <Box 
+                    >Cadastrar Morador</Box></Link>             
+                    <Link to='/myDonation'><Box 
                         w={'100%'}
                         textAlign={'center'}
                         transition={'all 0.5s'}
@@ -106,18 +106,7 @@ export function Header(){
                         }}
                         p={'10px'}
                         cursor={'pointer'}
-                    ><Link to='/myDonation'>Minhas Doações</Link></Box> 
-                     {/*<Box 
-                        w={'100%'}
-                        textAlign={'center'}
-                        transition={'all 0.2s'}
-                        _hover={{
-                            bg:'primary',
-                            color:'secondaryLight'
-                        }}
-                        p={'10px'}
-                        cursor={'pointer'}
-                    >Fale Conosco</Box>  */}
+                    >Minhas Doações</Box> </Link>
             </DrawerContent>
         </Drawer>
     </>

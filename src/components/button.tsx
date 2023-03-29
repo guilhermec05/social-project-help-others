@@ -11,6 +11,7 @@ export function ButtonMain({title, isLoading,...rest}:IButtonMain){
         <Button 
             bg={'primary'}
             color={'secondary'}
+            fontSize={{sm:'p',md:'h6',lg:'h6'}}
             _hover={{
                     bg:'primaryDark'
                 }
@@ -18,6 +19,7 @@ export function ButtonMain({title, isLoading,...rest}:IButtonMain){
             _active={{
                 bg:'primaryLight'
             }}
+            
             isLoading={isLoading || false }
             {...rest}
         >

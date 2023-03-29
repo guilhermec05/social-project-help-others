@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Back } from "../components/back";
 import { ButtonMain } from "../components/button";
 import { FormNgos } from "../components/formNgos";
@@ -12,6 +12,9 @@ import { Logo } from "../components/logo";
 
 export function SignUpUser(){
     const [isNGOS,setIsNGOS] = useState<boolean>(false)
+    // const 
+   
+
 
 
     return(
@@ -30,7 +33,7 @@ export function SignUpUser(){
             flexDirection={'column'}
             borderRadius={5}
             p={5}
-            w={'800px'}
+            w={'100%'}
             gap={10}
         >
                 <Back link={'/'}/>
@@ -40,8 +43,8 @@ export function SignUpUser(){
                     <Text fontSize={'p'} >Projeto Social Ajude o Próximo</Text> */}
                 </Flex> 
                 <Flex justifyContent={'center'} gap={10}>
-                    <ButtonMain title="Pessoa Fisica" fontSize={'h5'} p={'30px'}  onClick={v => setIsNGOS(false)}/>
-                    <ButtonMain title="Pessoa Juridica" fontSize={'h5'} p={'30px'}  onClick={v => setIsNGOS(true)}/>
+                    <ButtonMain title="Pessoa Fisica" p={'30px'}  onClick={v => setIsNGOS(false)} bg={(isNGOS ? 'primaryDark':'primary')} />
+                    <ButtonMain title="Pessoa Juridica" p={'30px'}  onClick={v => setIsNGOS(true)} bg={(!isNGOS ? 'primaryDark':'primary')}/>
                 </Flex>
                 <Flex 
                     flexDirection={'column'}
@@ -54,7 +57,7 @@ export function SignUpUser(){
                     {isNGOS ?<FormNgos/>: <FormUser/>}
                 </Flex>
                 <Flex justifyContent={'center'}>
-                    <ButtonMain title="Cadastrar" fontSize={'h5'} p={'30px'}/>
+                    <ButtonMain title="Cadastrar"  p={'30px'}/>
                 </Flex>     
         </Box>
     </Box>
