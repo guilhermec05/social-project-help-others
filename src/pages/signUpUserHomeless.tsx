@@ -6,6 +6,7 @@ import { InputMain } from "../components/input";
 import { TextAreaMain } from "../components/textArea";
 import { ButtonMain } from './../components/button';
 // import { SelectMain } from './../components/select';
+import { InputFile } from './../components/inputFile';
 
 
 
@@ -73,7 +74,7 @@ export function SignUpUserHomeless(){
                     <Flex maxW={'500px'}>
                         <Text fontSize={'h5'} color={'dark_light'}>Foto(s) do Local e/ou Pessoa</Text>   
                     </Flex>
-                    <InputMain name="Bairro" w={'100%'} type={'file'} border={'none'}/>
+                    <InputFile name="images"/>
             </Flex>
             <Flex 
                 flexDirection={'column'}
