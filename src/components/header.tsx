@@ -27,7 +27,7 @@ export function Header(){
             flexDirection={'column'}        
             position={'sticky'}
             top={'0px'}
-            zIndex={1}           
+            zIndex={5}           
         >
             <Box p={'3px'} bg={'primaryDark'}/>
             <Flex 

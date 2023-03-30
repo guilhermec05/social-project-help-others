@@ -1,15 +1,75 @@
-import { Box, Button, Checkbox, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Checkbox, CheckboxGroup, Flex, Text } from "@chakra-ui/react";
 import { Back } from "../components/back";
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { InputMain } from "../components/input";
+import { Loading } from "../components/loading";
 import { TextAreaMain } from "../components/textArea";
 import { ButtonMain } from './../components/button';
-// import { SelectMain } from './../components/select';
+import { InputFile } from './../components/inputFile';
+import { useState, useEffect, useCallback } from 'react';
+// import { useEffect } from 'react';
+import { optionProps, SelectMain } from './../components/select';
+import { api } from "../services/api/axios";
+import { InputNumber } from "../components/inputNumber";
 
 
+interface localidade{
+    bairro:string;
+    localidade:string;
+    logradouro:string;
+    uf:string;
+}
 
 export function SignUpUserHomeless(){
+    
+    const [load, setLoad] = useState<boolean>(false)
+    const [select,setSelect ] = useState<optionProps[]>([] as optionProps[])
+    const [localidades,setLocalidades ] = useState<localidade>({} as localidade)
+    // const [cep,setCep ] = useState<string>('')
+    
+    async function foundCep(cep:string){
+
+        if(cep.length != 8) return 
+
+        try{
+            setLoad(true)
+            const {data} = await api.get(`http://viacep.com.br/ws/${cep}/json/`)
+            const {bairro , localidade, logradouro, uf} = data
+            const obj = {bairro , localidade, logradouro, uf}
+            console.log(obj)
+            await setLocalidades(obj)
+           
+        }catch(error){
+
+        }finally{
+            await setLoad(false)
+        }
+    }
+
+    async function fetchUF(){
+        try{
+            setLoad(true)
+            setSelect([])
+            const {data} = await api.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+            data.forEach((value)=>{
+                const {sigla} = value
+                select.push({label:sigla,value:sigla})
+            })
+            await setSelect(select)
+            // console.log(select)
+        }catch(error){
+
+        }finally{
+            await setLoad(false)
+        }
+    } 
+    
+    useEffect(()=>{
+        fetchUF()
+    },[])
+
+
     return(
     <Flex  
         display={'flex'} 
@@ -17,6 +77,7 @@ export function SignUpUserHomeless(){
         // justifyContent={'center'} 
         // alignItems={'center'}
      >
+        {load &&<Loading/>}
         <Header />
         <Back link="/Home" /> 
         <Box 
@@ -55,14 +116,30 @@ export function SignUpUserHomeless(){
                 <Flex maxW={'500px'}>
                     <Text fontSize={'h5'} color={'dark_light'}>Onde pode ser encontrado</Text>   
                 </Flex>
-                <InputMain name="Cep" />
+                <InputNumber name="Cep" type={'number'} min={'00000000'} onChange={v => foundCep(v.target.value)} />
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
-                    <InputMain name="Cidade" widthForm={'70%'}  /> <InputMain name="UF" widthForm={'20%'}/>
+                    <InputMain name="Cidade" widthForm={'70%'} 
+                    value={localidades.localidade} 
+                    onChange={v => setLocalidades({...localidades, localidade:v.target.value })} /> 
+
+                    <SelectMain text="UF" 
+                    option={select}  
+                    widthForm={'20%'}
+                    value={localidades.uf} 
+                    onChange={v => setLocalidades({...localidades, uf:v.target.value })}
+                    />
                 </Flex>
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
-                    <InputMain name="Rua" widthForm={'70%'}  /> <InputMain name="Nº" widthForm={'20%'}/>
+                    <InputMain name="Rua" widthForm={'70%'}
+                    value={localidades.logradouro}
+                    onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
+                    
+                    /> <InputMain name="Nº" widthForm={'20%'}/>
                 </Flex>
-                <InputMain name="Bairro" />
+                <InputMain name="Bairro"
+                    value={localidades.bairro}
+                    onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
+                />
                 <InputMain name="Ponto de Referencia" />
             </Flex>
             <Flex 
@@ -73,7 +150,7 @@ export function SignUpUserHomeless(){
                     <Flex maxW={'500px'}>
                         <Text fontSize={'h5'} color={'dark_light'}>Foto(s) do Local e/ou Pessoa</Text>   
                     </Flex>
-                    <InputMain name="Bairro" w={'100%'} type={'file'} border={'none'}/>
+                    <InputFile name="images"/>
             </Flex>
             <Flex 
                 flexDirection={'column'}
@@ -84,10 +161,14 @@ export function SignUpUserHomeless(){
                         <Text fontSize={'h5'} color={'dark_light'}>Item Necessitados</Text>   
                     </Flex>
                     <Flex gap={5} flexWrap={'wrap'}>
+                    <CheckboxGroup colorScheme='green' >
                         <Checkbox>Cobertor</Checkbox>
                         <Checkbox>Comida</Checkbox>
                         <Checkbox>Desodorante</Checkbox>
                         <Checkbox>Sabonete</Checkbox>
+                    </CheckboxGroup>
+
+                        
                     </Flex>
             </Flex>
             <Flex maxW={'500px'}>

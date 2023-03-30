@@ -9,7 +9,7 @@ import {
 import { ReactNode } from "react";
 
 
-interface CardHomerlessProps{
+export interface CardHomerlessProps{
     id:string
     name:string;
     age:number,
