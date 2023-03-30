@@ -20,10 +20,14 @@ export function TextAreaMain({name, messageError, isError, ...rest }:inputMainPr
         
           <Textarea 
             placeholder={name}
+            border={'none'}
             _focus={{
-              border:'2px solid',
-              borderColor:'primary'
-            }} 
+              border:'3px solid',
+              borderColor:'primary',
+              outline:'none',
+              boxShadow:'none'
+            }}
+            bg={'secondaryLight'} 
           {...rest}/>
           <FormErrorMessage>{messageError}</FormErrorMessage>
       </FormControl>

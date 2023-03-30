@@ -46,13 +46,21 @@ export function InputFile({name, messageError, isError,widthForm,placeholderImg,
           <InputGroup>
                 <InputLeftElement
                 pointerEvents="none"
-                children={<Icon as={CiImageOn} />}
+                children={<Icon as={CiImageOn} fontSize={'h4'}/>}
                 />
                  <input type='file' accept={'image/*'} name={name} ref={inputRef} {...inputProps} style={{ display: 'none' }}></input>
                  <Input
-                    placeholder={placeholderImg || "Your file ..."}
-                    onClick={() => inputRef.current.click()}
-                    value={value}
+                      placeholder={placeholderImg || "seu arquivo ..."}
+                      onClick={() => inputRef.current.click()}
+                      value={value}
+                      border={'none'}
+                      _focus={{
+                        border:'3px solid',
+                        borderColor:'primary',
+                        outline:'none',
+                        boxShadow:'none'
+                      }}
+                      bg={'secondaryLight'} 
                     />
           </InputGroup>
           
