@@ -15,6 +15,7 @@ export function Footer(){
                     justifyContent={'center'}
                     flexDirection={'column'}
                     gap={5}
+                    mt={5}
                 >
                         
                     <Logo height={'50px'}/>

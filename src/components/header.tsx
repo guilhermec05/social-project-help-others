@@ -69,9 +69,25 @@ export function Header(){
                                 />
                         </MenuButton>
                      <MenuList bg={'secondary'}>
-                     <Link to='/profile'><MenuItem>Minha Conta</MenuItem></Link>
-                        <MenuItem>Sair</MenuItem>
-                     </MenuList>
+                        <Link to='/profile'>
+                            <MenuItem
+                            transition={'all 0.5s'}
+                            _hover={{
+                                bg:'primary',
+                                color:'secondaryLight'
+                            }}
+                            >Minha Conta</MenuItem>
+                        </Link>
+                        <Link to='/'>
+                            <MenuItem
+                            transition={'all 0.5s'}
+                            _hover={{
+                                bg:'primary',
+                                color:'secondaryLight'
+                            }}
+                            >Sair</MenuItem>
+                        </Link>
+                    </MenuList>
                 </Menu>
                 
               
