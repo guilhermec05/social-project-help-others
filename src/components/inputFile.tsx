@@ -54,6 +54,7 @@ export function InputFile({name, messageError, isError,widthForm,placeholderImg,
                       onClick={() => inputRef.current.click()}
                       value={value}
                       border={'none'}
+                      cursor={'pointer'}
                       _focus={{
                         border:'3px solid',
                         borderColor:'primary',

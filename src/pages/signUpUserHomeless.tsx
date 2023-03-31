@@ -125,6 +125,8 @@ export function SignUpUserHomeless(){
                     <SelectMain text="UF" 
                     option={select}  
                     widthForm={'25%'}
+                    color={'dark_light'}
+                    bgColor={'secondaryLight'}
                     value={localidades.uf} 
                     onChange={v => setLocalidades({...localidades, uf:v.target.value })}
                     />
@@ -148,7 +150,7 @@ export function SignUpUserHomeless(){
                 maxW={'500px'}
                 w={'100%'}>
                     <Flex maxW={'500px'}>
-                        <Text fontSize={'h5'} color={'dark_light'}>Foto(s) do Local e/ou Pessoa</Text>   
+                        <Text fontSize={'h5'} color={'dark_light'}>Foto do Local ou da Pessoa</Text>   
                     </Flex>
                     <InputFile name="images"/>
             </Flex>

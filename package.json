@@ -24,7 +24,7 @@
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.9.0",
     "react-svg": "^16.1.7",
-    "sort-by": "^1.2.0"
+    "sort-by": "^0.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
