@@ -6,18 +6,21 @@ interface InputNumberProps extends NumberInputFieldProps{
     widthForm?:string
     messageError?:string;
     isError?:boolean;
+    maxW?:string
   }  
 
 
-export function InputNumber({name, messageError, isError,widthForm, ...rest }:InputNumberProps){
+export function InputNumber({name, messageError, isError,widthForm,maxW, ...rest }:InputNumberProps){
     return(
         <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
         <NumberInput
-            w={'100%'}            
+            w={'100%'} 
+            maxW={maxW}           
             min={1}
             max={999999999}
             keepWithinRange={false}
             clampValueOnBlur={false}
+            display={'flex'}
         >
             <NumberInputField 
                  placeholder={name}

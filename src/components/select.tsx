@@ -40,18 +40,21 @@ export function SelectMain({text,option, messageError,isInvalid,widthForm,...res
         
     }
 
-    return  <FormControl isInvalid={isInvalid} width={widthForm} >
+    return(  <FormControl isInvalid={isInvalid} width={widthForm} >
                 <Select placeholder={text} 
-                 border={'none'}
-                _focus={{
+                  border={'none'}
+                  // onFocus={{border:'1px sild'}}
+                  // focusBorderColor={'primary'}
+                  _focus={{
                     border:'3px solid',
                     borderColor:'primary',
                     outline:'none',
                     boxShadow:'none'
                   }}
+                  bg={'secondaryLight'} 
                 {...rest}>
                     {Options(option)}
                 </Select>
                 <FormErrorMessage>{messageError}</FormErrorMessage>
-            </FormControl> 
+            </FormControl> )
 }

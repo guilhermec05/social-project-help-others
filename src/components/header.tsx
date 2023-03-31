@@ -21,7 +21,7 @@ export function Header(){
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    return<>
+    return(<>
          <Box
             display={'flex'}
             flexDirection={'column'}        
@@ -47,7 +47,6 @@ export function Header(){
                 
                     
                <Logo width={'50px'}  />
-               {/* <Logo width={'50px'}  /> */}
                 <Menu >
                     <MenuButton
                         as={Button}
@@ -70,7 +69,7 @@ export function Header(){
                         </MenuButton>
                      <MenuList bg={'secondary'}>
                      <Link to='/profile'><MenuItem>Minha Conta</MenuItem></Link>
-                        <MenuItem>Sair</MenuItem>
+                     <Link to='/'><MenuItem>Sair</MenuItem></Link>
                      </MenuList>
                 </Menu>
                 
@@ -85,7 +84,7 @@ export function Header(){
                 <DrawerCloseButton />
                 <DrawerHeader borderBottomWidth='1px'>Menu</DrawerHeader>
                
-                <Link to='/SignUpHomeless'> <Box 
+                <Link to='/sign_up_homeless'> <Box 
                         w={'100%'}
                         textAlign={'center'}
                         transition={'all 0.5s'}
@@ -96,7 +95,7 @@ export function Header(){
                         p={'10px'}
                         cursor={'pointer'}
                     >Cadastrar Morador</Box></Link>             
-                    <Link to='/myDonation'><Box 
+                    <Link to='/my_donation'><Box 
                         w={'100%'}
                         textAlign={'center'}
                         transition={'all 0.5s'}
@@ -109,7 +108,7 @@ export function Header(){
                     >Minhas Doações</Box> </Link>
             </DrawerContent>
         </Drawer>
-    </>
+    </>)
     
    
     

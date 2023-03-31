@@ -19,7 +19,7 @@ export function ButtonMain({title, isLoading,...rest}:IButtonMain){
             _active={{
                 bg:'primaryLight'
             }}
-            
+            shadow={'md'}
             isLoading={isLoading || false }
             {...rest}
         >

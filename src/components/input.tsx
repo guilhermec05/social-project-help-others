@@ -18,7 +18,7 @@ interface inputMainProps extends InputProps{
 }  
 
 export function InputMain({name, messageError, isError,widthForm, ...rest }:inputMainProps){
-    return <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
+    return( <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
         
           <Input 
             placeholder={name}
@@ -34,6 +34,6 @@ export function InputMain({name, messageError, isError,widthForm, ...rest }:inpu
             bg={'secondaryLight'} 
           {...rest}/>
           <FormErrorMessage>{messageError}</FormErrorMessage>
-      </FormControl>
+      </FormControl>)
    
 } 

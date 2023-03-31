@@ -33,6 +33,7 @@ export function SignUpUser(){
             flexDirection={'column'}
             borderRadius={5}
             p={5}
+            maxW={'800px'}
             w={'100%'}
             gap={10}
         >

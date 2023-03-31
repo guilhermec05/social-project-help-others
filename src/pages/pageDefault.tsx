@@ -1,12 +1,17 @@
 import { Box, Text } from "@chakra-ui/react";
 
-export function ErrorPage(){
+
+interface PageDefaultPorps{
+    text:string
+}
+
+export function PageDefault({text}:PageDefaultPorps){
     return( <Box 
         display={'flex'}
         justifyContent={'center'}
         alignItems={'center'}
         h={'100vh'}
     >
-        <Text fontSize={'h1'} fontWeight={700}>Oops! pages is not found </Text>
+        <Text fontSize={'h4'} fontWeight={700}>{text}</Text>
     </Box>)
 }
