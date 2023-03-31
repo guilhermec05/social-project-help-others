@@ -42,7 +42,7 @@ export function Home() {
       flexDirection={'column'} 
       gap={5}>
          <Header />
-         <Flex justifyContent={'flex-end'}  px={10} >
+         <Flex justifyContent={'flex-end'}   p={'30px'} >
             <Box p={2}></Box>
             <SelectMain text='Selecione'
                border={'1px solid'}

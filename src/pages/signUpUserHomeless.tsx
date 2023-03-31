@@ -69,7 +69,7 @@ export function SignUpUserHomeless(){
         fetchUF()
     },[])
 
-
+    
     return(
     <Flex  
         display={'flex'} 
@@ -79,7 +79,7 @@ export function SignUpUserHomeless(){
      >
         {load &&<Loading/>}
         <Header />
-        <Back link="/home"  justifyContent={'space-evenly'} /> 
+        <Back link="/home"  px={20} /> 
         <Box 
             display={'flex'}
             justifyContent={'center'}
