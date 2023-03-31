@@ -40,7 +40,7 @@ export function SelectMain({text,option, messageError,isInvalid,widthForm,...res
         
     }
 
-    return(  <FormControl isInvalid={isInvalid} width={widthForm} >
+    return(  <FormControl isInvalid={isInvalid} maxW={rest.maxW} >
                 <Select placeholder={text} 
                   border={'none'}
                   // onFocus={{border:'1px sild'}}

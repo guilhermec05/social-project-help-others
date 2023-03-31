@@ -4,6 +4,7 @@ import { Footer } from './../components/footer'
 import { CardHomerless, CardHomerlessProps } from './../components/cardHomeless'
 import { FilterHome } from './../components/filterHome'
 import { ReactNode } from 'react'
+import { SelectMain } from '../components/select'
 
 export function Home() {
    const card: CardHomerlessProps = {
@@ -36,9 +37,24 @@ export function Home() {
    }
 
    return (
-      <Flex height={'100vh'} display={'flex'} flexDirection={'column'}>
+      <Flex height={'100vh'} 
+      display={'flex'}  
+      flexDirection={'column'} 
+      gap={5}>
          <Header />
-         <FilterHome />
+         <Flex justifyContent={'flex-end'}  px={10} >
+            <Box p={2}></Box>
+            <SelectMain text='Selecione'
+               border={'1px solid'}
+               borderColor={'dark'} 
+               maxW={'200px'}
+              option={[{value:'option1',label:'Todos'},
+              {value:'option2',label:'Pessoas'},
+              {value:'option3',label:'ONGS'}]}>
+            </SelectMain>
+            
+         </Flex>
+         
          <Flex
             w={'100%'}
             maxW={'1400px'}
