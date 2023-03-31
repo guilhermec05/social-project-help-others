@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { Logo } from "./logo";
 
 export function Footer(){
-    return <Box
+    return( <Box
                 p={'20px'}
                
             >
@@ -21,5 +21,5 @@ export function Footer(){
                     <Logo height={'50px'}/>
                 <Text color={'dark_light'} fontSize={'small'}>© 2023 PSAP - Projeto Social Ajude o Próximo.  Todos os Direitos Reservados.</Text>
             </Box>
-    </Box>
+    </Box>)
 }

@@ -16,7 +16,7 @@ interface inputMainProps extends TextareaProps{
 }  
 
 export function TextAreaMain({name, messageError, isError, ...rest }:inputMainProps){
-    return <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} >
+    return( <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} >
         
           <Textarea 
             placeholder={name}
@@ -30,6 +30,6 @@ export function TextAreaMain({name, messageError, isError, ...rest }:inputMainPr
             bg={'secondaryLight'} 
           {...rest}/>
           <FormErrorMessage>{messageError}</FormErrorMessage>
-      </FormControl>
+      </FormControl>)
    
 } 

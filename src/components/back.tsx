@@ -1,26 +1,29 @@
-import { ArrowBackIcon, IconProps } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { Box,BoxProps } from "@chakra-ui/react";
 import {  Link } from "react-router-dom";
 
-interface BackProps extends IconProps{
+interface BackProps extends BoxProps{
     link:string
 }
 
 export function Back({link,...rest }:BackProps){
-    return <Box 
+    return( <Box 
         display={'flex'}
-        // w={'100vw'}
+        // justifyContent={'space-around'}
+        {...rest}
         p={'10px'}
-        cursor={'pointer'}
+       
     >
         <Link to={link}>
             <ArrowBackIcon 
             fontSize={'h3'}   
+            cursor={'pointer'}
             _active={
                 {color:'dark_light'}
             }
-            {...rest}
+            
             />
         </Link>
-    </Box>
+        <Box></Box>
+    </Box>)
 }

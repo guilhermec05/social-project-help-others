@@ -7,6 +7,7 @@ import {
     UnorderedList,
   } from '@chakra-ui/react'
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 
 export interface CardHomerlessProps{
@@ -19,7 +20,7 @@ export interface CardHomerlessProps{
     image: string
 }
 
-export function CardHomerless({name,age, items, city, state, image}:CardHomerlessProps){
+export function CardHomerless({id, name,age, items, city, state, image}:CardHomerlessProps){
     function listItems(){
         const list:ReactNode[] = []
         items?.forEach(v =>{
@@ -29,7 +30,7 @@ export function CardHomerless({name,age, items, city, state, image}:CardHomerles
         return list
     }
 
-    return <Box
+    return (<Box
         display={'flex'}
         flexDirection={'column'}
         maxW={'300px'}
@@ -45,14 +46,16 @@ export function CardHomerless({name,age, items, city, state, image}:CardHomerles
                     {listItems()}
                 </UnorderedList>
                 <Flex justifyContent={'flex-end'} w={'100%'} >
-                    <Icon 
-                    as={VscChevronRight} 
-                    fontSize={'h5'}
-                    fontWeight={800} 
-                    color={'dark'}
-                     mx={3}
-                     _hover={{color:'dark_light'}}/>
+                    <Link to={`/homeless_help/${id}`}>
+                        <Icon 
+                        as={VscChevronRight} 
+                        fontSize={'h5'}
+                        fontWeight={800} 
+                        color={'dark'}
+                        mx={3}
+                        _hover={{color:'dark_light'}}/>
+                    </Link>
                 </Flex>
         </Box> 
-    </Box> 
+    </Box> )
 }

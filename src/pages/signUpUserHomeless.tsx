@@ -79,7 +79,7 @@ export function SignUpUserHomeless(){
      >
         {load &&<Loading/>}
         <Header />
-        <Back link="/Home" /> 
+        <Back link="/home"  justifyContent={'space-evenly'} /> 
         <Box 
             display={'flex'}
             justifyContent={'center'}
@@ -124,7 +124,7 @@ export function SignUpUserHomeless(){
 
                     <SelectMain text="UF" 
                     option={select}  
-                    widthForm={'20%'}
+                    widthForm={'25%'}
                     value={localidades.uf} 
                     onChange={v => setLocalidades({...localidades, uf:v.target.value })}
                     />
@@ -134,7 +134,7 @@ export function SignUpUserHomeless(){
                     value={localidades.logradouro}
                     onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
                     
-                    /> <InputMain name="Nº" widthForm={'20%'}/>
+                    /> <InputMain name="Nº" widthForm={'25%'}/>
                 </Flex>
                 <InputMain name="Bairro"
                     value={localidades.bairro}

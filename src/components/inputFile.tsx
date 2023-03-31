@@ -42,7 +42,7 @@ export function InputFile({name, messageError, isError,widthForm,placeholderImg,
       });
 
 
-    return <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
+    return (<FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
           <InputGroup>
                 <InputLeftElement
                 pointerEvents="none"
@@ -65,6 +65,6 @@ export function InputFile({name, messageError, isError,widthForm,placeholderImg,
           </InputGroup>
           
           <FormErrorMessage>{messageError}</FormErrorMessage>
-      </FormControl>
+      </FormControl>)
    
 } 
