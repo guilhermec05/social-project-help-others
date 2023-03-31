@@ -74,110 +74,118 @@ export function SignUpUserHomeless(){
     <Flex  
         display={'flex'} 
         flexDirection={'column'}
-        // justifyContent={'center'} 
-        // alignItems={'center'}
+        alignItems={'center'}
+        justifyContent={'center'}
+        w={'100vw'}
      >
         {load &&<Loading/>}
         <Header />
-        <Back link="/home"  px={20} /> 
-        <Box 
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
+        <Flex
+            maxW={'1400px'}
+            w={'100%'}
             flexDirection={'column'}
-            gap={10}
-            px={'20px'}
         >
-            <Flex maxW={'500px'}>
-                <Text fontSize={'h4'}>Cadastro de Pessoa em Situação de Rua</Text>
-            </Flex>
-            <Flex 
-                flexDirection={'column'}
-                gap={5}
-                maxW={'500px'}
-                w={'100%'}
-                // border={'1px solid red'}
-            >
-                 
-                    <InputMain name="Titulo da Postagem"  />
-                    <TextAreaMain name="Descrição"  h={'100px'}  />
-                    <InputMain name="Nome ou Apelido" />
-                 
-            </Flex>
             
-           
-
-            <Flex 
+            <Back link="/home"  px={20} /> 
+            <Box 
+                display={'flex'}
+                justifyContent={'center'}
+                alignItems={'center'}
                 flexDirection={'column'}
-                gap={5}
-                maxW={'500px'}
-                w={'100%'}
+                gap={10}
+                px={'20px'}
             >
                 <Flex maxW={'500px'}>
-                    <Text fontSize={'h5'} color={'dark_light'}>Onde pode ser encontrado</Text>   
+                    <Text fontSize={'h4'}>Cadastro de Pessoa em Situação de Rua</Text>
                 </Flex>
-                <InputNumber name="Cep" type={'number'} min={'00000000'} onChange={v => foundCep(v.target.value)} />
-                <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
-                    <InputMain name="Cidade" widthForm={'70%'} 
-                    value={localidades.localidade} 
-                    onChange={v => setLocalidades({...localidades, localidade:v.target.value })} /> 
-
-                    <SelectMain text="UF" 
-                    option={select}  
-                    widthForm={'25%'}
-                    color={'dark_light'}
-                    bgColor={'secondaryLight'}
-                    value={localidades.uf} 
-                    onChange={v => setLocalidades({...localidades, uf:v.target.value })}
-                    />
-                </Flex>
-                <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
-                    <InputMain name="Rua" widthForm={'70%'}
-                    value={localidades.logradouro}
-                    onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
+                <Flex 
+                    flexDirection={'column'}
+                    gap={5}
+                    maxW={'500px'}
+                    w={'100%'}
+                    // border={'1px solid red'}
+                >
                     
-                    /> <InputMain name="Nº" widthForm={'25%'}/>
+                        <InputMain name="Titulo da Postagem"  />
+                        <TextAreaMain name="Descrição"  h={'100px'}  />
+                        <InputMain name="Nome ou Apelido" />
+                    
                 </Flex>
-                <InputMain name="Bairro"
-                    value={localidades.bairro}
-                    onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
-                />
-                <InputMain name="Ponto de Referencia" />
-            </Flex>
-            <Flex 
-                flexDirection={'column'}
-                gap={5}
-                maxW={'500px'}
-                w={'100%'}>
-                    <Flex maxW={'500px'}>
-                        <Text fontSize={'h5'} color={'dark_light'}>Foto do Local ou da Pessoa</Text>   
-                    </Flex>
-                    <InputFile name="images"/>
-            </Flex>
-            <Flex 
-                flexDirection={'column'}
-                gap={5}
-                maxW={'500px'} 
-                w={'100%'}>
-                    <Flex maxW={'500px'}>
-                        <Text fontSize={'h5'} color={'dark_light'}>Item Necessitados</Text>   
-                    </Flex>
-                    <Flex gap={5} flexWrap={'wrap'}>
-                    <CheckboxGroup colorScheme='green' >
-                        <Checkbox>Cobertor</Checkbox>
-                        <Checkbox>Comida</Checkbox>
-                        <Checkbox>Desodorante</Checkbox>
-                        <Checkbox>Sabonete</Checkbox>
-                    </CheckboxGroup>
+                
+            
 
-                        
+                <Flex 
+                    flexDirection={'column'}
+                    gap={5}
+                    maxW={'500px'}
+                    w={'100%'}
+                >
+                    <Flex maxW={'500px'}>
+                        <Text fontSize={'h5'} color={'dark_light'}>Onde pode ser encontrado</Text>   
                     </Flex>
-            </Flex>
-            <Flex maxW={'500px'}>
-                <ButtonMain title="Cadastrar" w={'100%'} />
-            </Flex>
-        </Box>
-        <Footer />       
-    </Flex>
+                    <InputNumber name="Cep" type={'number'} min={'00000000'} onChange={v => foundCep(v.target.value)} />
+                    <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
+                        <InputMain name="Cidade" widthForm={'70%'} 
+                        value={localidades.localidade} 
+                        onChange={v => setLocalidades({...localidades, localidade:v.target.value })} /> 
+
+                        <SelectMain text="UF" 
+                        option={select}  
+                        widthForm={'25%'}
+                        color={'dark_light'}
+                        bgColor={'secondaryLight'}
+                        value={localidades.uf} 
+                        onChange={v => setLocalidades({...localidades, uf:v.target.value })}
+                        />
+                    </Flex>
+                    <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
+                        <InputMain name="Rua" widthForm={'70%'}
+                        value={localidades.logradouro}
+                        onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
+                        
+                        /> <InputMain name="Nº" widthForm={'25%'}/>
+                    </Flex>
+                    <InputMain name="Bairro"
+                        value={localidades.bairro}
+                        onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
+                    />
+                    <InputMain name="Ponto de Referencia" />
+                </Flex>
+                <Flex 
+                    flexDirection={'column'}
+                    gap={5}
+                    maxW={'500px'}
+                    w={'100%'}>
+                        <Flex maxW={'500px'}>
+                            <Text fontSize={'h5'} color={'dark_light'}>Foto do Local ou da Pessoa</Text>   
+                        </Flex>
+                        <InputFile name="images"/>
+                </Flex>
+                <Flex 
+                    flexDirection={'column'}
+                    gap={5}
+                    maxW={'500px'} 
+                    w={'100%'}>
+                        <Flex maxW={'500px'}>
+                            <Text fontSize={'h5'} color={'dark_light'}>Item Necessitados</Text>   
+                        </Flex>
+                        <Flex gap={5} flexWrap={'wrap'}>
+                        <CheckboxGroup colorScheme='green' >
+                            <Checkbox>Cobertor</Checkbox>
+                            <Checkbox>Comida</Checkbox>
+                            <Checkbox>Desodorante</Checkbox>
+                            <Checkbox>Sabonete</Checkbox>
+                        </CheckboxGroup>
+
+                            
+                        </Flex>
+                </Flex>
+                <Flex maxW={'500px'}>
+                    <ButtonMain title="Cadastrar" w={'100%'} />
+                </Flex>
+            </Box>
+            <Footer />       
+        </Flex>
+        </Flex>
     )
 }

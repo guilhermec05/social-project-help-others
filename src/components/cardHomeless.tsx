@@ -24,7 +24,7 @@ export function CardHomerless({
 }: CardHomerlessProps) {
 	return (
 		<Box display={'flex'} flexDirection={'column'}>
-			<Box maxW={'410px'} maxH={'460px'} overflow="hidden">
+			<Box maxW={'350px'} maxH={'460px'} overflow="hidden">
 				<Image
 					src={image}
 					boxSize={'410px'}

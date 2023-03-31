@@ -26,6 +26,7 @@ export function Header(){
             display={'flex'}
             flexDirection={'column'}        
             position={'sticky'}
+            w={'100%'}
             top={'0px'}
             zIndex={5}           
         >
@@ -50,7 +51,7 @@ export function Header(){
                 <Menu >
                     <MenuButton
                         as={Button}
-                        p={0}
+                        // mx={2}
                         // border={'1px solid red'}
                         aria-label='Options'
                         bg={'none'}

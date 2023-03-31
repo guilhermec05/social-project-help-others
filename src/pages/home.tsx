@@ -37,36 +37,40 @@ export function Home() {
    }
 
    return (
-      <Flex height={'100vh'} 
+      <Flex  
       display={'flex'}  
       flexDirection={'column'} 
+      alignItems={'center'}
+      justifyContent={'center'}
+      w={'100vw'}
       gap={5}>
          <Header />
-         <Flex justifyContent={'flex-end'}   p={'30px'} >
-            <Box p={2}></Box>
-            <SelectMain text='Selecione'
-               border={'1px solid'}
-               borderColor={'dark'} 
-               maxW={'200px'}
-              option={[{value:'option1',label:'Todos'},
-              {value:'option2',label:'Pessoas'},
-              {value:'option3',label:'ONGS'}]}>
-            </SelectMain>
-            
-         </Flex>
-         
-         <Flex
-            w={'100%'}
-            maxW={'1400px'}
-            m={['0 auto']}
-            gap={10}
-            p={'30px'}
-            flexWrap={'wrap'}
-            justify={'center'}
-         >
-            {ListaCard()}
-         </Flex>
-         <Footer />
+            <Flex flexDirection={'column'} maxW={'1400px'}>
+               <Flex justifyContent={'flex-end'}   p={'30px'} >
+                  <Box p={2}></Box>
+                  <SelectMain text='Selecione'
+                     border={'1px solid'}
+                     borderColor={'dark'} 
+                     maxW={'200px'}
+                  option={[{value:'option1',label:'Todos'},
+                  {value:'option2',label:'Pessoas'},
+                  {value:'option3',label:'ONGS'}]}>
+                  </SelectMain>
+                  
+               </Flex>
+               
+               <Flex
+                  w={'100%'}
+                  maxW={'1300px'}
+                  m={['0 auto']}
+                  gap={10}
+                  p={'30px'}
+                  flexWrap={'wrap'}
+               >
+                  {ListaCard()}
+               </Flex>
+               <Footer />
+            </Flex>
       </Flex>
    )
 }
