@@ -6,7 +6,8 @@ import { Home } from "../pages/home";
 import { Login } from "../pages/login";
 import { PageDefault } from "../pages/pageDefault";
 import { SignUpUser } from "../pages/signUpUser";
-import { SignUpUserHomeless } from "../pages/signUpUserHomeless";
+import { HomlessProfile } from "../pages/donate";
+
 
 
 const router = createBrowserRouter([
@@ -24,10 +25,6 @@ const router = createBrowserRouter([
       element: <SignUpUser/>,
     },
     {
-      path: "/sign_up_homeless",
-      element: <SignUpUserHomeless/>,
-    },
-    {
       path: "/profile",
       element: <PageDefault text="profile"/>,
     },
@@ -41,7 +38,7 @@ const router = createBrowserRouter([
     },
     {
       path: "/homeless_help/:id",
-      element:  <PageDefault text="homeless_help"/>,
+      element:  <HomlessProfile/>,
     },
   ]);
 
