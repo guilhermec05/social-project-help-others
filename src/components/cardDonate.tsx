@@ -7,6 +7,7 @@ import location_icon from '../assets/locationIcon.png'
 import { CheckBox } from '../components/checkBox'
 import { ButtonMain } from "../components/button";
 import { Complaint } from './pop-upComplaint'
+import { Button, ButtonProps } from '@chakra-ui/react'
 
 export interface CardDonateProps {
 	id: string;
@@ -71,7 +72,7 @@ export function CardDonate({
 							{description}
 						</Text>
 					</Flex>
-					
+
 					<Box mt={6} display={'flex'} flexDirection={'column'}>
 						<Text fontSize={'h7'} fontWeight={'900'} noOfLines={5}>
 							{title_2}
@@ -85,17 +86,15 @@ export function CardDonate({
 						<CheckBox><Text fontSize={'h8'}>{item_7}</Text></CheckBox>
 					</Box>
 
+					<Flex justifyContent={'absolute'} mt={4}>
+						<ButtonMain fontSize={'h6'} title="Doar" p={'10px'} bg={'primaryDark'} onClick={e => submit(e)} />
+					</Flex>
 
-                <Flex justifyContent={'absolute'} mt={4}>
-                    <ButtonMain fontSize={'h6'} title="Doar"  p={'10px'}/>
-                </Flex>     
+					<Flex mt={6} w={'100%'} alignItems={'left'} noOfLines={5} fontSize={'h7'} fontWeight={'900'}>
 
-				<Flex mt={6} w={'100%'} alignItems={'left'} noOfLines={5} fontSize={'h7'} fontWeight={'900'}>
-					<Text>Para denunciar este anúncio</Text>
-					<Link to={'/home'}><Text color={'danger'} textDecoration={'underline'}>clique aqui!</Text></Link>
-					<Complaint />
+						<Complaint />
 
-				</Flex>     
+					</Flex>
 				</Box>
 			</Box>
 		</Box>

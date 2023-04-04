@@ -48,8 +48,7 @@ export function HomlessProfile() {
       w={'100vw'}
       gap={5}>
          <Header/>
-         <Back link={'/home'}/>
-         
+            <Back link={'/home'}/>
             <Flex flexDirection={'column'} maxW={'1400px'}>
                <Flex justifyContent={'flex-end'}   p={'30px'} >
                </Flex>
