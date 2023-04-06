@@ -2,7 +2,6 @@ import { Box, Flex, Text, Grid } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from './../components/footer'
 import { CardHomerless, CardHomerlessProps } from './../components/cardHomeless'
-import { FilterHome } from './../components/filterHome'
 import { ReactNode } from 'react'
 import { SelectMain } from '../components/select'
 

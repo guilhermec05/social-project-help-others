@@ -1,12 +1,10 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-// import { CardHomerless } from "../components/cardHomeless";
-import { Back } from './../components/back';
 import { ButtonMain } from "../components/button";
 import { Logo } from "../components/logo";
 
 import { InputNumber } from './../components/inputNumber';
 import { InputMain } from "../components/input";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 
 
 
@@ -14,7 +12,7 @@ export function Login(){
 
     const navigate = useNavigate();
 
-    async function submit(e:HTMLButtonElement){
+    async function submit(){
         navigate('/home')
         
     }
@@ -26,6 +24,8 @@ export function Login(){
         display={'flex'} 
         justifyContent={'center'} 
         alignItems={'center'}
+        // p={2}
+        px={2}
    
      >
         <Box 
@@ -37,6 +37,7 @@ export function Login(){
             w={'100%'}
             maxW={'700px'}
             gap={10}
+            px={2}
         >
                 <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}> 
                     <Logo width={'100px'} />
@@ -61,7 +62,7 @@ export function Login(){
                     
                 </Flex>
                 <Flex justifyContent={'center'}>
-                    <ButtonMain title="Entrar" bg={'primaryDark'} p={'25px'} w={'100%'} maxW={'200px'} onClick={e => submit(e)} />
+                    <ButtonMain title="Entrar" bg={'primaryDark'} p={'25px'} w={'100%'} maxW={'200px'} onClick={e => submit()} />
                 </Flex>
                 <Flex 
                     w={'100%'}

@@ -6,6 +6,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  HStack,
 } from '@chakra-ui/react'
 import { Button, ButtonProps } from '@chakra-ui/react'
 import { ButtonMain } from "../components/button";
@@ -16,7 +17,9 @@ import { InputMain } from "./input";
 import { Text } from '@chakra-ui/react'
 import { Logo } from "../components/logo";
 import { Flex, Spacer } from '@chakra-ui/react'
-import { theme } from '../style/theme'
+import { TextAreaMain } from './textArea';
+import { ArrowBackIcon } from '@chakra-ui/icons';
+
 
 
 export function Complaint() {
@@ -24,22 +27,30 @@ export function Complaint() {
 
   return (
     <>
-      <Text fontWeight='bold' mb='1rem' justifyContent={'center'} alignItems={'center'} >
-        Para denunciar este anúncio
-
-        <Button onClick={onOpen} colorScheme='red' variant='link' textDecoration={'underline'}>
-          clique aqui!
-        </Button>
-      </Text>
+      <HStack >
+        <Text fontWeight='bold' justifyContent={'center'} alignItems={'center'} >
+          Para denunciar este anúncio:
+        </Text>
+        <Text onClick={onOpen} color={'danger'} variant='link' textDecoration={'underline'} cursor={'pointer'}>clique aqui!</Text>
+      </HStack>
 
       <Modal
         closeOnOverlayClick={false}
         isOpen={isOpen}
         onClose={onClose}
+        size={'2xl'}
       >
         <ModalOverlay />
-        <ModalContent>
-          <Back onClick={onClose} />
+        <ModalContent p={10} >
+          <ArrowBackIcon 
+              fontSize={'h3'}   
+              cursor={'pointer'}
+              _active={
+                  {color:'dark_light'}
+              }
+              onClick={onClose}
+              
+            />
 
           <ModalHeader mr={5}>
             <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
@@ -53,12 +64,12 @@ export function Complaint() {
                 Por qual motivo você esta<br/>denunciando este anúncio ?
               </Text>
             </Flex>
-            <Textarea placeholder='Texto' />
+            <TextAreaMain name='Texto' w={'450px'} />
             <InputMain mt={5} name="Email" w={'450px'} h={'50px'} type={'email'}/>
           </ModalBody>
 
-          <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
-            <ModalFooter>
+          <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'} >
+            <ModalFooter paddingBottom={5}>
               <ButtonMain fontSize={'h6'} title="Enviar" bg={'primaryDark'} p={'25px'} w={'100%'} maxW={'200px'} onClick={e => submit(e)} />
             </ModalFooter>
           </Flex>

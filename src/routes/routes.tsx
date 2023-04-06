@@ -6,7 +6,7 @@ import { Home } from "../pages/home";
 import { Login } from "../pages/login";
 import { PageDefault } from "../pages/pageDefault";
 import { SignUpUser } from "../pages/signUpUser";
-import { HomlessProfile } from "../pages/donate";
+import { HomlessProfile } from "../pages/homlessProfile";
 
 
 
