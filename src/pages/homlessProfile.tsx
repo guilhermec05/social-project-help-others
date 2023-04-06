@@ -66,7 +66,7 @@ export function HomlessProfile() {
                   maxW={'1301px'}
                   m={['0 auto']}
                   gap={10}
-                  p={'30px'}
+                  p={'20px'}
                   flexWrap={'wrap'}
                >
                   <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
@@ -101,10 +101,10 @@ export function HomlessProfile() {
                         </Box>
 
                         <Flex justifyContent={'absolute'} mt={4}>
-                           <ButtonMain fontSize={'h6'} title="Doar" p={'10px'} bg={'primaryDark'} />
+                           <ButtonMain fontSize={'h6'} title="Doar" px={'30px'} bg={'primaryDark'} />
                         </Flex>
 
-                        <Flex mt={6} w={'100%'}  fontSize={'s'} fontWeight={'900'}>
+                        <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
 
                            <Complaint />
 

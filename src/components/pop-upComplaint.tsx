@@ -27,11 +27,11 @@ export function Complaint() {
 
   return (
     <>
-      <HStack >
-        <Text fontWeight='bold' justifyContent={'center'} alignItems={'center'} >
+      <HStack  >
+        <Text fontWeight='bold' justifyContent={'center'} alignItems={'center'}  >
           Para denunciar este anúncio:
-        </Text>
-        <Text onClick={onOpen} color={'danger'} variant='link' textDecoration={'underline'} cursor={'pointer'}>clique aqui!</Text>
+        </Text >
+        <Text onClick={onOpen} color={'danger'} variant='link' textDecoration={'underline'} cursor={'pointer'} >clique aqui!</Text>
       </HStack>
 
       <Modal
@@ -39,6 +39,7 @@ export function Complaint() {
         isOpen={isOpen}
         onClose={onClose}
         size={'2xl'}
+        
       >
         <ModalOverlay />
         <ModalContent p={10} >

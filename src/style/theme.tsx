@@ -27,6 +27,7 @@ const theme = extendTheme({
       'h6':'19px',
       'p':'16px',
       's':'14px',
+      'xs':'12px'
     },
     styles: {
       global:{
