@@ -7,6 +7,7 @@ import { Login } from "../pages/login";
 import { PageDefault } from "../pages/pageDefault";
 import { SignUpUser } from "../pages/signUpUser";
 import { HomlessProfile } from "../pages/homlessProfile";
+import { SignUpUserHomeless } from "../pages/signUpUserHomeless";
 
 
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     {
       path: "/my_donation",
       element: <PageDefault text="myDonation"/>,
+    },
+    {
+      path: "/sign_up_homeless",
+      element: <SignUpUserHomeless />,
     },
     {
       path: "/forgot_pass",
