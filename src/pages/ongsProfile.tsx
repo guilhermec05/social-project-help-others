@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Grid, Image } from '@chakra-ui/react'
+import { Box, Flex, Text, Grid, Image, HStack } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
 // import { CardDonate } from '../components/InputBox'
@@ -33,6 +33,7 @@ export function OngsProfile() {
    //    item_4: 'Toalha',
    //    item_5: 'Escova de dentes',
    //    item_6: 'Pasta de dente',
+   //    duration: '31 de maio de 2023'
    // }
 
    // const list: CardDonateProps[] = [
@@ -74,7 +75,7 @@ export function OngsProfile() {
                p={'20px'}
                flexWrap={'wrap'}
             >
-               <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
+               <Box maxW={'850px'} maxH={'1260px'} overflow="hidden">
                   <Image
                      src={'https://bit.ly/dan-abramov'}
                      boxSize={'800px'}
@@ -92,7 +93,7 @@ export function OngsProfile() {
                         {'Banho Solidário Poa'}
                      </Text>
                      <Flex>
-                        <Image mt={8} mr={3} src={location_icon} />
+                        <Image mt={8} mr={3} w={30} h={30} src={location_icon} />
                         <Text mt={8} fontSize={'h6'}>
                            {'Rua Conselheiro Travassos'}, {'89'} -{' '}
                            {'São Geraldo'}, {'Porto Alegre'} - {'RS'}
@@ -105,17 +106,6 @@ export function OngsProfile() {
                            }
                         </Text>
                      </Flex>
-
-                     <Text mt={5}>
-                        {'Acompanhe os eventos ativos desta ONG: '}
-                        <Link
-                           textDecoration={'underline'}
-                           color={'primaryDark'}
-                           href="/ong_events/:id"
-                        >
-                           {'clique aqui!'}
-                        </Link>
-                     </Text>
 
                      <Text mt={5}>{'Redes Sociais: '}</Text>
                      <Box display={'flex'} flexDirection={'row'}>
@@ -156,19 +146,19 @@ export function OngsProfile() {
                         />
                      </Flex>
 
-                     <Flex
-                        mt={6}
-                        w={'100%'}
-                        fontSize={'xs'}
-                        fontWeight={'900'}
-                        textAlign={'center'}
-                     >
-                        <Complaint />
-                     </Flex>
+                     <HStack mt={4} mb={4}>
+                        <Text fontWeight='bold' justifyContent={'center'} alignItems={'center'}  >
+                        {'Duração do evento: '}
+                        </Text >
+                        <Text >{'31 de maio de 2023'}</Text>
+                     </HStack>
+         
+                     <Complaint />
+
                   </Box>
                </Box>
             </Flex>
-            <Footer />
+            <Footer/>
          </Flex>
       </Flex>
    )

@@ -81,7 +81,7 @@ export function HomlessProfile() {
                            {'Ajude o José'}
                         </Text>
                         <Flex>
-                           <Image mt={8} mr={3} src={location_icon} />
+                           <Image mt={8} mr={3}  w={30} h={30} src={location_icon} />
                            <Text mt={8} fontSize={'h6'}>
                               {'Rua Silveira'}, {'500'} - {'São João'}, {'Porto Alegre'} - {'RS'}
                            </Text>
