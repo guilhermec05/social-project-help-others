@@ -50,6 +50,7 @@ export function Home() {
                   <SelectMain text='Selecione'
                      border={'1px solid'}
                      borderColor={'dark'} 
+                     bg={'Primary'}
                      maxW={'200px'}
                   option={[{value:'option1',label:'Todos'},
                   {value:'option2',label:'Pessoas'},
@@ -62,9 +63,10 @@ export function Home() {
                   w={'100%'}
                   maxW={'1300px'}
                   m={['0 auto']}
-                  gap={10}
+                  gap={20}
                   p={'30px'}
                   flexWrap={'wrap'}
+                  justify={'center'}
                >
                   {ListaCard()}
                </Flex>

@@ -6,7 +6,7 @@ import { Footer } from '../components/footer'
 import { Back } from "../components/back";
 import { ButtonMain } from '../components/button'
 import { Complaint } from '../components/pop-upComplaint'
-import location_icon from '../assets/locationIcon.png'
+import location_icon from '../assets/location-icon.png'
 import { InputCheckBox } from '../components/inputCheckBox';
 
 
@@ -81,9 +81,9 @@ export function HomlessProfile() {
                            {'Ajude o José'}
                         </Text>
                         <Flex>
-                           <Image mt={8} mr={3} src={location_icon} />
+                           <Image mt={8} mr={3}  w={30} h={30} src={location_icon} />
                            <Text mt={8} fontSize={'h6'}>
-                              {'Rua Silveira'} , {'500'} - {'São João'} - {'Porto Alegre'} - {'RS'}
+                              {'Rua Silveira'}, {'500'} - {'São João'}, {'Porto Alegre'} - {'RS'}
                            </Text>
                         </Flex>
                         <Flex align={"end"}>
