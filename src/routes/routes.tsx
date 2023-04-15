@@ -8,6 +8,7 @@ import { PageDefault } from "../pages/pageDefault";
 import { SignUpUser } from "../pages/signUpUser";
 import { HomlessProfile } from "../pages/homlessProfile";
 import { SignUpUserHomeless } from "../pages/signUpUserHomeless";
+import { HomeAdm } from "../pages/homeAdm";
 
 
 
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
     {
       path: "/homeless_help/:id",
       element:  <HomlessProfile/>,
+    },
+    {
+      path: "/home_adm",
+      element:  <HomeAdm/>,
     },
   ]);
 
