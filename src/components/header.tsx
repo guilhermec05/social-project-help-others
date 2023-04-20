@@ -16,8 +16,23 @@ import {
 import { Logo } from "./logo";
 import { Link } from "react-router-dom";
 
+interface HeaderProps{
+    hasAdm?:boolean
+}
 
-export function Header(){
+
+export function Header({hasAdm = true}:HeaderProps){
+
+    function hasAdmMenu(){
+        return( hasAdm ? (<Icon 
+        as={HamburgerIcon}
+         onClick={onOpen}
+         color={'secondary'}
+         fontSize={'h3'}
+         cursor={'pointer'}
+         _active={{color:'dark_light'}}
+      /> ): <div></div>)
+    }
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -37,15 +52,8 @@ export function Header(){
                 alignItems={'center'}
                 p={'10px'}
             >
-                <Icon 
-                  as={HamburgerIcon}
-                   onClick={onOpen}
-                   color={'secondary'}
-                   fontSize={'h3'}
-                   cursor={'pointer'}
-                   _active={{color:'dark_light'}}
-                />
-                
+               
+                {hasAdmMenu()}
                     
                <Logo width={'50px'}  />
                 <Menu >
@@ -73,8 +81,7 @@ export function Header(){
                      <Link to='/'><MenuItem>Sair</MenuItem></Link>
                      </MenuList>
                 </Menu>
-                
-              
+
                     
         
             </Flex> 

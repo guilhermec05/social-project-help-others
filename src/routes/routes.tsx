@@ -9,6 +9,8 @@ import { SignUpUser } from "../pages/signUpUser";
 import { HomlessProfile } from "../pages/homlessProfile";
 import { SignUpUserHomeless } from "../pages/signUpUserHomeless";
 import { HomeAdm } from "../pages/homeAdm";
+import { HomlessProfileReport } from "../pages/homlessProfileReport";
+import { HomlessProfileDonateProcess } from "../pages/homlessProfileDonateProcess";
 
 
 
@@ -49,6 +51,14 @@ const router = createBrowserRouter([
     {
       path: "/home_adm",
       element:  <HomeAdm/>,
+    },
+    {
+      path: "/report_profile/:id",
+      element:  <HomlessProfileReport/>,
+    },
+    {
+      path: "/donate_process/:id",
+      element:  <HomlessProfileDonateProcess/>,
     },
   ]);
 

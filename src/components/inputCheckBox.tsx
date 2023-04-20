@@ -1,4 +1,4 @@
-import {  Checkbox, HStack, Text, VStack } from '@chakra-ui/react'
+import {  Checkbox, CheckboxProps, HStack, Text, VStack } from '@chakra-ui/react'
 import { ReactNode } from 'react';
 
 // export interface CardDonateProps {
@@ -24,18 +24,19 @@ import { ReactNode } from 'react';
 interface checkBoxProps{
 	label:string;
 	value:string;
+	checked?:boolean
 }
 
-interface InputCheckBoxProps{
+interface InputCheckBoxProps extends CheckboxProps{
 	listCheckBox: checkBoxProps[]
 }
 
 
-export function InputCheckBox({listCheckBox }:InputCheckBoxProps) {
+export function InputCheckBox({listCheckBox,...rest }:InputCheckBoxProps) {
 
 	function list(){
 		const lists: ReactNode[] = []
-		listCheckBox.forEach((v) => lists.push( <Checkbox value={v.value} colorScheme={'green'}><Text fontSize={'s'}>{v.label}</Text></Checkbox>))
+		listCheckBox.forEach((v) => lists.push( <Checkbox value={v.value} colorScheme={'green'} isChecked={v.checked} {...rest}><Text fontSize={'s'}>{v.label}</Text></Checkbox>))
 		return lists
 	}
 

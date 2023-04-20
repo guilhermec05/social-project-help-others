@@ -4,7 +4,7 @@ import { Logo } from "./logo";
 export function Footer(){
     return( <Box
                 p={'20px'}
-               
+               w={'100%'}
             >
         <Box border={'1px solid'} borderColor={'dark_light'} opacity={'0.2'}/>
             <Box    

@@ -96,7 +96,7 @@ export function HomlessProfile() {
                            <Text fontSize={'h7'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>
-                           <InputCheckBox listCheckBox={[{value:'1', label:'Comida'},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]}/>
+                           <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]}  />
 
                         </Box>
 
