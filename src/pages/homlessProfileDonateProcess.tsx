@@ -72,7 +72,7 @@ export function HomlessProfileDonateProcess() {
                         </Box>
 
                         <Flex justifyContent={'absolute'} mt={4} gap={5}>
-                           <ButtonMain fontSize={'h6'} title="Delete" px={'30px'} bg={'danger'} />
+                           <ButtonMain fontSize={'h6'} title="Delete" px={'30px'} bg={'danger'} _hover={{bg:'danger'}} />
                            <ButtonMain fontSize={'h6'} title="Ok" px={'30px'} bg={'primaryDark'} />
                         </Flex>
 
