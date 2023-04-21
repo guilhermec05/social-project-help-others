@@ -7,6 +7,7 @@ import { Login } from "../pages/login";
 import { PageDefault } from "../pages/pageDefault";
 import { SignUpUser } from "../pages/signUpUser";
 import { HomlessProfile } from "../pages/homlessProfile";
+import { OngsProfile } from "../pages/ongsProfile";
 import { SignUpUserHomeless } from "../pages/signUpUserHomeless";
 import { HomeAdm } from "../pages/homeAdm";
 import { HomlessProfileReport } from "../pages/homlessProfileReport";
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
     {
       path: "/donate_process/:id",
       element:  <HomlessProfileDonateProcess/>,
+    },
+    {
+      path: "/ongs_help/:id",
+      element:  <OngsProfile/>,
     },
   ]);
 

@@ -3,7 +3,7 @@ import { Image, Icon } from '@chakra-ui/react'
 import { VscLocation, VscChevronRight } from 'react-icons/vsc'
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import location_icon from '../assets/locationIcon.png'
+import location_icon from '../assets/location-icon.png'
 
 export interface CardHomerlessProps {
 	id: string;

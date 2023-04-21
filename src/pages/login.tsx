@@ -24,7 +24,7 @@ export function Login(){
         display={'flex'} 
         justifyContent={'center'} 
         alignItems={'center'}
-        // p={2}
+        p={5}
         px={2}
    
      >
@@ -36,7 +36,8 @@ export function Login(){
             py={'100px'}
             w={'100%'}
             maxW={'700px'}
-            gap={10}
+            gap={7}
+            p={12}
             px={2}
         >
                 <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}> 
@@ -54,7 +55,7 @@ export function Login(){
                     justifyContent={'center'}
 
                 > 
-                    <InputNumber name="cpf ou cpnj" maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
+                    <InputNumber name="CPF ou CNPJ" maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
                     <InputMain name="******************"  maxW={'400px'} type={'password'}  h={'50px'} marginBottom={'2'} />
                     <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
                         <Link to={'/forgot_pass'}><Text color={'primaryDark'} fontSize={'s'} textDecoration={'underline'}>Esqueceu sua senha?</Text></Link>
