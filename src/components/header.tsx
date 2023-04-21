@@ -16,15 +16,15 @@ import {
 import { Logo } from "./logo";
 import { Link } from "react-router-dom";
 
-interface HeaderProps{
+export interface HeaderProps{
     hasAdm?:boolean
 }
 
 
-export function Header({hasAdm = true}:HeaderProps){
+export function Header({hasAdm = false}:HeaderProps){
 
     function hasAdmMenu(){
-        return( hasAdm ? (<Icon 
+        return( !hasAdm ? (<Icon 
         as={HamburgerIcon}
          onClick={onOpen}
          color={'secondary'}

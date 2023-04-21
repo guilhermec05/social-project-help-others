@@ -12,6 +12,8 @@ import { SignUpUserHomeless } from "../pages/signUpUserHomeless";
 import { HomeAdm } from "../pages/homeAdm";
 import { HomlessProfileReport } from "../pages/homlessProfileReport";
 import { HomlessProfileDonateProcess } from "../pages/homlessProfileDonateProcess";
+import { MyDonations } from "../pages/myDonations";
+import { UserPropfile } from "../pages/userProfile";
 
 
 
@@ -31,12 +33,9 @@ const router = createBrowserRouter([
     },
     {
       path: "/profile",
-      element: <PageDefault text="profile"/>,
+      element: <UserPropfile />,
     },
-    {
-      path: "/my_donation",
-      element: <PageDefault text="myDonation"/>,
-    },
+    
     {
       path: "/sign_up_homeless",
       element: <SignUpUserHomeless />,
@@ -65,7 +64,11 @@ const router = createBrowserRouter([
       path: "/ongs_help/:id",
       element:  <OngsProfile/>,
     },
+    {
+      path: "/my_donation",
+      element:  <MyDonations/>,
+    },
   ]);
-
+  
 
 export {router}

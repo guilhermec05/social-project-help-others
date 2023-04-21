@@ -36,7 +36,7 @@ export function InputCheckBox({listCheckBox,...rest }:InputCheckBoxProps) {
 
 	function list(){
 		const lists: ReactNode[] = []
-		listCheckBox.forEach((v) => lists.push( <Checkbox value={v.value} colorScheme={'green'} isChecked={v.checked} {...rest}><Text fontSize={'s'}>{v.label}</Text></Checkbox>))
+		listCheckBox.forEach((v) => lists.push( <Checkbox value={v.value} colorScheme={'green'} defaultChecked={v.checked} {...rest}><Text fontSize={'s'}>{v.label}</Text></Checkbox>))
 		return lists
 	}
 
