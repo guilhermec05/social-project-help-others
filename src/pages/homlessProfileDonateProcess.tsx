@@ -1,11 +1,9 @@
 import { Box, Flex, Text, ModalContent, Image, HStack, useDisclosure, Modal, ModalOverlay, ModalHeader, ModalBody } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
-// import { CardDonate } from '../components/InputBox'
 import  React  from 'react'
 import { Back } from "../components/back";
 import { ButtonMain } from '../components/button'
-import { Complaint } from '../components/pop-upComplaint'
 import location_icon from '../assets/locationIcon.png'
 import { InputCheckBox } from '../components/inputCheckBox';
 import { ArrowBackIcon } from '@chakra-ui/icons';

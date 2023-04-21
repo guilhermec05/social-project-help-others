@@ -13,39 +13,6 @@ import { InputCheckBox } from '../components/inputCheckBox';
 export function HomlessProfile() {
 
 
-
-   // const card = {
-   //    id: '1',
-   //    title: 'Ajude o José!',
-   //    street: 'Rua Silveira',
-   //    number: '500',
-   //    neighborhood: 'São João',
-   //    city: 'Porto Alegre',
-   //    state: 'RS',
-   //    description:
-   //       'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
-   //    image: 'https://bit.ly/dan-abramov',
-   //    title_2: 'Itens necessitados:',
-   //    item_1: 'Comida',
-   //    item_2: 'Cobertor',
-   //    item_3: 'Saco de dormir',
-   //    item_4: 'Sabonete',
-   //    item_5: 'Toalha',
-   //    item_6: 'Escova de dentes',
-   //    item_7: 'Pasta de dente',
-   // }
-
-   // const list: CardDonateProps[] = [
-   //    card,
-   // ]
-
-   // function ListaCard() {
-   //    const lists: ReactNode[] = []
-
-   //    list.forEach((v) => lists.push(<CardDonate {...v} />))
-   //    return lists
-   // }
-
    return (
       <Flex
       display={'flex'}  

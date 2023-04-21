@@ -1,54 +1,18 @@
 import { Box, Flex, Text, ModalContent, Image, HStack, useDisclosure, Modal, ModalOverlay, ModalHeader, ModalBody, ModalFooter } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
-// import { CardDonate } from '../components/InputBox'
-// import { ReactNode } from 'react'
+
 import { Back } from "../components/back";
 import { ButtonMain } from '../components/button'
-import { Complaint } from '../components/pop-upComplaint'
 import location_icon from '../assets/locationIcon.png'
 import { InputCheckBox } from '../components/inputCheckBox';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Logo } from '../components/logo';
-import { TextAreaMain } from '../components/textArea';
-import { InputMain } from '../components/input';
 
 
 export function HomlessProfileReport() {
 
    const { isOpen, onOpen, onClose } = useDisclosure()
-
-   // const card = {
-   //    id: '1',
-   //    title: 'Ajude o José!',
-   //    street: 'Rua Silveira',
-   //    number: '500',
-   //    neighborhood: 'São João',
-   //    city: 'Porto Alegre',
-   //    state: 'RS',
-   //    description:
-   //       'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
-   //    image: 'https://bit.ly/dan-abramov',
-   //    title_2: 'Itens necessitados:',
-   //    item_1: 'Comida',
-   //    item_2: 'Cobertor',
-   //    item_3: 'Saco de dormir',
-   //    item_4: 'Sabonete',
-   //    item_5: 'Toalha',
-   //    item_6: 'Escova de dentes',
-   //    item_7: 'Pasta de dente',
-   // }
-
-   // const list: CardDonateProps[] = [
-   //    card,
-   // ]
-
-   // function ListaCard() {
-   //    const lists: ReactNode[] = []
-
-   //    list.forEach((v) => lists.push(<CardDonate {...v} />))
-   //    return lists
-   // }
 
    return (
       <Flex
@@ -145,9 +109,7 @@ export function HomlessProfileReport() {
 
                                  <ModalBody pb={6}>
                                     <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'} gap={6}>
-                                       {/* <Text fontSize={'h6'} fontWeight='bold' mb='1rem' justifyContent={'center'} alignItems={'center'}>
-                                          Por qual motivo você esta<br/>denunciando este anúncio ?
-                                       </Text> */}
+                                       
                                        <Text fontSize={'h3'}>Titulo</Text>
                                        <Text fontSize={'p'}>Ut reprehenderit voluptate laborum excepteur Lorem qui nisi dolore aute nisi cillum magna aliqua. 
                                        Deserunt sint et cupidatat nisi ex aute cupidatat officia ea labore qui. Id occaecat laborum consequat nisi officia. 
@@ -160,9 +122,6 @@ export function HomlessProfileReport() {
                                        Esse deserunt Lorem proident sunt sint qui veniam exercitation culpa sint elit. Sint cillum mollit est eiusmod fugiat veniam quis irure
                                        et do deserunt ea. Lorem aute consequat ea eiusmod quis id dolore aliqua. Cillum ut nisi duis et ex adipisicing minim tempor.</Text>
                                     </Flex>
-                                       
-                                    {/* <TextAreaMain name='Texto' w={'450px'} /> */}
-                                    {/* <InputMain mt={5} name="Email" w={'450px'} h={'50px'} type={'email'}/> */}
                                  </ModalBody>
                               </ModalContent>
                            </Modal>
