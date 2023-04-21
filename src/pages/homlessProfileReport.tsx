@@ -4,7 +4,7 @@ import { Footer } from '../components/footer'
 
 import { Back } from "../components/back";
 import { ButtonMain } from '../components/button'
-import location_icon from '../assets/locationIcon.png'
+import location_icon from "../assets/location-icon.png";
 import { InputCheckBox } from '../components/inputCheckBox';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Logo } from '../components/logo';
