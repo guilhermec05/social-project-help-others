@@ -27,6 +27,7 @@ export function Header({hasAdm = false}:HeaderProps){
         return( !hasAdm ? (<Icon 
         as={HamburgerIcon}
          onClick={onOpen}
+         mx={3}
          color={'secondary'}
          fontSize={'h3'}
          cursor={'pointer'}
@@ -69,16 +70,16 @@ export function Header({hasAdm = false}:HeaderProps){
                         >
                             <Icon 
                                     as={FaRegUserCircle} 
-                                    fontSize={'h4'} 
+                                    fontSize={'h3'} 
                                     color={'secondary'}
                                     _hover={{
                                         color:'dark_light'
                                     }}
                                 />
                         </MenuButton>
-                     <MenuList bg={'secondary'}>
-                     <Link to='/profile'><MenuItem>Minha Conta</MenuItem></Link>
-                     <Link to='/'><MenuItem>Sair</MenuItem></Link>
+                     <MenuList bg={'secondary'}>           
+                        <Link to='/profile'><MenuItem>Minha Conta</MenuItem></Link>
+                        <Link to='/'><MenuItem>Sair</MenuItem></Link>
                      </MenuList>
                 </Menu>
 
@@ -91,6 +92,18 @@ export function Header({hasAdm = false}:HeaderProps){
             <DrawerContent >
                 <DrawerCloseButton />
                 <DrawerHeader borderBottomWidth='1px'>Menu</DrawerHeader>
+                  
+                <Link to='/home'> <Box 
+                        w={'100%'}
+                        textAlign={'center'}
+                        transition={'all 0.5s'}
+                        _hover={{
+                            bg:'primary',
+                            color:'secondaryLight'
+                        }}
+                        p={'10px'}
+                        cursor={'pointer'}
+                    >Página Inicial</Box></Link>  
                
                 <Link to='/sign_up_homeless'> <Box 
                         w={'100%'}

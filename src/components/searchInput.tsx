@@ -1,5 +1,5 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { IconButton, InputGroup, InputLeftAddon, InputLeftElement } from "@chakra-ui/react";
+import { IconButton, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import { useRef,useEffect, useState } from "react";
 import { InputMain } from "./input";
 
@@ -14,8 +14,8 @@ export function SearchInput(){
            * Alert if clicked on outside of element
            */
           function handleClickOutside(event:any) {
-           
-            if (ref.current && !ref.current.contains(event.target) && event.target.value ==="") {
+
+            if (ref.current && !ref.current.contains(event.target) && (search ==="" || search === undefined)) {
                 setCloseInput(false)
             }
           }
@@ -25,7 +25,7 @@ export function SearchInput(){
             // Unbind the event listener on clean up
             document.removeEventListener("mousedown", handleClickOutside);
           };
-        }, [ref]);
+        }, [ref,search]);
       }
 
       

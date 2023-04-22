@@ -54,7 +54,7 @@ export function OngsProfile() {
          flexDirection={'column'}
          alignItems={'center'}
          justifyContent={'center'}
-         w={'100vw'}
+      
          gap={5}
       >
          <Header />
@@ -73,13 +73,14 @@ export function OngsProfile() {
                maxW={'1301px'}
                m={['0 auto']}
                gap={10}
+               // border={'1px solid red'}
                p={'20px'}
                flexWrap={'wrap'}
             >
-               <Box maxW={'850px'} maxH={'1260px'} overflow="hidden">
+               <Box maxW={'850px'}  overflow="hidden">
                   <Image
                      src={'https://bit.ly/dan-abramov'}
-                     boxSize={'800px'}
+                     boxSize={'00px'}
                      w={'100%'}
                      h={'450px'}
                      alt="ONG image"

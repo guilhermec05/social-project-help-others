@@ -41,7 +41,7 @@ export function Home() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-      w={'100vw'}
+      // w={'100vw'}
       gap={5}>
          <Header />
             <Flex flexDirection={'column'} maxW={'1400px'}>

@@ -53,11 +53,10 @@ export function MyDonations() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-      w={'100vw'}
-     
+
       gap={15}>
          <Header />
-            <Flex flexDirection={'column'} maxW={'1400px'}  >
+            <Flex flexDirection={'column'} maxW={'1300px'}  >
                <Flex justifyContent={'space-between'}  wrap={'wrap'} p={'10px'} gap={5} >
                  <SearchInput />
                  <IconButton 
@@ -111,8 +110,8 @@ export function MyDonations() {
                  
                   w={'100%'}
                   maxW={'1300px'}
-                  m={['0 auto']}
                   gap={20}
+                  // border={'1px solid red'}
                   p={'30px'}
                   flexWrap={'wrap'}
                   justify={'center'}
