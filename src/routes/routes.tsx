@@ -14,7 +14,7 @@ import { HomlessProfileReport } from "../pages/homlessProfileReport";
 import { HomlessProfileDonateProcess } from "../pages/homlessProfileDonateProcess";
 import { MyDonations } from "../pages/myDonations";
 import { UserPropfile } from "../pages/userProfile";
-
+import { ProcessDonate } from "../pages/processDonate";
 
 
 const router = createBrowserRouter([
@@ -67,6 +67,10 @@ const router = createBrowserRouter([
     {
       path: "/my_donation",
       element:  <MyDonations/>,
+    },
+    {
+      path: "/processDonate/:id",
+      element:  <ProcessDonate/>,
     },
   ]);
   
