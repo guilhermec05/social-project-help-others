@@ -3,6 +3,7 @@ import chakraTheme from '@chakra-ui/theme'
 import "@fontsource/roboto"
 
 const { Button, Input } = chakraTheme.components
+import { StepsTheme as Steps } from "chakra-ui-steps";
 
 
 const theme = extendTheme({
@@ -38,7 +39,8 @@ const theme = extendTheme({
     },
     components: {
       Button,
-      Input
+      Input,
+      Steps
     },
  })
 
