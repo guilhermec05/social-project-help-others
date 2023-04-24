@@ -14,6 +14,7 @@ export function Home() {
       description:
          'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
       image: 'https://bit.ly/dan-abramov',
+      link:`/homeless_help/${2}`
    }
 
    const list: CardHomerlessProps[] = [
@@ -41,7 +42,6 @@ export function Home() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-      // w={'100vw'}
       gap={5}>
          <Header />
             <Flex flexDirection={'column'} maxW={'1400px'}>

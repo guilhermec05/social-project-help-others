@@ -8,6 +8,7 @@ import location_icon from "../assets/location-icon.png";
 import { InputCheckBox } from '../components/inputCheckBox';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Logo } from '../components/logo';
+import { StepsMain } from '../components/steps';
 
 
 export function HomlessProfileDonateProcess() {
@@ -21,14 +22,14 @@ export function HomlessProfileDonateProcess() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-      w={'100vw'}
+
       gap={5}>
          <Header hasAdm={false}/>
             
-            <Flex justifyContent={'flex-start'} maxW={'1400px'} w={'100%'}  p={'10px'} >
+            <Flex justifyContent={'flex-start'} w={'100%'}  p={'10px'} >
                <Back link={'/home_adm'}/>
             </Flex>
-            <Flex flexDirection={'column'} maxW={'1400px'}>
+            <Flex flexDirection={'column'} >
                
                <Flex
                   w={'100%'}
@@ -38,7 +39,7 @@ export function HomlessProfileDonateProcess() {
                   p={'20px'}
                   flexWrap={'wrap'}
                >
-                  <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
+                  <Box maxW={'850px'}  overflow="hidden">
                      <Image
                         src={'https://bit.ly/dan-abramov'}
                         boxSize={'800px'}
@@ -62,6 +63,10 @@ export function HomlessProfileDonateProcess() {
                         </Flex>
 
                         <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
+                           <Text mt={6} fontSize={'h6'} fontWeight={'700'} noOfLines={1}>
+                              Processo de doação:
+                           </Text>
+                           <StepsMain variant='circles' state={1}/>
                            <Text fontSize={'h7'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>
@@ -75,8 +80,6 @@ export function HomlessProfileDonateProcess() {
                         </Flex>
 
                         <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
-
-                           {/* <Complaint /> */}
                            <HStack  >
                               <Text fontWeight='bold' justifyContent={'center'} alignItems={'center'}  >
                                  Para visualizar o processo de doação:

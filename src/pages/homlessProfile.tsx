@@ -61,7 +61,6 @@ export function HomlessProfile() {
                         </Flex>
 
                         <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
-                           <StepsMain variant='circles' state={1}/>
                            <Text fontSize={'h7'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>

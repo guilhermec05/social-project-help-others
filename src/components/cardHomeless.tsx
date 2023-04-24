@@ -12,6 +12,7 @@ export interface CardHomerlessProps {
 	city: string;
 	state: string;
 	description: string;
+	link:string
 }
 
 export function CardHomerless({
@@ -21,6 +22,7 @@ export function CardHomerless({
 	city,
 	state,
 	description,
+	link
 }: CardHomerlessProps) {
 	return (
 		<Box display={'flex'} flexDirection={'column'}>
@@ -53,7 +55,7 @@ export function CardHomerless({
 							{description}
 						</Text>
 						<Flex align={"end"}>
-							<Link to={`/homeless_help/${id}`}>
+							<Link to={link}>
 								<Icon
 									as={VscChevronRight}
 									fontSize={'h4'}

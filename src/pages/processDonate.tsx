@@ -8,6 +8,8 @@ import { ButtonMain } from '../components/button'
 import { Complaint } from '../components/pop-upComplaint'
 import location_icon from '../assets/location-icon.png'
 import { InputCheckBox } from '../components/inputCheckBox';
+import { StepsMain } from '../components/steps';
+import { InputFile } from '../components/inputFile';
 
 export function ProcessDonate() {
 
@@ -18,7 +20,7 @@ export function ProcessDonate() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-      w={'100vw'}
+
       gap={5}>
          <Header/>
             
@@ -57,22 +59,25 @@ export function ProcessDonate() {
                               {'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.'}
                            </Text>
                         </Flex>
-                        <Flex>
+                        <Flex direction={'column'} gap={5}>
                            <Text mt={6} fontSize={'h6'} fontWeight={'700'} noOfLines={1}>
-                              {'Status da doação: Ajudado'}
+                              Processo de doação:
                            </Text>
+                           <StepsMain variant='circles' state={1}/>
                         </Flex>
 
                         <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
                            <Text fontSize={'h7'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>
-                           <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]}  />
+                           <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]}  isDisabled={true}/>
 
                         </Box>
+                        
 
-                        <Flex justifyContent={'absolute'} mt={4}>
-                           <ButtonMain fontSize={'h6'} title="Doar" px={'30px'} bg={'primaryDark'} />
+                        <Flex justifyContent={'center'} direction={'column'} mt={4} gap={5}  maxW={'500px'}  width="100%">
+                           <InputFile name="images" />
+                           <ButtonMain fontSize={'h6'} title="Enviar" px={'30px'} bg={'primaryDark'} w={'100px'}/>
                         </Flex>
 
                         <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>

@@ -26,6 +26,7 @@ export function MyDonations() {
       description:
          'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
       image: 'https://bit.ly/dan-abramov',
+      link:`/process_donate/${2}`
    }
 
    const list: CardHomerlessProps[] = [

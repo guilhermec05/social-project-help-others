@@ -1,18 +1,21 @@
-import { useColorModeValue } from "@chakra-ui/color-mode";
-import { Box } from "@chakra-ui/layout";
+// import { useColorModeValue } from "@chakra-ui/color-mode";
+// import { Box } from "@chakra-ui/layout";
 import { Button, Flex, Heading } from "@chakra-ui/react";
 import { Step, Steps, useSteps } from "chakra-ui-steps";
-import { FiClipboard, FiDollarSign, FiUser } from "react-icons/fi";
+import { GrInProgress } from "react-icons/gr";
+import { BiDonateHeart } from "react-icons/bi";
+import { FaCheck } from "react-icons/fa";
+// GrInProgress
 
 const steps = [
-  { label: "Login", icon: FiUser },
-  { label: "Verification", icon: FiDollarSign },
-  { label: "Pay", icon: FiClipboard },
+  { label: "Em processo", icon: GrInProgress },
+  { label: "Doado", icon: BiDonateHeart },
+  { label: "Completo", icon: FaCheck },
 ];
 
 interface stepProps{
   variant: "circles" | "circles-alt" | "simple" | undefined;
-  state: 0 | 1 | 2| 3
+  state: number
 }
 
 export function StepsMain({variant,state}:stepProps){
@@ -25,7 +28,7 @@ export function StepsMain({variant,state}:stepProps){
     <Flex flexDir="column" width="100%">
       <Steps
         variant={variant}
-        orientation={'vertical'}
+        // orientation={'vertical'}
         colorScheme="green"
         activeStep={activeStep}
       >

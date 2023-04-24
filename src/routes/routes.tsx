@@ -69,7 +69,7 @@ const router = createBrowserRouter([
       element:  <MyDonations/>,
     },
     {
-      path: "/processDonate/:id",
+      path: "/process_donate/:id",
       element:  <ProcessDonate/>,
     },
   ]);
