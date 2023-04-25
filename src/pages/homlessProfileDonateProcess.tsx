@@ -6,8 +6,10 @@ import { Back } from "../components/back";
 import { ButtonMain } from '../components/button'
 import location_icon from "../assets/location-icon.png";
 import { InputCheckBox } from '../components/inputCheckBox';
-import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Logo } from '../components/logo';
+import { Icon } from '@chakra-ui/react'
+// import { ArrowBackIcon } from '@chakra-ui/icons';
+// import { Logo } from '../components/logo';
+import {MdOutlineEscalatorWarning} from 'react-icons/md'
 import { StepsMain } from '../components/steps';
 
 
@@ -24,7 +26,7 @@ export function HomlessProfileDonateProcess() {
       justifyContent={'center'}
 
       gap={5}>
-         <Header hasAdm={false}/>
+         <Header hasAdm={true}/>
             
             <Flex justifyContent={'flex-start'} w={'100%'}  p={'10px'} >
                <Back link={'/home_adm'}/>
@@ -57,21 +59,26 @@ export function HomlessProfileDonateProcess() {
                            </Text>
                         </Flex>
                         <Flex align={"end"}>
-                           <Text mt={8} fontSize={'h7'} fontWeight={'300'}>
+                           <Text mt={8} fontSize={'p'} fontWeight={'300'}>
                               {'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.'}
                            </Text>
                         </Flex>
 
                         <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
-                           <Text mt={6} fontSize={'h6'} fontWeight={'700'} noOfLines={1}>
+                           <Text mt={6} fontSize={'h5'} fontWeight={'700'} noOfLines={1}>
                               Processo de doação:
                            </Text>
                            <StepsMain variant='circles' state={1}/>
-                           <Text fontSize={'h7'} fontWeight={'900'} >
+                           <Text fontSize={'h6'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>
                            <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]} isDisabled/>
-
+                           <Text fontSize={'h6'} fontWeight={'900'} >
+                              Foto da Doação:
+                           </Text>
+                           <Text fontSize={'p'} fontWeight={'900'} color={'dark_light'}  >
+                             <Icon as={MdOutlineEscalatorWarning} fontSize={'h1'} />  O Doador não fez a doação no momento 
+                           </Text>
                         </Box>
 
                         <Flex justifyContent={'absolute'} mt={4} gap={5}>
@@ -79,56 +86,7 @@ export function HomlessProfileDonateProcess() {
                            <ButtonMain fontSize={'h6'} title="Ok" px={'30px'} bg={'primaryDark'} />
                         </Flex>
 
-                        <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
-                           <HStack  >
-                              <Text fontWeight='bold' justifyContent={'center'} alignItems={'center'}  >
-                                 Para visualizar o processo de doação:
-                              </Text >
-                              <Text onClick={onOpen} color={'danger'} variant='link' textDecoration={'underline'} cursor={'pointer'} >clique aqui!</Text>
-                           </HStack>
-                           <Modal
-                           closeOnOverlayClick={false}
-                           isOpen={isOpen}
-                           onClose={onClose}
-                           size={'2xl'}
-                           
-                           >
-                           <ModalOverlay />
-                              <ModalContent p={10} >
-                                 <ArrowBackIcon 
-                                    fontSize={'h3'}   
-                                    cursor={'pointer'}
-                                    _active={
-                                          {color:'dark_light'}
-                                    }
-                                    onClick={onClose}
-                                    
-                                    />
-
-                                 <ModalHeader mr={5}>
-                                    <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
-                                    <Logo width={'100px'} />
-                                    </Flex>
-                                 </ModalHeader>
-
-                                 <ModalBody pb={6}>
-                                    <Flex justifyContent={'center'} alignItems={'flex-start'} flexDirection={'column'} gap={6}>
-                                       <Text fontSize={'h5'} fontWeight={800}>situação: Doado</Text>
-                                       <Text fontSize={'h6'} fontWeight={800}>Itens a ser doado</Text>
-                                       <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]} isDisabled />
-                                       <Text fontSize={'h6'} fontWeight={800}>foto da doação</Text>
-                                       {hasImage?  <Image
-                                          src={'https://bit.ly/dan-abramov'}
-                                          boxSize={'800px'}
-                                          h={'370px'}
-                                          alt="homeless image"
-                                       />:'Não houve doação no momento'}
-                                     
-                                    </Flex>
-                                 </ModalBody>
-                              </ModalContent>
-                           </Modal>
-                        </Flex>
+                       
                      </Box>
                   </Box>
                </Flex>

@@ -8,10 +8,12 @@ import { TextAreaMain } from "../components/textArea";
 import { ButtonMain } from './../components/button';
 import { InputFile } from './../components/inputFile';
 import { useState, useEffect, useCallback } from 'react';
-// import { useEffect } from 'react';
 import { optionProps, SelectMain } from './../components/select';
 import { api } from "../services/api/axios";
 import { InputNumber } from "../components/inputNumber";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 
 interface localidade{
@@ -26,6 +28,36 @@ export function SignUpUserHomeless(){
     const [load, setLoad] = useState<boolean>(false)
     const [select,setSelect ] = useState<optionProps[]>([] as optionProps[])
     const [localidades,setLocalidades ] = useState<localidade>({} as localidade)
+
+
+    
+    const schema = yup.object({
+        title: yup.string()
+        .min(10,"o campo deve conter pelo ou menos 10 caracteres")
+        .required("o campo não deve estar vazio"),
+        nickname: yup.string().min(10,"o campo deve conter pelo ou menos 3 caracteres").
+        required("o campo não deve estar vazio"),
+        number: yup.string().required("o campo não deve estar vazio"),
+        city:yup.string()
+        .min(5,"o campo deve conter pelo ou menos 5 caracteres")
+        .required("o campo não deve estar vazio"),
+        district:yup.string()
+        .min(8,"o campo deve conter pelo ou menos 8 caracteres")
+        .required("o campo não deve estar vazio"),
+        reference:yup.string()
+        .min(10,"o campo deve conter pelo ou menos 10 caracteres")
+        .required("o campo não deve estar vazio")
+      });
+
+
+
+    type FormData = yup.InferType<typeof schema>
+
+  
+    const { handleSubmit,control } = useForm<FormData>({
+        resolver: yupResolver(schema)
+      });
+    
     // const [cep,setCep ] = useState<string>('')
     
     async function foundCep(cep:string){
@@ -64,6 +96,13 @@ export function SignUpUserHomeless(){
             await setLoad(false)
         }
     } 
+
+    function onSubmit(data: FormData){
+        // alert(submit)
+         console.log(data )
+        // navigate('/home')
+        
+    }
     
     useEffect(()=>{
         fetchUF()
@@ -78,6 +117,7 @@ export function SignUpUserHomeless(){
         // alignItems={'center'}
      >
         {load &&<Loading/>}
+        <form  onSubmit={handleSubmit(onSubmit)} >
         <Header />
         <Back link="/Home" /> 
         <Box 
@@ -99,9 +139,9 @@ export function SignUpUserHomeless(){
                 // border={'1px solid red'}
             >
                  
-                    <InputMain name="Titulo da Postagem"  />
-                    <TextAreaMain name="Descrição"  h={'100px'}  />
-                    <InputMain name="Nome ou Apelido" />
+                    <InputMain placeholder="Titulo da Postagem"  name="title"  useControl={control}/>
+                    <TextAreaMain  placeholder="Descrição" name="description" h={'100px'}  />
+                    <InputMain placeholder="Nome ou Apelido"  name="nickname"  useControl={control} />
                  
             </Flex>
             
@@ -116,31 +156,51 @@ export function SignUpUserHomeless(){
                 <Flex maxW={'500px'}>
                     <Text fontSize={'h5'} color={'dark_light'}>Onde pode ser encontrado</Text>   
                 </Flex>
-                <InputNumber name="Cep" type={'number'} min={'00000000'} onChange={v => foundCep(v.target.value)} />
+
+                <InputNumber 
+                    placeholder="Cep" 
+                    type={'number'} 
+                    onChange={v => foundCep(v.target.value)} 
+
+                />
+                
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
-                    <InputMain name="Cidade" widthForm={'70%'} 
+                    <InputMain placeholder="Cidade" 
+                    widthForm={'70%'} 
                     value={localidades.localidade} 
+                    name="city"  
+                    useControl={control}
                     onChange={v => setLocalidades({...localidades, localidade:v.target.value })} /> 
 
                     <SelectMain text="UF" 
                     option={select}  
-                    widthForm={'20%'}
+                    widthForm={'25%'}
                     value={localidades.uf} 
+                    name="title" 
                     onChange={v => setLocalidades({...localidades, uf:v.target.value })}
                     />
                 </Flex>
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
-                    <InputMain name="Rua" widthForm={'70%'}
+                    <InputMain placeholder="Rua" widthForm={'70%'}
                     value={localidades.logradouro}
+                    name="title"  useControl={control}
                     onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
                     
-                    /> <InputMain name="Nº" widthForm={'20%'}/>
+                    /> 
+                    <InputMain placeholder="Nº" widthForm={'25%'} 
+                    name="number"  
+                    useControl={control}/>
                 </Flex>
-                <InputMain name="Bairro"
-                    value={localidades.bairro}
-                    onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
-                />
-                <InputMain name="Ponto de Referencia" />
+                    <InputMain placeholder="Bairro"
+                        value={localidades.bairro}
+                        name="district"  
+                        useControl={control}
+                        onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
+                    />
+                    <InputMain 
+                    placeholder="Ponto de Referencia" 
+                    name="reference"  
+                    useControl={control} />
             </Flex>
             <Flex 
                 flexDirection={'column'}
@@ -150,7 +210,7 @@ export function SignUpUserHomeless(){
                     <Flex maxW={'500px'}>
                         <Text fontSize={'h5'} color={'dark_light'}>Foto(s) do Local e/ou Pessoa</Text>   
                     </Flex>
-                    <InputFile name="images"/>
+                    <InputFile name="images" placeholder="images"/>
             </Flex>
             <Flex 
                 flexDirection={'column'}
@@ -172,10 +232,13 @@ export function SignUpUserHomeless(){
                     </Flex>
             </Flex>
             <Flex maxW={'500px'}>
-                <ButtonMain title="Cadastrar" w={'100%'} />
+                <ButtonMain title="Cadastrar" w={'100%'} type={'submit'}  />
             </Flex>
         </Box>
-        <Footer />       
+        <Footer />     
+
+        </form>
+          
     </Flex>
     )
 }

@@ -20,9 +20,9 @@ export function HomlessProfileReport() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-      w={'100vw'}
+      
       gap={5}>
-         <Header hasAdm={false}/>
+         <Header hasAdm={true}/>
             
             <Flex justifyContent={'flex-start'} maxW={'1400px'} w={'100%'}  p={'10px'} >
                <Back link={'/home_adm'}/>

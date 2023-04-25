@@ -2,7 +2,7 @@ import { FormControl, FormErrorMessage, NumberInput, NumberInputField, NumberInp
 
 
 interface InputNumberProps extends NumberInputFieldProps{
-    name:string;
+   
     widthForm?:string
     messageError?:string;
     isError?:boolean;

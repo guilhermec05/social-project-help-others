@@ -313,9 +313,8 @@ export function HomeAdm() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-      w={'100vw'}
       gap={5}>
-         <Header hasAdm={false} />
+         <Header hasAdm={true} />
             <Flex flexDirection={'column'} maxW={'1400px'}>
                <Flex justifyContent={'flex-end'}   p={'30px'} >
                </Flex>

@@ -1,33 +1,49 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { ButtonMain } from "../components/button";
 import { Logo } from "../components/logo";
-
-import { InputNumber } from './../components/inputNumber';
 import { InputMain } from "../components/input";
 import { Link,  useNavigate } from "react-router-dom";
-
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 export function Login(){
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();  
 
-    async function submit(){
+
+    const schema = yup.object({
+        name: yup.string().required("o campo não deve estar vazio"),
+        pass: yup.string().required("o campo não deve estar vazio"),
+      });
+
+
+
+    type FormData = yup.InferType<typeof schema>
+
+  
+    const { handleSubmit,control } = useForm<FormData>({
+        resolver: yupResolver(schema)
+      });
+
+    function onSubmit(data: FormData){
+        // alert(submit)
+         console.log(data )
         navigate('/home')
         
     }
 
     return(
+        <form onSubmit={handleSubmit(onSubmit)}>
         <Box  
-        bg={'primary'}
-        minHeight={'100vh'}
-        display={'flex'} 
-        justifyContent={'center'} 
-        alignItems={'center'}
-        p={5}
-        px={2}
-   
-     >
+            bg={'primary'}
+            minHeight={'100vh'}
+            display={'flex'} 
+            justifyContent={'center'} 
+            alignItems={'center'}
+            p={5}
+            px={2}
+        >
         <Box 
             bg={'secondary'}
             display={'flex'}
@@ -49,21 +65,21 @@ export function Login(){
                 <Flex 
                     flexDirection={'column'}
                     w={'100%'}
-                    // gap={5} 
+                    gap={5} 
                     transition={'all 1s'}
                     alignItems={'center'}
                     justifyContent={'center'}
 
                 > 
-                    <InputNumber name="CPF ou CNPJ" maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
-                    <InputMain name="******************"  maxW={'400px'} type={'password'}  h={'50px'} marginBottom={'2'} />
+                    <InputMain placeholder="CPF ou CNPJ" name={'name'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
+                    <InputMain placeholder="******************" name={'pass'}  maxW={'400px'} useControl={control} type={'password'}  h={'50px'} marginBottom={'2'} />
                     <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
                         <Link to={'/forgot_pass'}><Text color={'primaryDark'} fontSize={'s'} textDecoration={'underline'}>Esqueceu sua senha?</Text></Link>
                     </Flex>                    
                     
                 </Flex>
                 <Flex justifyContent={'center'}>
-                    <ButtonMain title="Entrar" bg={'primaryDark'} p={'25px'} w={'100%'} maxW={'200px'} onClick={e => submit()} />
+                    <ButtonMain title="Entrar" bg={'primaryDark'} p={'25px'} w={'100%'} maxW={'200px'} type={'submit'} />
                 </Flex>
                 <Flex 
                     w={'100%'}
@@ -75,5 +91,7 @@ export function Login(){
                 </Flex>     
         </Box>
     </Box>
+        </form>
+      
     )
 }

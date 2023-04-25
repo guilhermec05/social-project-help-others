@@ -3,37 +3,64 @@ import {
     FormControl,
     Input ,
     FormErrorMessage,
-    InputProps,
-    border,
-    Box
+    InputProps
     // FormLabel,
     // FormHelperText,
   } from '@chakra-ui/react'
 
+import {useController, UseControllerProps } from "react-hook-form";
+
 interface inputMainProps extends InputProps{
-  name:string;
   widthForm?:string
   messageError?:string;
   isError?:boolean;
+  useControl:any;
+  name:string;
 }  
 
-export function InputMain({name, messageError, isError,widthForm, ...rest }:inputMainProps){
-    return( <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
+export function InputMain({name, messageError, isError,widthForm,useControl, ...rest }:inputMainProps){
+
+
+
+    const { field, fieldState } = useController(
+      {
+        name:name,
+        control:useControl,
+        rules: { required: true }
+      });
+
+
+    return( 
+      <FormControl 
         
+        isInvalid={fieldState.invalid} 
+        display={'flex'} 
+        justifyContent={'center'} 
+        alignItems={'center'} 
+        flexDirection={'column'} 
+        width={widthForm} >  
           <Input 
             placeholder={name}
             border={'none'}
+            {...field}
             // onFocus={{border:'1px sild'}}
             // focusBorderColor={'primary'}
+            _invalid={{
+              border:'2px solid',
+              borderColor:'danger',
+              // outline:'none',
+              // boxShadow:'none'
+            }}
             _focus={{
               border:'3px solid',
               borderColor:'primary',
               outline:'none',
               boxShadow:'none'
             }}
+        
             bg={'secondaryLight'} 
           {...rest}/>
-          <FormErrorMessage>{messageError}</FormErrorMessage>
+          <FormErrorMessage fontWeight={800} >{fieldState?.error?.message}</FormErrorMessage>
       </FormControl>)
    
 } 
