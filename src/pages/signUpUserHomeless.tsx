@@ -14,6 +14,7 @@ import { InputNumber } from "../components/inputNumber";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useValidationsBR } from 'validations-br';
 
 
 interface localidade{
@@ -46,7 +47,8 @@ export function SignUpUserHomeless(){
         .required("o campo não deve estar vazio"),
         reference:yup.string()
         .min(10,"o campo deve conter pelo ou menos 10 caracteres")
-        .required("o campo não deve estar vazio")
+        .required("o campo não deve estar vazio"),
+        cep:yup.string().required("o campo não deve estar vazio").test("cep","cep não é valido",(value) => useValidationsBR('cep',value) ),
       });
 
 
@@ -77,6 +79,7 @@ export function SignUpUserHomeless(){
         }finally{
             await setLoad(false)
         }
+
     }
 
     async function fetchUF(){
@@ -158,6 +161,8 @@ export function SignUpUserHomeless(){
                 </Flex>
 
                 <InputNumber 
+                    name="cep"
+                    useControl={control}
                     placeholder="Cep" 
                     type={'number'} 
                     onChange={v => foundCep(v.target.value)} 
@@ -183,7 +188,8 @@ export function SignUpUserHomeless(){
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
                     <InputMain placeholder="Rua" widthForm={'70%'}
                     value={localidades.logradouro}
-                    name="title"  useControl={control}
+                    name="street"  
+                    useControl={control}
                     onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
                     
                     /> 

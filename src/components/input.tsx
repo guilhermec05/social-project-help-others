@@ -8,7 +8,7 @@ import {
     // FormHelperText,
   } from '@chakra-ui/react'
 
-import {useController, UseControllerProps } from "react-hook-form";
+import {useController } from "react-hook-form";
 
 interface inputMainProps extends InputProps{
   widthForm?:string
@@ -30,6 +30,7 @@ export function InputMain({name, messageError, isError,widthForm,useControl, ...
       });
 
 
+
     return( 
       <FormControl 
         
@@ -42,6 +43,7 @@ export function InputMain({name, messageError, isError,widthForm,useControl, ...
           <Input 
             placeholder={name}
             border={'none'}
+            
             {...field}
             // onFocus={{border:'1px sild'}}
             // focusBorderColor={'primary'}

@@ -1,30 +1,44 @@
 import { FormControl, FormErrorMessage, NumberInput, NumberInputField, NumberInputFieldProps } from "@chakra-ui/react";
+import { useController } from "react-hook-form";
 
 
 interface InputNumberProps extends NumberInputFieldProps{
    
     widthForm?:string
-    messageError?:string;
     isError?:boolean;
     maxW?:string
+    useControl:any;
+    name:string;
   }  
 
 
-export function InputNumber({name, messageError, isError,widthForm,maxW, ...rest }:InputNumberProps){
+export function InputNumber({name, isError,widthForm,maxW,useControl, ...rest }:InputNumberProps){
+    
+  const { field, fieldState } = useController(
+    {
+      name:name,
+      control:useControl,
+      rules: { required: true }
+    });
+
+    console.log(field)
+  
     return(
-        <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
+        <FormControl isInvalid={fieldState.invalid} flexDirection={'column'}  display={'flex'} justifyContent={'center'} width={widthForm} >
         <NumberInput
             w={'100%'} 
             maxW={maxW}           
             min={1}
             max={999999999}
+            {...field}
             keepWithinRange={false}
             clampValueOnBlur={false}
             display={'flex'}
+           
         >
             <NumberInputField 
-                 placeholder={name}
-                 {...rest}
+                
+              
                 border={'none'}
                 _focus={{
                   border:'3px solid',
@@ -32,10 +46,17 @@ export function InputNumber({name, messageError, isError,widthForm,maxW, ...rest
                   outline:'none',
                   boxShadow:'none'
                 }}
-                bg={'secondaryLight'} 
+                _invalid={{
+                  border:'2px solid',
+                  borderColor:'danger',
+                  // outline:'none',
+                  // boxShadow:'none'
+                }}
+                bg={'secondaryLight'}
+                {...rest} 
             />
         </NumberInput>
-        <FormErrorMessage>{messageError}</FormErrorMessage>
+        <FormErrorMessage fontWeight={800} >{fieldState?.error?.message}</FormErrorMessage>
       </FormControl>
     )
 }

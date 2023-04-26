@@ -1,5 +1,5 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { IconButton, InputGroup, InputLeftAddon } from "@chakra-ui/react";
+import { IconButton, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import { useRef,useEffect, useState } from "react";
 import { InputMain } from "./input";
 
@@ -51,9 +51,17 @@ export function SearchInput(){
                         children={<SearchIcon  color='white' />}
                         borderRadius={'5px 0px 0px 5px'}
                         cursor={'pointer'}
+                        border={'3px solid'}
+                        borderColor={'primary'}
                         // onClick={e=> setEnableInput(false)}
                     />
-                    <InputMain name="" widthForm={'350px'} onChange={e =>{ setSearch(e.target.value)}} value={search} borderRadius={'0px 5px 5px 0px'} _focus={{border:'none', outline:'none', boxShadow:'none'}}  />
+                    <Input  w={'350px'} 
+                    onChange={e =>{ setSearch(e.target.value)}} 
+                    value={search} 
+                    borderRadius={'0px 5px 5px 0px'} 
+
+                     _focus={{outline:'none', boxShadow:'none',    border:'3px solid',
+                     borderColor:'primary',}}  />
                 </InputGroup>}
          
         </>
