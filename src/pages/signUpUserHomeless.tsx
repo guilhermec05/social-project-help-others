@@ -43,12 +43,16 @@ export function SignUpUserHomeless(){
         .min(5,"o campo deve conter pelo ou menos 5 caracteres")
         .required("o campo não deve estar vazio"),
         district:yup.string()
-        .min(8,"o campo deve conter pelo ou menos 8 caracteres")
+        .min(5,"o campo deve conter pelo ou menos 5 caracteres")
         .required("o campo não deve estar vazio"),
         reference:yup.string()
+        .min(10,"o campo deve conter pelo ou menos 10 caracteres"),
+        street:yup.string()
         .min(10,"o campo deve conter pelo ou menos 10 caracteres")
         .required("o campo não deve estar vazio"),
         cep:yup.string().required("o campo não deve estar vazio").test("cep","cep não é valido",(value) => useValidationsBR('cep',value) ),
+        uf:yup.string().required("o campo não deve estar vazio"),
+        description:yup.string().required("o campo não deve estar vazio")
       });
 
 
@@ -56,7 +60,7 @@ export function SignUpUserHomeless(){
     type FormData = yup.InferType<typeof schema>
 
   
-    const { handleSubmit,control } = useForm<FormData>({
+    const { handleSubmit,control,setValue,clearErrors } = useForm<FormData>({
         resolver: yupResolver(schema)
       });
     
@@ -71,8 +75,18 @@ export function SignUpUserHomeless(){
             const {data} = await api.get(`http://viacep.com.br/ws/${cep}/json/`)
             const {bairro , localidade, logradouro, uf} = data
             const obj = {bairro , localidade, logradouro, uf}
+
+            setValue("district",bairro)
+            clearErrors("district")
+            setValue("street",logradouro)
+            clearErrors("street")
+            setValue("city",localidade)
+            clearErrors("city")
+            setValue("uf",uf)
+            clearErrors("uf")
+            clearErrors("number")
             console.log(obj)
-            await setLocalidades(obj)
+          
            
         }catch(error){
 
@@ -143,7 +157,7 @@ export function SignUpUserHomeless(){
             >
                  
                     <InputMain placeholder="Titulo da Postagem"  name="title"  useControl={control}/>
-                    <TextAreaMain  placeholder="Descrição" name="description" h={'100px'}  />
+                    <TextAreaMain name={"description"} placeholder="Descrição" h={'100px'}  useControl={control} />
                     <InputMain placeholder="Nome ou Apelido"  name="nickname"  useControl={control} />
                  
             </Flex>
@@ -170,27 +184,27 @@ export function SignUpUserHomeless(){
                 />
                 
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
-                    <InputMain placeholder="Cidade" 
-                    widthForm={'70%'} 
-                    value={localidades.localidade} 
-                    name="city"  
-                    useControl={control}
-                    onChange={v => setLocalidades({...localidades, localidade:v.target.value })} /> 
+                    <InputMain 
+                        name="city"  
+                        placeholder="Cidade" 
+                        widthForm={'70%'} 
+                        useControl={control}
+                        // onChange={v => setLocalidades({...localidades, localidade:v.target.value })} 
+                    /> 
 
                     <SelectMain text="UF" 
+                    name="uf"
                     option={select}  
                     widthForm={'25%'}
-                    value={localidades.uf} 
-                    name="title" 
-                    onChange={v => setLocalidades({...localidades, uf:v.target.value })}
+                    useControl={control}
+                    // onChange={v => setLocalidades({...localidades, uf:v.target.value })}
                     />
                 </Flex>
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
                     <InputMain placeholder="Rua" widthForm={'70%'}
-                    value={localidades.logradouro}
                     name="street"  
                     useControl={control}
-                    onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
+                    // onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
                     
                     /> 
                     <InputMain placeholder="Nº" widthForm={'25%'} 
@@ -198,10 +212,9 @@ export function SignUpUserHomeless(){
                     useControl={control}/>
                 </Flex>
                     <InputMain placeholder="Bairro"
-                        value={localidades.bairro}
                         name="district"  
                         useControl={control}
-                        onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
+                        // onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
                     />
                     <InputMain 
                     placeholder="Ponto de Referencia" 

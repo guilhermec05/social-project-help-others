@@ -41,7 +41,6 @@ export function InputMain({name, messageError, isError,widthForm,useControl, ...
         flexDirection={'column'} 
         width={widthForm} >  
           <Input 
-            placeholder={name}
             border={'none'}
             
             {...field}

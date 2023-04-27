@@ -8,18 +8,29 @@ import {
     // FormLabel,
     // FormHelperText,
   } from '@chakra-ui/react'
+  import {useController } from "react-hook-form";
 
 interface inputMainProps extends TextareaProps{
-  name:string;
   messageError?:string;
   isError?:boolean;
+  useControl:any;
+  name:string;
 }  
 
-export function TextAreaMain({name, messageError, isError, ...rest }:inputMainProps){
-    return( <FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} >
+export function TextAreaMain({name, messageError,useControl, isError, ...rest }:inputMainProps){
+
+  const { field, fieldState } = useController(
+    {
+      name:name,
+      control:useControl,
+      rules: { required: true }
+    });
+
+
+    return( <FormControl isInvalid={fieldState.invalid}  display={'flex'} justifyContent={'center'} flexDirection={'column'} >
         
           <Textarea 
-            placeholder={name}
+            {...field}
             border={'none'}
             _focus={{
               border:'3px solid',
@@ -29,7 +40,7 @@ export function TextAreaMain({name, messageError, isError, ...rest }:inputMainPr
             }}
             bg={'secondaryLight'} 
           {...rest}/>
-          <FormErrorMessage>{messageError}</FormErrorMessage>
+          <FormErrorMessage fontWeight={800} >{fieldState?.error?.message}</FormErrorMessage>
       </FormControl>)
    
 } 
