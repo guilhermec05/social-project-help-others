@@ -1,26 +1,6 @@
-import {  Checkbox, CheckboxProps, HStack, Text, VStack } from '@chakra-ui/react'
+import {  Checkbox, CheckboxProps, FormControl, FormErrorMessage, HStack, Text, VStack } from '@chakra-ui/react'
 import { ReactNode } from 'react';
-
-// export interface CardDonateProps {
-// 	id: string;
-// 	image: string;
-// 	title: string;
-// 	street: string;
-// 	number: string;
-// 	neighborhood: string;
-// 	city: string;
-// 	state: string;
-// 	description: string;
-// 	title_2: string;
-// 	item_1: string;
-// 	item_2: string;
-// 	item_3: string;
-// 	item_4: string;
-// 	item_5: string;
-// 	item_6: string;
-// 	item_7: string;
-// }
-
+import { Controller, useController } from "react-hook-form";
 interface checkBoxProps{
 	label:string;
 	value:string;
@@ -28,21 +8,46 @@ interface checkBoxProps{
 }
 
 interface InputCheckBoxProps extends CheckboxProps{
-	listCheckBox: checkBoxProps[]
+	listCheckBox: checkBoxProps[];
+	useControl:any;
+    name:string;
+	error?:any
 }
 
 
-export function InputCheckBox({listCheckBox,...rest }:InputCheckBoxProps) {
-
+export function InputCheckBox({listCheckBox,useControl,name,error,...rest }:InputCheckBoxProps) {
 	function list(){
 		const lists: ReactNode[] = []
-		listCheckBox.forEach((v) => lists.push( <Checkbox value={v.value} colorScheme={'green'} defaultChecked={v.checked} {...rest}><Text fontSize={'s'}>{v.label}</Text></Checkbox>))
+		listCheckBox.forEach((v,key) =>{ 
+			lists.push( 
+					
+						<Checkbox 
+							{...useControl}
+							value={v.value}
+							key={key}
+							colorScheme={'green'} 
+							isInvalid={false} 
+							{...rest}
+						>
+							<Text fontSize={'h6'} fontWeight={500}>{v.label}</Text>
+						</Checkbox>			
+			)}
+		 )
 		return lists
 	}
 
+
+
 	return (
 		<VStack   alignItems={'flex-start'}>
-			{list()}
+			<FormControl 
+			gap={2}
+			isInvalid={ (error?.checks != undefined)} 
+			display={'flex'} 
+			flexDirection={'column'}>
+				{list()}
+				<FormErrorMessage fontWeight={800}>{error?.checks?.message}</FormErrorMessage>
+			</FormControl>
 		</VStack>
 	)
 }

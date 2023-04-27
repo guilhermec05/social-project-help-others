@@ -27,13 +27,7 @@ interface inputMainProps extends InputProps{
 
 export function InputFile({name, messageError,useControl, isError,widthForm,placeholderImg, ...rest }:inputMainProps){
     const inputRef = useRef();
-    const {
-		handleSubmit,
-		register,
-		setError,
-		control,
-		formState: { errors, isSubmitting },
-	} = useForm()
+   
     const {
         field: { ref, value, ...inputProps },
         fieldState: { invalid, isTouched, isDirty,error },

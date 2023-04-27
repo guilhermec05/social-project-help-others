@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useValidationsBR } from 'validations-br';
+import { InputCheckBox } from "../components/inputCheckBox";
 
 
 interface localidade{
@@ -53,7 +54,7 @@ export function SignUpUserHomeless(){
         cep:yup.string().required("o campo não deve estar vazio").test("cep","cep não é valido",(value) => useValidationsBR('cep',value) ),
         uf:yup.string().required("o campo não deve estar vazio"),
         description:yup.string().required("o campo não deve estar vazio").min(30, "A descrição deve conter pelo ou menos 30 caracteres"),
-        check: yup.array(),
+        checks: yup.array().min(1,"você deve selecionar um").required("você deve selecionar um").typeError("você deve selecionar um"),
         images:yup.string().required("o campo não deve estar vazio")
       });
 
@@ -62,9 +63,16 @@ export function SignUpUserHomeless(){
     type FormData = yup.InferType<typeof schema>
 
   
-    const { handleSubmit,control,setValue,clearErrors} = useForm<FormData>({
+    const { handleSubmit,control,setValue,clearErrors,register,formState:{errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
       });
+
+    const   listBox = [
+        {value:'1', label:'Cobertor'},
+        {value:'2', label:'Comida'},
+        {value:'3', label:'Desodorante'},
+        {value:'4', label:'Sabonete'}
+    ]
     
     // const [cep,setCep ] = useState<string>('')
     
@@ -117,9 +125,8 @@ export function SignUpUserHomeless(){
     } 
 
     function onSubmit(data: FormData){
-        // alert(submit)
-         console.log(data )
-        // navigate('/home')
+
+         data.checks.forEach(v => console.log(listBox[parseInt(v) - 1]) ) 
         
     }
     
@@ -182,7 +189,6 @@ export function SignUpUserHomeless(){
                     placeholder="Cep" 
                     type={'number'} 
                     onChange={v => foundCep(v.target.value)} 
-
                 />
                 
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
@@ -190,25 +196,22 @@ export function SignUpUserHomeless(){
                         name="city"  
                         placeholder="Cidade" 
                         widthForm={'70%'} 
-                        useControl={control}
-                        // onChange={v => setLocalidades({...localidades, localidade:v.target.value })} 
+                        useControl={control} 
                     /> 
 
                     <SelectMain text="UF" 
-                    name="uf"
-                    option={select}  
-                    widthForm={'25%'}
-                    useControl={control}
-                    // onChange={v => setLocalidades({...localidades, uf:v.target.value })}
+                        name="uf"
+                        option={select}  
+                        widthForm={'25%'}
+                        useControl={control}
                     />
                 </Flex>
                 <Flex  maxW={'500px'} w={'100%'}  justifyContent={'space-between'}>
+                    
                     <InputMain placeholder="Rua" widthForm={'70%'}
                     name="street"  
-                    useControl={control}
-                    // onChange={v => setLocalidades({...localidades, logradouro:v.target.value })}
+                    useControl={control}/> 
                     
-                    /> 
                     <InputMain placeholder="Nº" widthForm={'25%'} 
                     name="number"  
                     useControl={control}/>
@@ -216,7 +219,6 @@ export function SignUpUserHomeless(){
                     <InputMain placeholder="Bairro"
                         name="district"  
                         useControl={control}
-                        // onChange={v => setLocalidades({...localidades, bairro:v.target.value })}
                     />
                     <InputMain 
                     placeholder="Ponto de Referencia" 
@@ -242,12 +244,20 @@ export function SignUpUserHomeless(){
                         <Text fontSize={'h5'} color={'dark_light'}>Item Necessitados</Text>   
                     </Flex>
                     <Flex gap={5} flexWrap={'wrap'}>
-                    <CheckboxGroup colorScheme='green'  >
+                        <InputCheckBox 
+                                error={errors}
+                                name={'checks'}
+                                listCheckBox={listBox}
+                               
+                                
+                                useControl={register("checks")}    
+                        />
+                    {/* <CheckboxGroup colorScheme='green'  >
                         <Checkbox >Cobertor</Checkbox>
                         <Checkbox>Comida</Checkbox>
                         <Checkbox>Desodorante</Checkbox>
                         <Checkbox>Sabonete</Checkbox>
-                    </CheckboxGroup>
+                    </CheckboxGroup> */}
 
                         
                     </Flex>
