@@ -1,10 +1,14 @@
-import { Flex, Text, Grid, Tabs, TabList, Tab, TabPanels, TabPanel, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Icon } from '@chakra-ui/react'
+import { Flex, Text, Grid, Tabs, TabList, Tab, TabPanels, TabPanel, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Icon, useDisclosure, Modal, ModalOverlay, ModalHeader, ModalBody, ModalFooter, ModalContent, Center } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
 import { ReactNode } from 'react'
 import { FaCheck } from 'react-icons/fa'
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom'
+
+import { InputCheckBox } from '../components/inputCheckBox'
+import { ArrowBackIcon } from '@chakra-ui/icons'
+import { Logo } from '../components/logo'
 
 
 export function HomeAdm() {
@@ -17,7 +21,7 @@ export function HomeAdm() {
    //       'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
    //    image: 'https://bit.ly/dan-abramov',
    // }
-
+   const { isOpen, onOpen, onClose } = useDisclosure()
    function TableAccess(){
 
       interface tableReponse{
@@ -62,8 +66,41 @@ export function HomeAdm() {
                      fontSize={'h3'}
                      cursor={'pointer'}
                      _active={{color:'dark_light'}}
-                  />
+                     onClick={onOpen}
+                  />                   <Modal
+                  // closeOnOverlayClick={false}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  size={'sm'}>
+                      <ModalOverlay />
+                      <ModalContent p={5} >
+                           <ArrowBackIcon 
+                              fontSize={'h3'}   
+                              cursor={'pointer'}
+                              _active={
+                                    {color:'dark_light'}
+                              }
+                              onClick={onClose}/>
+                              <ModalHeader>
+                                 <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
+                                    <Logo width={'70px'} />
+                                 </Flex>
+                              </ModalHeader>
+                              <ModalBody>
+                                 <Center flexDirection={'column'} gap={5} mb={5}>
+                                    <Text fontSize={'h5'} textAlign={'center'}>Informe abaixo o motivo de excluir este usuário</Text>
+                                 </Center >
+                                 <Center flexDirection={'column'} gap={5}  mb={5}>
+                                    <Text fontSize={'h3'} textAlign={'center'}>Dono:</Text>
+                                 </Center>
+                                 <Center>
 
+                                  
+                                 </Center>
+                              </ModalBody>
+                        </ModalContent>
+                              
+               </Modal>
                </Td>
             </Tr>)
          })   
