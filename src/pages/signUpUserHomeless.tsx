@@ -248,18 +248,8 @@ export function SignUpUserHomeless(){
                                 error={errors}
                                 name={'checks'}
                                 listCheckBox={listBox}
-                               
-                                
                                 useControl={register("checks")}    
-                        />
-                    {/* <CheckboxGroup colorScheme='green'  >
-                        <Checkbox >Cobertor</Checkbox>
-                        <Checkbox>Comida</Checkbox>
-                        <Checkbox>Desodorante</Checkbox>
-                        <Checkbox>Sabonete</Checkbox>
-                    </CheckboxGroup> */}
-
-                        
+                        />                       
                     </Flex>
             </Flex>
             <Flex maxW={'500px'}>
