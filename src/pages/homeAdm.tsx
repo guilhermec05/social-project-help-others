@@ -6,9 +6,14 @@ import { FaCheck } from 'react-icons/fa'
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom'
 
-import { InputCheckBox } from '../components/inputCheckBox'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Logo } from '../components/logo'
+import { Textarea } from '@chakra-ui/react'
+import { TextAreaMain } from '../components/textArea';
+import { InputMain } from '../components/input';
+import { Input } from '@chakra-ui/react'
+
+import { Complaint } from '../components/pop-upComplaint'
 
 
 export function HomeAdm() {
@@ -67,7 +72,8 @@ export function HomeAdm() {
                      cursor={'pointer'}
                      _active={{color:'dark_light'}}
                      onClick={onOpen}
-                  />                   <Modal
+                  />
+                  <Modal
                   // closeOnOverlayClick={false}
                   isOpen={isOpen}
                   onClose={onClose}
@@ -88,15 +94,9 @@ export function HomeAdm() {
                               </ModalHeader>
                               <ModalBody>
                                  <Center flexDirection={'column'} gap={5} mb={5}>
-                                    <Text fontSize={'h5'} textAlign={'center'}>Informe abaixo o motivo de excluir este usuário</Text>
+                                    <Text fontSize={'h5'} textAlign={'center'}>Informe o motivo de excluir este usuário</Text>
+                                    <Input mt={5} name="Email" w={'450px'} h={'50px'} type={'email'}/>
                                  </Center >
-                                 <Center flexDirection={'column'} gap={5}  mb={5}>
-                                    <Text fontSize={'h3'} textAlign={'center'}>Dono:</Text>
-                                 </Center>
-                                 <Center>
-
-                                  
-                                 </Center>
                               </ModalBody>
                         </ModalContent>
                               
