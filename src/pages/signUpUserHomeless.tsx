@@ -52,15 +52,17 @@ export function SignUpUserHomeless(){
         .required("o campo não deve estar vazio"),
         cep:yup.string().required("o campo não deve estar vazio").test("cep","cep não é valido",(value) => useValidationsBR('cep',value) ),
         uf:yup.string().required("o campo não deve estar vazio"),
-        description:yup.string().required("o campo não deve estar vazio")
+        description:yup.string().required("o campo não deve estar vazio").min(30, "A descrição deve conter pelo ou menos 30 caracteres"),
+        check: yup.array(),
+        images:yup.string().required("o campo não deve estar vazio")
       });
 
-
+    
 
     type FormData = yup.InferType<typeof schema>
 
   
-    const { handleSubmit,control,setValue,clearErrors } = useForm<FormData>({
+    const { handleSubmit,control,setValue,clearErrors} = useForm<FormData>({
         resolver: yupResolver(schema)
       });
     
@@ -229,7 +231,7 @@ export function SignUpUserHomeless(){
                     <Flex maxW={'500px'}>
                         <Text fontSize={'h5'} color={'dark_light'}>Foto(s) do Local e/ou Pessoa</Text>   
                     </Flex>
-                    <InputFile name="images" placeholder="images"/>
+                    <InputFile name="images" placeholder="images" useControl={control}/>
             </Flex>
             <Flex 
                 flexDirection={'column'}
@@ -240,8 +242,8 @@ export function SignUpUserHomeless(){
                         <Text fontSize={'h5'} color={'dark_light'}>Item Necessitados</Text>   
                     </Flex>
                     <Flex gap={5} flexWrap={'wrap'}>
-                    <CheckboxGroup colorScheme='green' >
-                        <Checkbox>Cobertor</Checkbox>
+                    <CheckboxGroup colorScheme='green'  >
+                        <Checkbox >Cobertor</Checkbox>
                         <Checkbox>Comida</Checkbox>
                         <Checkbox>Desodorante</Checkbox>
                         <Checkbox>Sabonete</Checkbox>

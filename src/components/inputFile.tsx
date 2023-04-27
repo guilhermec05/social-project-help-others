@@ -21,10 +21,11 @@ interface inputMainProps extends InputProps{
   widthForm?:string
   messageError?:string;
   isError?:boolean;
-  placeholderImg?:string
+  placeholderImg?:string;
+  useControl:any;
 }  
 
-export function InputFile({name, messageError, isError,widthForm,placeholderImg, ...rest }:inputMainProps){
+export function InputFile({name, messageError,useControl, isError,widthForm,placeholderImg, ...rest }:inputMainProps){
     const inputRef = useRef();
     const {
 		handleSubmit,
@@ -35,20 +36,20 @@ export function InputFile({name, messageError, isError,widthForm,placeholderImg,
 	} = useForm()
     const {
         field: { ref, value, ...inputProps },
-        fieldState: { invalid, isTouched, isDirty },
+        fieldState: { invalid, isTouched, isDirty,error },
       } = useController({
         name,
-        control:control
+        control:useControl
       });
 
 
-    return (<FormControl isInvalid={isError} display={'flex'} justifyContent={'center'} width={widthForm} >
+    return (<FormControl isInvalid={invalid} display={'flex'} justifyContent={'center'} flexDirection={'column'} width={widthForm} >
           <InputGroup>
                 <InputLeftElement
                 pointerEvents="none"
                 children={<Icon as={CiImageOn} fontSize={'h4'}/>}
                 />
-                 <input type='file' accept={'image/*'} name={name} ref={inputRef} {...inputProps} style={{ display: 'none' }}></input>
+                 <input type='file' accept={'image/*'}  ref={inputRef} {...inputProps} style={{ display: 'none' }}></input>
                  <Input
                       placeholder={placeholderImg || "seu arquivo ..."}
                       onClick={() => inputRef.current.click()}
@@ -61,11 +62,17 @@ export function InputFile({name, messageError, isError,widthForm,placeholderImg,
                         outline:'none',
                         boxShadow:'none'
                       }}
+                      _invalid={{
+                        border:'2px solid',
+                        borderColor:'danger',
+                        // outline:'none',
+                        // boxShadow:'none'
+                      }}
                       bg={'secondaryLight'} 
                     />
           </InputGroup>
           
-          <FormErrorMessage>{messageError}</FormErrorMessage>
+          <FormErrorMessage fontWeight={800} >{error?.message}</FormErrorMessage>
       </FormControl>)
    
 } 

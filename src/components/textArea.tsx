@@ -38,6 +38,12 @@ export function TextAreaMain({name, messageError,useControl, isError, ...rest }:
               outline:'none',
               boxShadow:'none'
             }}
+            _invalid={{
+              border:'2px solid',
+              borderColor:'danger',
+              // outline:'none',
+              // boxShadow:'none'
+            }}
             bg={'secondaryLight'} 
           {...rest}/>
           <FormErrorMessage fontWeight={800} >{fieldState?.error?.message}</FormErrorMessage>
