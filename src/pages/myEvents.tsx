@@ -12,7 +12,7 @@ import { CheckBox } from '../components/checkBox'
 import { InputCheckBox } from '../components/inputCheckBox'
 import { ButtonMain } from '../components/button'
 
-export function MyDonations() {
+export function MyEvents() {
 
    const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -20,13 +20,13 @@ export function MyDonations() {
 
    const card: CardHomerlessProps = {
       id: '1',
-      title: 'Ajude o José!',
+      title: 'Banho Solidário Poa',
       city: 'Porto Alegre',
       state: 'RS',
       description:
-         'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
+         'Um projeto da ONG Centro Social da Rua para estimular a autoestima e inclusão.',
       image: 'https://bit.ly/dan-abramov',
-      link:`/process_donate/${2}`
+      link:`/edit_my_event/`
    }
 
    const list: CardHomerlessProps[] = [
@@ -90,20 +90,22 @@ export function MyDonations() {
                                  <ModalBody>
                                     <Center flexDirection={'column'} gap={5} mb={5}>
                                        <Text fontSize={'h3'} textAlign={'center'}>Tipo:</Text>
-                                       <InputCheckBox listCheckBox={[{value:'1', label:'Pessoas',checked:true},{value:'2', label:'Ongs',checked:true}]} />
+                                       <InputCheckBox listCheckBox={[{value:'1', label:'Em andamento',checked:true},{value:'2', label:'Ongs',checked:true}]} />
                                     </Center >
-                                    <Center flexDirection={'column'} gap={5}  mb={5}>
-                                       <Text fontSize={'h3'} textAlign={'center'}>Dono:</Text>
-                                       <InputCheckBox listCheckBox={[{value:'1', label:'Meus',checked:true},{value:'2', label:'Terceiro',checked:true}]} />
-                                    </Center>
                                     <Center>
-                                       <ButtonMain fontSize={'p'} title="Filtrar" px={'30px'} bg={'primaryDark'} />   
+                                      <ButtonMain fontSize={'p'} title="Filtrar" px={'30px'} bg={'primaryDark'} />                              
                                     </Center>
                                  </ModalBody>
                            </ModalContent>
                                  
                   </Modal>
                   
+               </Flex>
+
+               <Flex>
+                  <Text fontSize={'h7'} fontWeight={'700'}  p={'10px'} mt={'20px'}>
+                    Total de {'9'} eventos
+						      </Text>
                </Flex>
                
                <Flex
