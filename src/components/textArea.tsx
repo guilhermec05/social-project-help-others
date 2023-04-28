@@ -27,7 +27,7 @@ export function TextAreaMain({name, messageError,useControl, isError, ...rest }:
     });
 
 
-    return( <FormControl isInvalid={fieldState.invalid}  display={'flex'} justifyContent={'center'} flexDirection={'column'} >
+    return( <FormControl isInvalid={fieldState.invalid}  display={'flex'} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
         
           <Textarea 
             {...field}
