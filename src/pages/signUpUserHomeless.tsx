@@ -46,8 +46,8 @@ export function SignUpUserHomeless(){
         district:yup.string()
         .min(5,"o campo deve conter pelo ou menos 5 caracteres")
         .required("o campo não deve estar vazio"),
-        reference:yup.string()
-        .min(10,"o campo deve conter pelo ou menos 10 caracteres"),
+        // reference:yup.string()
+        // .min(10,"o campo deve conter pelo ou menos 10 caracteres"),
         street:yup.string()
         .min(10,"o campo deve conter pelo ou menos 10 caracteres")
         .required("o campo não deve estar vazio"),

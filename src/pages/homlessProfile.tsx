@@ -24,7 +24,7 @@ export function HomlessProfile() {
    type FormData = yup.InferType<typeof schema>
 
   
-   const { handleSubmit,control,setValue,clearErrors,register,formState:{errors}} = useForm<FormData>({
+   const { handleSubmit,register,formState:{errors}} = useForm<FormData>({
        resolver: yupResolver(schema)
      });
 
@@ -96,7 +96,7 @@ export function HomlessProfile() {
                            </Box>
 
                            <Flex justifyContent={'absolute'} mt={4}>
-                              <ButtonMain fontSize={'h6'} title="Doar" px={'30px'} bg={'primaryDark'} type={'submit'} />
+                              <ButtonMain fontSize={'h6'}  title="Doar" px={'30px'} bg={'primaryDark'} type={'submit'} />
                            </Flex>
 
                            <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>

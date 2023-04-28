@@ -24,7 +24,7 @@ export function InputNumber({name, isError,widthForm,maxW,useControl, ...rest }:
 
   
     return(
-        <FormControl isInvalid={fieldState.invalid} flexDirection={'column'}  display={'flex'} justifyContent={'center'} width={widthForm} >
+        <FormControl isInvalid={fieldState.invalid} flexDirection={'column'}    alignItems={'center'} justifyContent={'center'}  display={'flex'} width={widthForm} >
         <NumberInput
             w={'100%'} 
             maxW={maxW}           
@@ -34,6 +34,7 @@ export function InputNumber({name, isError,widthForm,maxW,useControl, ...rest }:
             keepWithinRange={false}
             clampValueOnBlur={false}
             display={'flex'}
+            alignItems={'center'} justifyContent={'center'} 
            
         >
             <NumberInputField 

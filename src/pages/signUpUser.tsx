@@ -57,9 +57,7 @@ export function SignUpUser(){
                     <Text textAlign={'center'} fontSize={'h5'}>Cadastro de {isNGOS ?"Pessoa Juridica": "Pessoa Fisica"}</Text>
                     {isNGOS ?<FormNgos/>: <FormUser/>}
                 </Flex>
-                <Flex justifyContent={'center'}>
-                    <ButtonMain title="Cadastrar"  p={'30px'}/>
-                </Flex>     
+                   
         </Box>
     </Box>
     )

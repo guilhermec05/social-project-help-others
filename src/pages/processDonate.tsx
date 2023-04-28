@@ -10,8 +10,35 @@ import location_icon from '../assets/location-icon.png'
 import { InputCheckBox } from '../components/inputCheckBox';
 import { StepsMain } from '../components/steps';
 import { InputFile } from '../components/inputFile';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 export function ProcessDonate() {
+
+   const schema = yup.object({
+      checks: yup.array().min(1,"você deve selecionar um").typeError("aaaaaassss"),
+      images:yup.string().required("o campo não deve estar vazio")
+    });
+
+
+    
+  type FormData = yup.InferType<typeof schema>
+
+  const listBox =[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]
+
+
+  const { handleSubmit,register, control ,formState:{errors}    } = useForm<FormData>({
+      resolver: yupResolver(schema)
+    });
+
+
+  function onSubmit(data: FormData){
+      // alert(submit)
+       console.log(data )
+      // navigate('/home')
+      
+  }
 
 
    return (
@@ -20,7 +47,6 @@ export function ProcessDonate() {
       flexDirection={'column'} 
       alignItems={'center'}
       justifyContent={'center'}
-
       gap={5}>
          <Header/>
             
@@ -37,7 +63,9 @@ export function ProcessDonate() {
                   p={'20px'}
                   flexWrap={'wrap'}
                >
-                  <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
+                  <Box maxW={'850px'}  overflow="hidden">
+                     <form onSubmit={handleSubmit(onSubmit)}>
+
                      <Image
                         src={'https://bit.ly/dan-abramov'}
                         boxSize={'800px'}
@@ -63,22 +91,25 @@ export function ProcessDonate() {
                            <Text mt={6} fontSize={'h6'} fontWeight={'700'} noOfLines={1}>
                               Processo de doação:
                            </Text>
-                           <StepsMain variant='circles' state={1}/>
+                           <StepsMain variant='circles' state={0}/>
                         </Flex>
 
                         <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
                            <Text fontSize={'h7'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>
-                           <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]}  isDisabled={true}/>
+                           <InputCheckBox  useControl={register("checks")}     name={'checks'}     error={errors} listCheckBox={listBox} isDisabled={true}/>
 
                         </Box>
                         
 
                         <Flex justifyContent={'center'} direction={'column'} mt={4} gap={5}  maxW={'500px'}  width="100%">
-                           <InputFile name="images" />
-                           <ButtonMain fontSize={'h6'} title="Enviar" px={'30px'} bg={'primaryDark'} w={'100px'}/>
+                           <InputFile useControl={control} name="images" placeholder='selecione uma imagem' />
+                           <ButtonMain fontSize={'h6'} title="Enviar" px={'30px'} bg={'primaryDark'} w={'100px'} type={'submit'}/>
                         </Flex>
+                        </Box>   
+                     </form>
+                   
 
                         <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
 
@@ -86,7 +117,7 @@ export function ProcessDonate() {
 
                         </Flex>
                      </Box>
-                  </Box>
+                 
                </Flex>
                <Footer />
             </Flex>

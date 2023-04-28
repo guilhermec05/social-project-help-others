@@ -50,6 +50,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 							value={v.value}
 							key={key}
 							colorScheme={'green'} 
+							defaultChecked={v.checked}
 							isInvalid={false} 
 							{...rest}
 						>
