@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 export function FirstAccess() {
   const navigate = useNavigate();
+  
 
   const schema = yup.object({
     password: yup
