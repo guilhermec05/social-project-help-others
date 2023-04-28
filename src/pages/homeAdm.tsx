@@ -5,16 +5,9 @@ import { ReactNode } from 'react'
 import { FaCheck } from 'react-icons/fa'
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom'
-
-import { ArrowBackIcon } from '@chakra-ui/icons'
-import { Logo } from '../components/logo'
-import { Textarea } from '@chakra-ui/react'
-import { TextAreaMain } from '../components/textArea';
-import { InputMain } from '../components/input';
-import { Input } from '@chakra-ui/react'
-
-import { Complaint } from '../components/pop-upComplaint'
-
+import { ExcludeComplaint } from '../components/excludePopup-Complaint'
+import { IconButton } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
 export function HomeAdm() {
    // const card: CardHomerlessProps = {
@@ -26,7 +19,9 @@ export function HomeAdm() {
    //       'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
    //    image: 'https://bit.ly/dan-abramov',
    // }
+
    const { isOpen, onOpen, onClose } = useDisclosure()
+
    function TableAccess(){
 
       interface tableReponse{
@@ -66,48 +61,14 @@ export function HomeAdm() {
                      cursor={'pointer'}
                      _active={{color:'dark_light'}}
                   />
-                    <Icon as={AiFillDelete}
-                     color={'danger'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                     onClick={onOpen}
-                  />
-                  <Modal
-                  // closeOnOverlayClick={false}
-                  isOpen={isOpen}
-                  onClose={onClose}
-                  size={'sm'}>
-                      <ModalOverlay />
-                      <ModalContent p={5} >
-                           <ArrowBackIcon 
-                              fontSize={'h3'}   
-                              cursor={'pointer'}
-                              _active={
-                                    {color:'dark_light'}
-                              }
-                              onClick={onClose}/>
-                              <ModalHeader>
-                                 <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
-                                    <Logo width={'70px'} />
-                                 </Flex>
-                              </ModalHeader>
-                              <ModalBody>
-                                 <Center flexDirection={'column'} gap={5} mb={5}>
-                                    <Text fontSize={'h5'} textAlign={'center'}>Informe o motivo de excluir este usuário</Text>
-                                    <Input mt={5} name="Email" w={'450px'} h={'50px'} type={'email'}/>
-                                 </Center >
-                              </ModalBody>
-                        </ModalContent>
-                              
-               </Modal>
+
+                  <ExcludeComplaint />
                </Td>
             </Tr>)
          })   
 
          return list
       }
-
 
       return(
          <TableContainer>
@@ -169,12 +130,8 @@ export function HomeAdm() {
                      cursor={'pointer'}
                      _active={{color:'dark_light'}}
                   />
-                    <Icon as={AiFillDelete}
-                     color={'danger'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                  />
+                  <ExcludeComplaint />
+
                    <Link to={'/donate_process/1'}>
                      <Icon as={AiFillEye}
                         color={'primary'}
@@ -281,19 +238,15 @@ export function HomeAdm() {
                      _active={{color:'dark_light'}}
                      
                   />
-                    <Icon as={AiFillDelete}
-                     color={'danger'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                  />
+                  
+                  <ExcludeComplaint />
+
                   <Link to={'/report_profile/1'}>
                      <Icon as={AiFillEye}
                         color={'primary'}
                         fontSize={'h3'}
                         cursor={'pointer'}
                         _active={{color:'dark_light'}}
-                     
                      />
                   </Link>
                    
