@@ -18,6 +18,7 @@ import { ProcessDonate } from "../pages/processDonate";
 import { FogotPassword } from "../pages/forgotPassword";
 import { FogotPasswordUser } from "../pages/forgotPasswordUser";
 import { FirstAccess } from "../pages/firstaccess";
+import { SignUpOngEvent } from "../pages/signUpOngEvent";
 
 
 const router = createBrowserRouter([
@@ -83,7 +84,11 @@ const router = createBrowserRouter([
       path: "/process_donate/:id",
       element:  <ProcessDonate/>,
     },
+    {
+      path: "/sign_up_event",
+      element:  <SignUpOngEvent/>,
+    },
   ]);
   
-
+  
 export {router}
