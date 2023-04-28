@@ -6,11 +6,20 @@ import { ButtonMain } from '../components/button';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { AlertDialogConfirm } from "../components/alertDialogConfirm";
 
 
 
 
 export function UserPropfile({hasAdm = false}:HeaderProps){
+    
+
+    function HasAdm(){
+        return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza">
+            <Text textDecoration={'underline'} color={'primary'} cursor={'pointer'}>Quero Ser adm!</Text>
+        </AlertDialogConfirm>) 
+    }
+
     
     const schema = yup.object({
         pass: yup.string().required("o campo não deve estar vazio"),
@@ -44,6 +53,7 @@ export function UserPropfile({hasAdm = false}:HeaderProps){
         // alignItems={'center'}
      >
         <Header  hasAdm={hasAdm}/>
+
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box 
                 display={'flex'}
@@ -54,8 +64,13 @@ export function UserPropfile({hasAdm = false}:HeaderProps){
                 px={'20px'}
                 h={'60vh'}
             >
-                <Flex maxW={'500px'}>
-                    <Text fontSize={'h4'}>Atualizar seus dados</Text>
+                
+               
+                <Flex maxW={'500px'} flexDirection={'column'}  gap={3} px={5}>
+                    <Flex justifyContent={'flex-end'} >
+                         {HasAdm()}
+                    </Flex>
+                    <Text fontSize={'h4'} >Atualizar seus dados</Text>
                 </Flex>
                 <Flex 
                     flexDirection={'column'}

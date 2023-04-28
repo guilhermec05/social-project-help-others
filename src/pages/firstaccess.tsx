@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text,Icon } from "@chakra-ui/react";
 import { ButtonMain } from "../components/button";
 import { Logo } from "../components/logo";
 import { InputMain } from "../components/input";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { FaUser } from "react-icons/fa";
 
 
 
@@ -63,14 +64,11 @@ export function FirstAccess() {
         >
           <Flex justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
             <Logo width={"100px"} />
-            <Text fontSize={"h3"} fontWeight={"bold"} fontStyle={"italic"}>
-              PSAP
-            </Text>
-            <Text fontSize={"p"}>Projeto Social Ajude o Próximo</Text>
+            <Text fontSize={"h5"}>Primeiro Acesso</Text>
           </Flex>
           <Flex flexDirection={"column"} w={"100%"}  gap={5} transition={"all 1s"} alignItems={"center"} justifyContent={"center"}>
-            <Text maxW={'400px'} fontSize={'h6'}>Olá, {userName}!<br/> Você foi elevado a administrador. Por favor, crie uma nova senha abaixo:</Text>
-            <InputMain placeholder="Nova senha" name={"password"} useControl={control} type={"password"} maxW={"400px"} w={"100%"} h={"50px"} my={5} />
+            <Text fontSize={'h6'}><Icon as={FaUser}/> {userName}</Text>
+            <InputMain placeholder="Nova senha" name={"password"} useControl={control} type={"password"} maxW={"400px"} w={"100%"} h={"50px"}  />
             <InputMain placeholder="Confirme a nova senha" name={"confirmPassword"} useControl={control} type={"password"} maxW={"400px"} w={"100%"} h={"50px"} marginBottom={"2"} />
           </Flex>
           <Flex justifyContent={"center"}>

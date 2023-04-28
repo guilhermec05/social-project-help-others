@@ -14,7 +14,10 @@ export function FormUser(){
         last_name: yup.string().required("o campo não deve estar vazio"),
         email: yup.string().required("o campo não deve estar vazio").email("o campo deve ser um tipo email"),
         cpf:yup.string().required("o campo não deve estar vazio").test("cpf","cpf não é valido",(value) => useValidationsBR('cpf',value) ),
-        new_pass: yup.string().required("o campo não deve estar vazio"),
+        new_pass: yup.string().required("o campo não deve estar vazio").matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+            "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial"
+          ),
         confirm_pass: yup.string().oneOf([yup.ref('new_pass'), null], 'a senha deve ser iguais').required("o campo não deve estar vazio")
       });
     
