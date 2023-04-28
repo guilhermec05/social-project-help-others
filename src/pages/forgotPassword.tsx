@@ -2,7 +2,7 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { ButtonMain } from "../components/button";
 import { Logo } from "../components/logo";
 import { InputMain } from "../components/input";
-import { Link,  useNavigate } from "react-router-dom";
+import {   useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -13,8 +13,8 @@ export function FogotPassword(){
 
 
     const schema = yup.object({
-        name: yup.string().required("o campo não deve estar vazio"),
-        pass: yup.string().required("o campo não deve estar vazio"),
+        new_pass: yup.string().required("o campo não deve estar vazio"),
+        confirm_pass: yup.string().oneOf([yup.ref('new_pass'), null], 'a senha deve ser iguais').required("o campo não deve estar vazio")
       });
 
 
@@ -70,8 +70,8 @@ export function FogotPassword(){
                     justifyContent={'center'}
 
                 > 
-                    <InputMain placeholder="senha" name={'name'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
-                    <InputMain placeholder="confirma senha" name={'pass'}  maxW={'400px'} useControl={control} type={'password'}  h={'50px'} marginBottom={'2'} />
+                    <InputMain placeholder="senha" name={'new_pass'} useControl={control} type={'password'} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
+                    <InputMain placeholder="confirma senha" name={'confirm_pass'}  maxW={'400px'} useControl={control} type={'password'}  h={'50px'} marginBottom={'2'} />
                     <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
                         
                     </Flex>                    

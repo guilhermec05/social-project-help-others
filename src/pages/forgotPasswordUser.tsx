@@ -13,8 +13,8 @@ export function FogotPasswordUser(){
 
 
     const schema = yup.object({
-        name: yup.string().required("o campo não deve estar vazio"),
-        pass: yup.string().required("o campo não deve estar vazio"),
+        email: yup.string().required("o campo não deve estar vazio"),
+       
       });
 
 
@@ -29,7 +29,7 @@ export function FogotPasswordUser(){
     function onSubmit(data: FormData){
         // alert(submit)
          console.log(data )
-        navigate('/home')
+        navigate('/forgot_pass')
         
     }
 
@@ -71,7 +71,7 @@ export function FogotPasswordUser(){
                     justifyContent={'center'}
 
                 > 
-                    <InputMain placeholder="Email ou CNPJ" name={'name'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
+                    <InputMain placeholder="Usuário" name={'email'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
                     
                     <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
                         

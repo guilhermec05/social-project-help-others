@@ -17,6 +17,7 @@ import { UserPropfile } from "../pages/userProfile";
 import { ProcessDonate } from "../pages/processDonate";
 import { FogotPassword } from "../pages/forgotPassword";
 import { FogotPasswordUser } from "../pages/forgotPasswordUser";
+import { FirstAccess } from "../pages/firstaccess";
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     {
       path: "/sign_up_homeless",
       element: <SignUpUserHomeless />,
+    },
+    {
+      path: "/first_access_adm",
+      element:  < FirstAccess />,
     },
     {
       path: "/forgot_pass",
