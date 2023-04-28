@@ -9,9 +9,34 @@ import { Complaint } from '../components/pop-upComplaint'
 import location_icon from '../assets/location-icon.png'
 import { InputCheckBox } from '../components/inputCheckBox';
 import { StepsMain } from './../components/steps';
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 export function HomlessProfile() {
+
+
+   const schema = yup.object({
+      checks: yup.array().min(1,"você deve selecionar um").required("você deve selecionar um").typeError("você deve selecionar um"),
+    });
+
+   
+   type FormData = yup.InferType<typeof schema>
+
+  
+   const { handleSubmit,control,setValue,clearErrors,register,formState:{errors}} = useForm<FormData>({
+       resolver: yupResolver(schema)
+     });
+
+
+     const listBox =[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]
+
+     function onSubmit(data: FormData){
+
+            data.checks.forEach(v => console.log(listBox[parseInt(v) - 1]) ) 
+         
+      }
+
 
 
    return (
@@ -28,58 +53,61 @@ export function HomlessProfile() {
                <Back link={'/home'}/>
             </Flex>
             <Flex flexDirection={'column'} maxW={'1400px'}>
-               
-               <Flex
-                  w={'100%'}
-                  maxW={'1301px'}
-                  m={['0 auto']}
-                  gap={10}
-                  p={'20px'}
-                  flexWrap={'wrap'}
-               >
-                  <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
-                     <Image
-                        src={'https://bit.ly/dan-abramov'}
-                        boxSize={'800px'}
-                        h={'370px'}
-                        alt="homeless image"
-                     />
-                     <Box m={5}>
-                        <Text mt={6} fontSize={'h5'} fontWeight={'700'} noOfLines={1}>
-                           {'Ajude o José'}
-                        </Text>
-                        <Flex>
-                           <Image mt={8} mr={3}  w={30} h={30} src={location_icon} />
-                           <Text mt={8} fontSize={'h6'}>
-                              {'Rua Silveira'}, {'500'} - {'São João'}, {'Porto Alegre'} - {'RS'}
-                           </Text>
-                        </Flex>
-                        <Flex align={"end"}>
-                           <Text mt={8} fontSize={'h7'} fontWeight={'300'}>
-                              {'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.'}
-                           </Text>
-                        </Flex>
+               <form  onSubmit={handleSubmit(onSubmit)} >
 
-                        <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
-                           <Text fontSize={'h7'} fontWeight={'900'} >
-                              Itens necessitados:
+                  <Flex
+                     w={'100%'}
+                     maxW={'1301px'}
+                     m={['0 auto']}
+                     gap={10}
+                     p={'20px'}
+                     flexWrap={'wrap'}
+                  >
+                     <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
+                        <Image
+                           src={'https://bit.ly/dan-abramov'}
+                           boxSize={'800px'}
+                           h={'370px'}
+                           alt="homeless image"
+                        />
+                        <Box m={5}>
+                           <Text mt={6} fontSize={'h5'} fontWeight={'700'} noOfLines={1}>
+                              {'Ajude o José'}
                            </Text>
-                           <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]}  />
+                           <Flex>
+                              <Image mt={8} mr={3}  w={30} h={30} src={location_icon} />
+                              <Text mt={8} fontSize={'h6'}>
+                                 {'Rua Silveira'}, {'500'} - {'São João'}, {'Porto Alegre'} - {'RS'}
+                              </Text>
+                           </Flex>
+                           <Flex align={"end"}>
+                              <Text mt={8} fontSize={'h7'} fontWeight={'300'}>
+                                 {'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.'}
+                              </Text>
+                           </Flex>
 
+                           <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
+                              {/* <StepsMain variant='circles' state={1} /> */}
+                              <Text fontSize={'h7'} fontWeight={'900'} >
+                                 Itens necessitados:
+                              </Text>
+                              <InputCheckBox useControl={register("checks")}     name={'checks'}     error={errors} listCheckBox={listBox}  />
+
+                           </Box>
+
+                           <Flex justifyContent={'absolute'} mt={4}>
+                              <ButtonMain fontSize={'h6'} title="Doar" px={'30px'} bg={'primaryDark'} type={'submit'} />
+                           </Flex>
+
+                           <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
+
+                              <Complaint />
+
+                           </Flex>
                         </Box>
-
-                        <Flex justifyContent={'absolute'} mt={4}>
-                           <ButtonMain fontSize={'h6'} title="Doar" px={'30px'} bg={'primaryDark'} />
-                        </Flex>
-
-                        <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
-
-                           <Complaint />
-
-                        </Flex>
                      </Box>
-                  </Box>
-               </Flex>
+                  </Flex>
+               </form>
                <Footer />
             </Flex>
       </Flex>
