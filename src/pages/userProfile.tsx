@@ -15,7 +15,7 @@ export function UserPropfile({hasAdm = false}:HeaderProps){
     
 
     function HasAdm(){
-        return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza">
+        return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza" text="você passarar por um processo de avaliação com outros adms.">
             <Text textDecoration={'underline'} color={'primary'} cursor={'pointer'}>Quero Ser adm!</Text>
         </AlertDialogConfirm>) 
     }

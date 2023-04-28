@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Alert, Box, Flex, Text } from "@chakra-ui/react";
 import { ButtonMain } from "../components/button";
 import { Logo } from "../components/logo";
 import { InputMain } from "../components/input";
@@ -29,7 +29,19 @@ export function Login(){
     function onSubmit(data: FormData){
         // alert(submit)
          console.log(data )
-        // navigate('/home')
+
+         switch(data.name){
+            case 'admin':
+                navigate('/home_adm')
+                break;
+            case 'user':
+                navigate('/home')
+                break;
+           
+
+         }
+        //  if(data.name == "")
+        // 
         
     }
 
