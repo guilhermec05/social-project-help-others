@@ -249,6 +249,7 @@ export function SignUpUserHomeless(){
                                 name={'checks'}
                                 listCheckBox={listBox}
                                 useControl={register("checks")}    
+                                hasOthers
                         />                       
                     </Flex>
             </Flex>
