@@ -17,7 +17,7 @@ import * as yup from "yup";
 export function ProcessDonate() {
 
    const schema = yup.object({
-      checks: yup.array().min(1,"você deve selecionar um").typeError("aaaaaassss"),
+      checks: yup.array().min(1,"você deve selecionar um").typeError(""),
       images:yup.string().required("o campo não deve estar vazio")
     });
 
@@ -51,7 +51,7 @@ export function ProcessDonate() {
          <Header/>
             
             <Flex justifyContent={'flex-start'} maxW={'1400px'} w={'100%'}  p={'10px'} >
-               <Back link={'/home'}/>
+               <Back link={'/my_donation'}/>
             </Flex>
             <Flex flexDirection={'column'} maxW={'1400px'}>
                
@@ -91,7 +91,7 @@ export function ProcessDonate() {
                            <Text mt={6} fontSize={'h6'} fontWeight={'700'} noOfLines={1}>
                               Processo de doação:
                            </Text>
-                           <StepsMain variant='circles' state={0}/>
+                           <StepsMain variant='circles' state={1}/>
                         </Flex>
 
                         <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>

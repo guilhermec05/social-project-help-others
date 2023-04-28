@@ -51,7 +51,7 @@ export function CardHomerless({
 						</Text>
 					</Flex>
 					<Flex align={"end"}>
-						<Text fontSize={'h7'} fontWeight={'300'} noOfLines={5}>
+						<Text fontSize={'p'} fontWeight={'300'} noOfLines={3}>
 							{description}
 						</Text>
 						<Flex align={"end"}>

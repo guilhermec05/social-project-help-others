@@ -18,7 +18,9 @@ import { ProcessDonate } from "../pages/processDonate";
 import { FogotPassword } from "../pages/forgotPassword";
 import { FogotPasswordUser } from "../pages/forgotPasswordUser";
 import { FirstAccess } from "../pages/firstaccess";
-import { SignUpOngEvent } from "../pages/signUpOngEvent";
+import { MyEvents } from "../pages/myEvents";
+import { EditMyEvent } from "../pages/editMyEvent";
+import { SignUpEventOng } from "../pages/signUpEventOng";
 
 
 const router = createBrowserRouter([
@@ -39,7 +41,6 @@ const router = createBrowserRouter([
       path: "/profile",
       element: <UserPropfile />,
     },
-    
     {
       path: "/sign_up_homeless",
       element: <SignUpUserHomeless />,
@@ -85,8 +86,16 @@ const router = createBrowserRouter([
       element:  <ProcessDonate/>,
     },
     {
-      path: "/sign_up_event",
-      element:  <SignUpOngEvent/>,
+      path: "/my_events",
+      element:  <MyEvents/>,
+    },
+    {
+      path: "/edit_my_event",
+      element:  <EditMyEvent/>,
+    },
+    {
+      path: "/sign_up_event_ong",
+      element: <SignUpEventOng/>,
     },
   ]);
   

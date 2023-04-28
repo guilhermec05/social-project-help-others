@@ -37,6 +37,9 @@ export function Login(){
             case 'user':
                 navigate('/home')
                 break;
+            case 'ongs':
+                navigate('/my_events')
+                break;
            
 
          }

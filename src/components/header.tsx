@@ -17,11 +17,78 @@ import { Logo } from "./logo";
 import { Link } from "react-router-dom";
 
 export interface HeaderProps{
-    hasAdm?:boolean
+    hasAdm?:boolean,
+    hasNGOs?:boolean
 }
 
 
-export function Header({hasAdm = false}:HeaderProps){
+export function Header({hasAdm = false,hasNGOs= false}:HeaderProps){
+
+    function hasNGO(){
+        return(!hasNGOs?<>
+          <Link to='/home'> <Box 
+            w={'100%'}
+            textAlign={'center'}
+            transition={'all 0.5s'}
+            _hover={{
+                bg:'primary',
+                color:'secondaryLight'
+            }}
+            p={'10px'}
+            cursor={'pointer'}
+        >Página Inicial</Box></Link>  
+   
+    <Link to='/sign_up_homeless'> <Box 
+            w={'100%'}
+            textAlign={'center'}
+            transition={'all 0.5s'}
+            _hover={{
+                bg:'primary',
+                color:'secondaryLight'
+            }}
+            p={'10px'}
+            cursor={'pointer'}
+        >Cadastrar Morador</Box></Link>             
+        <Link to='/my_donation'><Box 
+            w={'100%'}
+            textAlign={'center'}
+            transition={'all 0.5s'}
+            _hover={{
+                bg:'primary',
+                color:'secondaryLight'
+            }}
+            p={'10px'}
+            cursor={'pointer'}
+        >Minhas Doações</Box> </Link>
+        </>:<>
+        <Link to='/my_events'> <Box 
+            w={'100%'}
+            textAlign={'center'}
+            transition={'all 0.5s'}
+            _hover={{
+                bg:'primary',
+                color:'secondaryLight'
+            }}
+            p={'10px'}
+            cursor={'pointer'}
+        >Meus Eventos</Box></Link>  
+        <Link to='/sign_up_event_ong'> <Box 
+            w={'100%'}
+            textAlign={'center'}
+            transition={'all 0.5s'}
+            _hover={{
+                bg:'primary',
+                color:'secondaryLight'
+            }}
+            p={'10px'}
+            cursor={'pointer'}
+        >Cadastrar Eventos</Box></Link>  
+        </>
+          
+            
+        )
+    }
+
 
     function hasAdmMenu(){
         return( !hasAdm ? (<Icon 
@@ -92,41 +159,8 @@ export function Header({hasAdm = false}:HeaderProps){
             <DrawerContent >
                 <DrawerCloseButton />
                 <DrawerHeader borderBottomWidth='1px'>Menu</DrawerHeader>
-                  
-                <Link to='/home'> <Box 
-                        w={'100%'}
-                        textAlign={'center'}
-                        transition={'all 0.5s'}
-                        _hover={{
-                            bg:'primary',
-                            color:'secondaryLight'
-                        }}
-                        p={'10px'}
-                        cursor={'pointer'}
-                    >Página Inicial</Box></Link>  
-               
-                <Link to='/sign_up_homeless'> <Box 
-                        w={'100%'}
-                        textAlign={'center'}
-                        transition={'all 0.5s'}
-                        _hover={{
-                            bg:'primary',
-                            color:'secondaryLight'
-                        }}
-                        p={'10px'}
-                        cursor={'pointer'}
-                    >Cadastrar Morador</Box></Link>             
-                    <Link to='/my_donation'><Box 
-                        w={'100%'}
-                        textAlign={'center'}
-                        transition={'all 0.5s'}
-                        _hover={{
-                            bg:'primary',
-                            color:'secondaryLight'
-                        }}
-                        p={'10px'}
-                        cursor={'pointer'}
-                    >Minhas Doações</Box> </Link>
+                {hasNGO()}
+    
             </DrawerContent>
         </Drawer>
     </>)
