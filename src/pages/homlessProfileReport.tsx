@@ -8,6 +8,7 @@ import location_icon from "../assets/location-icon.png";
 import { InputCheckBox } from '../components/inputCheckBox';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Logo } from '../components/logo';
+import { ExcludeHomless } from '../components/excludePopup-ProfileHomless'
 
 
 export function HomlessProfileReport() {
@@ -67,12 +68,16 @@ export function HomlessProfileReport() {
                            <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]} isDisabled/>
 
                         </Box>
-
-                        <Flex justifyContent={'absolute'} mt={4} gap={5}>
-                           <ButtonMain fontSize={'h6'} title="Delete" px={'30px'} bg={'danger'} />
+                        <Box flexDirection={'row'}>
+                        <Flex justifyContent={'absolute'} mt={4} gap={5} flexDirection={'row'}>
                            <ButtonMain fontSize={'h6'} title="Ok" px={'30px'} bg={'primaryDark'} />
-                        </Flex>
+                           <ExcludeHomless/>
+                        </Flex>                        
 
+                        </Box>
+                        
+                        
+                        
                         <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
 
                            {/* <Complaint /> */}

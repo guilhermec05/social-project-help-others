@@ -1,11 +1,13 @@
-import { Flex, Text, Grid, Tabs, TabList, Tab, TabPanels, TabPanel, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Icon } from '@chakra-ui/react'
+import { Flex, Text, Grid, Tabs, TabList, Tab, TabPanels, TabPanel, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Icon, useDisclosure, Modal, ModalOverlay, ModalHeader, ModalBody, ModalFooter, ModalContent, Center } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
 import { ReactNode } from 'react'
 import { FaCheck } from 'react-icons/fa'
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom'
-
+import { ExcludeComplaint } from '../components/excludePopup-Complaint'
+import { IconButton } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
 export function HomeAdm() {
    // const card: CardHomerlessProps = {
@@ -17,6 +19,8 @@ export function HomeAdm() {
    //       'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
    //    image: 'https://bit.ly/dan-abramov',
    // }
+
+   const { isOpen, onOpen, onClose } = useDisclosure()
 
    function TableAccess(){
 
@@ -57,20 +61,14 @@ export function HomeAdm() {
                      cursor={'pointer'}
                      _active={{color:'dark_light'}}
                   />
-                    <Icon as={AiFillDelete}
-                     color={'danger'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                  />
 
+                  <ExcludeComplaint />
                </Td>
             </Tr>)
          })   
 
          return list
       }
-
 
       return(
          <TableContainer>
@@ -132,12 +130,8 @@ export function HomeAdm() {
                      cursor={'pointer'}
                      _active={{color:'dark_light'}}
                   />
-                    <Icon as={AiFillDelete}
-                     color={'danger'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                  />
+                  <ExcludeComplaint />
+
                    <Link to={'/donate_process/1'}>
                      <Icon as={AiFillEye}
                         color={'primary'}
@@ -244,19 +238,15 @@ export function HomeAdm() {
                      _active={{color:'dark_light'}}
                      
                   />
-                    <Icon as={AiFillDelete}
-                     color={'danger'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                  />
+                  
+                  <ExcludeComplaint />
+
                   <Link to={'/report_profile/1'}>
                      <Icon as={AiFillEye}
                         color={'primary'}
                         fontSize={'h3'}
                         cursor={'pointer'}
                         _active={{color:'dark_light'}}
-                     
                      />
                   </Link>
                    

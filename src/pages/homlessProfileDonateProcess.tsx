@@ -11,6 +11,7 @@ import { Icon } from '@chakra-ui/react'
 // import { Logo } from '../components/logo';
 import {MdOutlineEscalatorWarning} from 'react-icons/md'
 import { StepsMain } from '../components/steps';
+import { ExcludeHomless } from '../components/excludePopup-ProfileHomless'
 
 
 export function HomlessProfileDonateProcess() {
@@ -82,7 +83,7 @@ export function HomlessProfileDonateProcess() {
                         </Box>
 
                         <Flex justifyContent={'absolute'} mt={4} gap={5}>
-                           <ButtonMain fontSize={'h6'} title="Delete" px={'30px'} bg={'danger'} _hover={{bg:'danger'}} />
+                           <ExcludeHomless/>
                            <ButtonMain fontSize={'h6'} title="Ok" px={'30px'} bg={'primaryDark'} />
                         </Flex>
 
