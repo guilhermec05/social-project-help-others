@@ -151,7 +151,7 @@ export function SignUpEventOng(){
         {load &&<Loading/>}
         <form  onSubmit={handleSubmit(onSubmit)} >
         <Header hasNGOs />
-        <Back link="/Home" /> 
+        <Back link="/my_events" /> 
         <Box 
             display={'flex'}
             justifyContent={'center'}
