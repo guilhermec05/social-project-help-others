@@ -21,7 +21,7 @@ export function InputNumber({name, isError,widthForm,maxW,useControl, ...rest }:
       rules: { required: true }
     });
 
-    console.log(field)
+
   
     return(
         <FormControl isInvalid={fieldState.invalid} flexDirection={'column'}  display={'flex'} justifyContent={'center'} width={widthForm} >

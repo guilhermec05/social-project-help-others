@@ -1,6 +1,6 @@
-import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
+import { Checkbox, CheckboxGroup, CheckboxProps } from '@chakra-ui/react'
 
-interface CheckBox extends CheckBoxProps{
+interface CheckBox extends CheckboxProps{
 }
 
 export function CheckBox({...htmlProps}){

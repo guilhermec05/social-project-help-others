@@ -42,9 +42,6 @@ export function SelectMain({name="",useControl,text,option, messageError,isInval
           rules: { required: true }
         });
        
-    console.log(fieldState.error)    
-    
-
 
     function Options(options?:optionProps[]){
         const lists:ReactNode[] = [] ;

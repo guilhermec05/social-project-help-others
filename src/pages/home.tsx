@@ -4,8 +4,22 @@ import { Footer } from './../components/footer'
 import { CardHomerless, CardHomerlessProps } from './../components/cardHomeless'
 import { ReactNode } from 'react'
 import { SelectMain } from '../components/select'
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 export function Home() {
+
+   const schema = yup.object({
+      select: yup.string()
+   })
+
+   type FormData = yup.InferType<typeof schema>
+
+   const { handleSubmit,control,setValue,clearErrors} = useForm<FormData>({
+      resolver: yupResolver(schema)
+    });
+
    const card: CardHomerlessProps = {
       id: '1',
       title: 'Ajude o José!',
@@ -47,7 +61,10 @@ export function Home() {
             <Flex flexDirection={'column'} maxW={'1400px'}>
                <Flex justifyContent={'flex-end'}   p={'30px'} >
                   <Box p={2}></Box>
-                  <SelectMain text='Selecione'
+                  <SelectMain 
+                     useControl={control}
+                     name={'select'}
+                     text='Selecione'
                      border={'1px solid'}
                      borderColor={'dark'} 
                      bg={'Primary'}
