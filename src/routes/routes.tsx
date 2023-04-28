@@ -15,6 +15,8 @@ import { HomlessProfileDonateProcess } from "../pages/homlessProfileDonateProces
 import { MyDonations } from "../pages/myDonations";
 import { UserPropfile } from "../pages/userProfile";
 import { ProcessDonate } from "../pages/processDonate";
+import { FogotPassword } from "../pages/forgotPassword";
+import { FogotPasswordUser } from "../pages/forgotPasswordUser";
 
 
 const router = createBrowserRouter([
@@ -42,7 +44,11 @@ const router = createBrowserRouter([
     },
     {
       path: "/forgot_pass",
-      element:  <PageDefault text="forgotPass"/>,
+      element:  < FogotPassword />,
+    },
+    {
+      path: "/forgot_pass_user",
+      element:  < FogotPasswordUser />,
     },
     {
       path: "/homeless_help/:id",
