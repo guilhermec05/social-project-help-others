@@ -1,7 +1,7 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Button, Icon,  Menu, MenuButton, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react'
 import { Box, Flex } from "@chakra-ui/react";
-
+import { useAuth } from "../hooks/useAuth";
 
 
 import { FaRegUserCircle } from "react-icons/fa";
@@ -14,7 +14,7 @@ import {
     DrawerCloseButton,
   } from '@chakra-ui/react'
 import { Logo } from "./logo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export interface HeaderProps{
     hasAdm?:boolean,
@@ -23,6 +23,9 @@ export interface HeaderProps{
 
 
 export function Header({hasAdm = false,hasNGOs= false}:HeaderProps){
+
+    const {logOut} = useAuth()
+    const navigate = useNavigate();  
 
     function hasNGO(){
         return(!hasNGOs?<>
@@ -89,6 +92,10 @@ export function Header({hasAdm = false,hasNGOs= false}:HeaderProps){
         )
     }
 
+    function exit(){
+        logOut()
+        navigate("/")
+    }
 
     function hasAdmMenu(){
         return( !hasAdm ? (<Icon 
@@ -146,7 +153,7 @@ export function Header({hasAdm = false,hasNGOs= false}:HeaderProps){
                         </MenuButton>
                      <MenuList bg={'secondary'}>           
                         <Link to='/profile'><MenuItem>Minha Conta</MenuItem></Link>
-                        <Link to='/'><MenuItem>Sair</MenuItem></Link>
+                        <MenuItem onClick={exit}>Sair</MenuItem>
                      </MenuList>
                 </Menu>
 

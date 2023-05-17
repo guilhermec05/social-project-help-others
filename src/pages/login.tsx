@@ -6,10 +6,28 @@ import { Link,  useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useAuth } from "../hooks/useAuth";
+import React from "react";
 
 export function Login(){
 
     const navigate = useNavigate();  
+    const {signIn,user} = useAuth()
+
+
+    React.useEffect(()=>{
+        switch(user.type){
+            case 'A':
+                navigate('/home_adm')
+                break;
+            case 'P':
+                navigate('/home')
+                break;
+            case 'N':
+                navigate('/my_events')
+                break;
+        }
+    },[user])
 
 
     const schema = yup.object({
@@ -26,26 +44,8 @@ export function Login(){
         resolver: yupResolver(schema)
       });
 
-    function onSubmit(data: FormData){
-        // alert(submit)
-         console.log(data )
-
-         switch(data.name){
-            case 'admin':
-                navigate('/home_adm')
-                break;
-            case 'user':
-                navigate('/home')
-                break;
-            case 'ongs':
-                navigate('/my_events')
-                break;
-           
-
-         }
-        //  if(data.name == "")
-        // 
-        
+    async function onSubmit(data: FormData){
+        await signIn(data.name,data.pass)
     }
 
     return(

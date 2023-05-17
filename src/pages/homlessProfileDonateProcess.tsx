@@ -69,7 +69,7 @@ export function HomlessProfileDonateProcess() {
                            <Text mt={6} fontSize={'h5'} fontWeight={'700'} noOfLines={1}>
                               Processo de doação:
                            </Text>
-                           <StepsMain variant='circles' state={1}/>
+                           <StepsMain variant='circles' state={3}/>
                            <Text fontSize={'h6'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>

@@ -16,7 +16,7 @@ export function Home() {
 
    type FormData = yup.InferType<typeof schema>
 
-   const { handleSubmit,control,setValue,clearErrors} = useForm<FormData>({
+   const { control} = useForm<FormData>({
       resolver: yupResolver(schema)
     });
 
