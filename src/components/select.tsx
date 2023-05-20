@@ -55,7 +55,12 @@ export function SelectMain({name="",useControl,text,option, messageError,isInval
     return(  <FormControl 
                 isInvalid={fieldState.invalid} 
                 w={widthForm}
-                maxW={rest.maxW} >
+                maxW={rest.maxW} 
+                display={'flex'}
+                flexDirection={'column'}
+                justifyContent={'center'} 
+                alignItems={'center'} 
+                >
                 <Select placeholder={text} 
                   border={'none'}
                   {...field}

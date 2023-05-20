@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, Toast } from "@chakra-ui/react";
 import { ButtonMain } from "../components/button";
 import { Logo } from "../components/logo";
 import { InputMain } from "../components/input";
@@ -6,10 +6,44 @@ import {   useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { api } from "../services/api/axios";
+import { useToast } from '@chakra-ui/react'
+
 
 export function FogotPassword(){
+    const toast = useToast()
+    const navigate = useNavigate();
+      
+    const {id} = useParams()
+    const [user,setUser] = useState({})
 
-    const navigate = useNavigate();  
+
+    useEffect(()=>{
+
+        async function execInitial(){
+            try {
+                const user =  await api.post('/auth/validate_reset_pass',{crypt:id}).then(res=> res.data)
+                
+                setUser(user)
+             } catch (error) {
+                navigate('/')
+                 toast({
+                    title: error?.response.data.message,
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                    position:'top-right',
+                    
+                })
+             }
+        }
+     
+        execInitial()
+        
+        console.log(id)
+    },[])
 
 
     const schema = yup.object({
@@ -26,10 +60,29 @@ export function FogotPassword(){
         resolver: yupResolver(schema)
       });
 
-    function onSubmit(data: FormData){
-        // alert(submit)
-         console.log(data )
-        navigate('/home')
+    async function onSubmit(data: FormData){
+  
+        try {
+            await api.post('/auth/reset_pass',{id:user.id, pass: data.new_pass}).then(res=> res.data)
+            toast({
+                title: 'senha alterada com sucesso',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+            navigate('/')
+        } catch (error) {
+            toast({
+                title: error?.response.data.message,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+        }
         
     }
 

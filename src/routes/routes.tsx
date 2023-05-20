@@ -68,7 +68,7 @@ const router = createBrowserRouter([
       element: < FirstAccess /> ,
     },
     {
-      path: "/forgot_pass",
+      path: "/forgot_pass/:id",
       element:< FogotPassword />,
     },
     {

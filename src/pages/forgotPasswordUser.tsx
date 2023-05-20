@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useToast } from "@chakra-ui/react";
 import { ButtonMain } from "../components/button";
 import { Logo } from "../components/logo";
 import { InputMain } from "../components/input";
@@ -8,12 +8,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 export function FogotPasswordUser(){
-
+    const toast = useToast()
     const navigate = useNavigate();  
 
 
     const schema = yup.object({
-        email: yup.string().required("o campo não deve estar vazio"),
+        email: yup.string().required("o campo não deve estar vazio").email("favor informe o email corretamente"),
        
       });
 
@@ -26,10 +26,31 @@ export function FogotPasswordUser(){
         resolver: yupResolver(schema)
       });
 
-    function onSubmit(data: FormData){
+    async function onSubmit(data: FormData){
         // alert(submit)
-         console.log(data )
-        navigate('/forgot_pass')
+
+        try {
+            await api.post('/auth/reset_pass',{id:user.id, pass: data.new_pass}).then(res=> res.data)
+            toast({
+                title: 'senha alterada com sucesso',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+            navigate('/')
+        } catch (error) {
+            toast({
+                title: error?.response.data.message,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+        }
+       
         
     }
 
@@ -71,7 +92,7 @@ export function FogotPasswordUser(){
                     justifyContent={'center'}
 
                 > 
-                    <InputMain placeholder="Usuário" name={'email'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
+                    <InputMain placeholder="Email" name={'email'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
                     
                     <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
                         
