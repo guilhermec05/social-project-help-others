@@ -11,8 +11,8 @@ interface userProps{
     name:string;
     email:string;
     type:'P'|'A'|'N',
-    state_or_province:string,
-    city:string
+    state_or_province?:string,
+    city?:string
 }
 
 interface propsProviderAuth{
@@ -42,7 +42,12 @@ export function AuthContextProvider({children}:propsProviderAuth){
         try {
             const storage = localStorage.getItem('signIn')
             const usersStorage = storage? storage : {} as userProps
-            if(usersStorage) setUser(JSON.parse(usersStorage))
+            const json = JSON.parse(usersStorage)
+            if(usersStorage) setUser(json)
+            api.defaults.headers.common['Authorization'] = `Bearer ${json.token}`
+
+
+
         } catch (error) {
             
         }
@@ -58,7 +63,7 @@ export function AuthContextProvider({children}:propsProviderAuth){
             const {id,email,name,type,state_or_province,city} = dataResponse.data
             api.defaults.headers.common['Authorization'] = `Bearer ${dataResponse.data.access_token}`
             await setUser({id,email,name,type,state_or_province,city})
-            localStorage.setItem("signIn", JSON.stringify({id,email,name,type}) )
+            localStorage.setItem("signIn", JSON.stringify({id,email,name,type, token: dataResponse.data.access_token}) )
 
         } catch (error) {
             

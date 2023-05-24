@@ -16,6 +16,7 @@ import {
   import { useRef } from "react"
 import { useController,useForm } from 'react-hook-form';
 
+
 interface inputMainProps extends InputProps{
   name:string;
   widthForm?:string
@@ -23,33 +24,55 @@ interface inputMainProps extends InputProps{
   isError?:boolean;
   placeholderImg?:string;
   useControl:any;
+  setFiles?:any
 }  
 
-export function InputFile({name, messageError,useControl, isError,widthForm,placeholderImg, ...rest }:inputMainProps){
+export function InputFile({name, messageError,useControl, isError,widthForm,placeholderImg,setFiles, ...rest }:inputMainProps){
     const inputRef = useRef();
    
-    const {
-        field: { ref, value, ...inputProps },
-        fieldState: { invalid, isTouched, isDirty,error },
-      } = useController({
-        name,
-        control:useControl
+    // const {
+    //     field: { ref, value, ...inputProps },
+    //     fieldState: { invalid, isTouched, isDirty,error },
+    //   } = useController({
+    //     name,
+    //     control:useControl
+    //   });
+
+
+    
+    const { field:{ref,value, ...props}, fieldState } = useController(
+      {
+        name:name,
+        control:useControl,
+        rules: { required: true }
       });
 
+      // const {
+      //   register,
+      //   formState: { errors },
+      //   setValue,
+      // } = useField(name);
 
-    return (<FormControl isInvalid={invalid} display={'flex'} justifyContent={'center'} flexDirection={'column'} width={widthForm} >
+  
+
+    return (<FormControl isInvalid={fieldState.invalid} display={'flex'} justifyContent={'center'} flexDirection={'column'} width={widthForm} >
           <InputGroup>
                 <InputLeftElement
                 pointerEvents="none"
                 children={<Icon as={CiImageOn} fontSize={'h4'}/>}
                 />
-                 <input type='file' accept={'image/*'}  ref={inputRef} {...inputProps} style={{ display: 'none' }}></input>
+                 <input type='file' accept={'image/*'} name={name}   ref={(e)=>{
+                 setFiles(e?.files[0])
+                  inputRef.current = e
+                  }} {...props}  style={{ display: 'none' }}  />
                  <Input
                       placeholder={placeholderImg || "seu arquivo ..."}
-                      onClick={() => inputRef.current.click()}
+                      onClick={(e) =>  inputRef.current.click()}
                       value={value}
                       border={'none'}
+                      // {...field}
                       cursor={'pointer'}
+                      // type={'file'}
                       _focus={{
                         border:'3px solid',
                         borderColor:'primary',
@@ -66,7 +89,7 @@ export function InputFile({name, messageError,useControl, isError,widthForm,plac
                     />
           </InputGroup>
           
-          <FormErrorMessage fontWeight={800} >{error?.message}</FormErrorMessage>
+          <FormErrorMessage fontWeight={800} >{fieldState?.error?.message}</FormErrorMessage>
       </FormControl>)
    
 } 

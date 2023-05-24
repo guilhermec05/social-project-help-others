@@ -6,10 +6,12 @@ import { Link,  useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { api } from "../services/api/axios";
 
 export function FogotPasswordUser(){
     const toast = useToast()
     const navigate = useNavigate();  
+
 
 
     const schema = yup.object({
@@ -28,9 +30,9 @@ export function FogotPasswordUser(){
 
     async function onSubmit(data: FormData){
         // alert(submit)
-
+        console.log(data)
         try {
-            await api.post('/auth/reset_pass',{id:user.id, pass: data.new_pass}).then(res=> res.data)
+            await api.post('/auth/send_forgot',{email:data.email}).then(res=> res.data)
             toast({
                 title: 'senha alterada com sucesso',
                 status: 'success',
@@ -41,6 +43,7 @@ export function FogotPasswordUser(){
             })
             navigate('/')
         } catch (error) {
+            console.log(error)
             toast({
                 title: error?.response.data.message,
                 status: 'error',

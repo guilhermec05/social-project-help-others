@@ -48,12 +48,12 @@ const router = createBrowserRouter([
     },
     {
       path: "/",
-      element: <Login/>,
+      element: <Login/>,///ok
       errorElement:<ErrorPage/>
     },
     {
       path: "/sign_up_user",
-      element: <SignUpUser/>,
+      element: <SignUpUser/>,//ok
     },
     {
       path: "/profile",
@@ -69,11 +69,11 @@ const router = createBrowserRouter([
     },
     {
       path: "/forgot_pass/:id",
-      element:< FogotPassword />,
+      element:< FogotPassword />,//ok
     },
     {
       path: "/forgot_pass_user",
-      element:  < FogotPasswordUser />,
+      element:  < FogotPasswordUser />,//ok
     },
     {
       path: "/homeless_help/:id",
@@ -81,7 +81,7 @@ const router = createBrowserRouter([
     },
     {
       path: "/home_adm",
-      element: <PrivateRoute> <HomeAdm/></PrivateRoute> ,
+      element: <PrivateRoute> <HomeAdm/></PrivateRoute> //half ok,
     },
     {
       path: "/report_profile/:id",

@@ -1,4 +1,4 @@
-import { Flex, Text, Grid, Tabs, TabList, Tab, TabPanels, TabPanel, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Icon, useDisclosure, Modal, ModalOverlay, ModalHeader, ModalBody, ModalFooter, ModalContent, Center } from '@chakra-ui/react'
+import { Flex, Text,  Tabs, TabList, Tab, TabPanels, TabPanel, TableContainer, Table, Thead, Tr, Th, Tbody, Td, Icon, useDisclosure, useToast } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
 import { ReactNode } from 'react'
@@ -6,66 +6,138 @@ import { FaCheck } from 'react-icons/fa'
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom'
 import { ExcludeComplaint } from '../components/excludePopup-Complaint'
-import { IconButton } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/react'
+import { useEffect,useState } from "react";
+import { useAuth } from '../hooks/useAuth'
+import { api } from '../services/api/axios'
+import { Loading } from '../components/loading'
+
 
 export function HomeAdm() {
-   // const card: CardHomerlessProps = {
-   //    id: '1',
-   //    title: 'Ajude o José!',
-   //    city: 'Porto Alegre',
-   //    state: 'RS',
-   //    description:
-   //       'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
-   //    image: 'https://bit.ly/dan-abramov',
-   // }
+   interface tableReponse{
+      type: 'ONGs'|'PESSOA'
+      name:string
+      document:string
+      id:string
+   }
 
-   const { isOpen, onOpen, onClose } = useDisclosure()
+   interface tableReponseDonate{
+      titulo: string
+      Origem:string
+      Destino:string
+      id:string
+   }
+
+   const [usersAcess,setUsersAcess] = useState<tableReponse[]>([] as tableReponse[] )
+   const [donateProcess,setDonateProcess] = useState<tableReponseDonate[]>([] as tableReponseDonate[] )
+   const [isLoading,setIsLoading] = useState<Boolean>(false)
+  const {user,logOut} = useAuth()   
+   const toast = useToast()
+
+   function checkTypeUser(){
+      if(user.type != 'A'){
+         logOut()
+         toast({
+            title:'favor Acessar novamente',
+            status: 'warning',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+        })
+
+
+      }
+   }
+
+
+ 
+
+   
+   useEffect(()=>{
+      checkTypeUser()
+      
+   },[])
+
 
    function TableAccess(){
 
-      interface tableReponse{
-         type: 'ONGs'|'PESSOA'
-         name:string
-         document:string
-         id:string
-      }
+      useEffect(()=>{
+         AccessSelect()       
+      },[])
+   
 
-      const reponse:tableReponse[] = [
-         {
-            id:'1',
-            type:'ONGs',
-            document:'111211112',
-            name:'ong1'
-         },
-         {
-            id:'2',
-            type:'PESSOA',
-            document:'111211112',
-            name:'joaozinho'
+      async function AccessSelect(){
+         try {
+         setIsLoading(true)
+         const dataRes:tableReponse[] = []    
+         const user =  await api.get('user/get_users_blocked').then(res=> res.data)
+       
+         setUsersAcess([])
+         user.forEach(e=>{
+           
+            if(e.type == "N"){
+               if(e.Persons){
+                  e.type = "Pessoas"
+                  e.document = e.Persons.cpf
+                  e.name = e.Persons.name+" "+e.Persons.lastName
+               }
+   
+               if(e.NGOS){
+                  e.type = "ONGS"
+                  e.document = e.Persons.cnpj
+               }
+            }else{
+               e.type = "ADM"
+            }
+
+            dataRes.push({id: e.id, document:e.document, name:e.name,type:e.type})
+
+         })
+
+         setUsersAcess(dataRes)
+       
+         resultTbody()
+
+
+         return true
+            
+         } catch (error) {
+            console.log(error)
+            toast({
+               title: error?.response.data.message,
+               status: 'error',
+               duration: 5000,
+               isClosable: true,
+               position:'top-right',
+           })
+         }finally{
+            setIsLoading(false)
          }
-      ]
+         
+      }
 
 
       function resultTbody(){
          const list: ReactNode[] = []
-         reponse.forEach(v=>{
-            list.push(<Tr>
-               <Td>{v.type}</Td>
-               <Td>{v.name}</Td>
-               <Td>{v.document}</Td>
-               <Td>
-                  <Icon as={FaCheck}
-                     color={'primary'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                  />
-
-                  <ExcludeComplaint />
-               </Td>
-            </Tr>)
-         })   
+         if(usersAcess){
+            usersAcess.forEach(v=>{
+               list.push(<Tr>
+                  <Td>{v.type}</Td>
+                  <Td>{v.name}</Td>
+                  <Td>{v.document}</Td>
+                  <Td>
+                     <Icon as={FaCheck}
+                        color={'primary'}
+                        fontSize={'h3'}
+                        cursor={'pointer'}
+                        _active={{color:'dark_light'}}
+                     />
+   
+                     <ExcludeComplaint />
+                  </Td>
+               </Tr>)
+            })  
+         }
+          
 
          return list
       }
@@ -91,34 +163,52 @@ export function HomeAdm() {
 
 
    function TableDonation(){
+      useEffect(()=>{
+         AccessSelect()       
+      },[])
+   
 
+      async function AccessSelect(){
+         try {
+         setIsLoading(true)
+         const data:tableReponseDonate[] = []    
+         const donates =  await api.get('donates/donate_process').then(res=> res.data)
 
-      interface tableReponse{
-         titulo: string
-         Origem:string
-         Destino:string
-         id:string
+         
+         setDonateProcess([])
+         donates.forEach(e=>{
+
+            data.push({id: e.id,titulo:e.title, Origem:e.origin, Destino:  e.destiny})
+
+         })
+
+         setDonateProcess(data)
+         // setUsersAcess(data)
+         
+         // console.log(donateProcess)
+
+         resultTbodyDonation()
+         return true
+            
+         } catch (error) {
+            console.log(error)
+            toast({
+               title: error?.response.data.message,
+               status: 'error',
+               duration: 5000,
+               isClosable: true,
+               position:'top-right',
+           })
+         }finally{
+            setIsLoading(false)
+         }
+         
       }
 
-      const reponse:tableReponse[] = [
-         {
-            id:'1',
-            titulo:'titulo 1',
-            Origem:'usuário 1',
-            Destino:'usuário 2'
-         },
-         {
-            id:'1',
-            titulo:'titulo 2',
-            Origem:'usuário 1',
-            Destino:'usuário 2'
-         }
-      ]
 
-
-      function resultTbody(){
+      function resultTbodyDonation(){
          const list: ReactNode[] = []
-         reponse.forEach(v=>{
+         donateProcess.forEach(v=>{
             list.push(<Tr>
                <Td>{v.titulo}</Td>
                <Td>{v.Origem}</Td>
@@ -163,7 +253,7 @@ export function HomeAdm() {
                   </Tr>
                </Thead>
                <Tbody>
-                  {resultTbody()}
+                  {resultTbodyDonation()}
                </Tbody>
             </Table>
          </TableContainer>
@@ -279,24 +369,7 @@ export function HomeAdm() {
    }
 
 
-   // const list: CardHomerlessProps[] = [
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   // ]
-
-   // function ListaCard() {
-   //    const lists: ReactNode[] = []
-
-   //    list.forEach((v) => lists.push(<CardHomerless {...v} />))
-   //    return lists
-   // }
+   {isLoading && <Loading />}
 
    return (<Flex
       display={'flex'}  

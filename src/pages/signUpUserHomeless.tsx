@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, CheckboxGroup, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Checkbox, CheckboxGroup, Flex, Text, useToast } from "@chakra-ui/react";
 import { Back } from "../components/back";
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
@@ -15,7 +15,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useValidationsBR } from 'validations-br';
-import { InputCheckBox } from "../components/inputCheckBox";
+import { checkBoxProps, InputCheckBox } from "../components/inputCheckBox";
+import { useAuth } from "../hooks/useAuth";
 
 
 interface localidade{
@@ -26,18 +27,30 @@ interface localidade{
 }
 
 export function SignUpUserHomeless(){
+
+    const   listBox:checkBoxProps[] = [
+        {value:'1', label:'Cobertor'},
+        {value:'2', label:'Comida'},
+        {value:'3', label:'Desodorante'},
+        {value:'4', label:'Sabonete'}
+    ]
+
+
+    const toast = useToast()
+    
     
     const [load, setLoad] = useState<boolean>(false)
     const [select,setSelect ] = useState<optionProps[]>([] as optionProps[])
+    const [checkBox, setCheckBox] = useState<checkBoxProps[]>(listBox)
     const [localidades,setLocalidades ] = useState<localidade>({} as localidade)
-
-
+    const [files, setFiles] = useState(null)
+    const {user} = useAuth()
     
     const schema = yup.object({
         title: yup.string()
         .min(10,"o campo deve conter pelo ou menos 10 caracteres")
         .required("o campo não deve estar vazio"),
-        nickname: yup.string().min(10,"o campo deve conter pelo ou menos 3 caracteres").
+        nickname: yup.string().min(3,"o campo deve conter pelo ou menos 3 caracteres").
         required("o campo não deve estar vazio"),
         number: yup.string().required("o campo não deve estar vazio"),
         city:yup.string()
@@ -53,9 +66,10 @@ export function SignUpUserHomeless(){
         .required("o campo não deve estar vazio"),
         cep:yup.string().required("o campo não deve estar vazio").test("cep","cep não é valido",(value) => useValidationsBR('cep',value) ),
         uf:yup.string().required("o campo não deve estar vazio"),
-        description:yup.string().required("o campo não deve estar vazio").min(30, "A descrição deve conter pelo ou menos 30 caracteres"),
+        description:yup.string().required("o campo não deve estar vazio").min(20, "A descrição deve conter pelo ou menos 20 caracteres"),
+        reference:yup.string(),
         checks: yup.array().min(1,"você deve selecionar um").required("você deve selecionar um").typeError("você deve selecionar um"),
-        images:yup.string().required("o campo não deve estar vazio")
+        file:yup.string().required("o campo não deve estar vazio")
       });
 
     
@@ -63,17 +77,11 @@ export function SignUpUserHomeless(){
     type FormData = yup.InferType<typeof schema>
 
   
-    const { handleSubmit,control,setValue,clearErrors,register,formState:{errors}} = useForm<FormData>({
+    const { handleSubmit,control,setValue,clearErrors,register ,formState:{errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
       });
 
-    const   listBox = [
-        {value:'1', label:'Cobertor'},
-        {value:'2', label:'Comida'},
-        {value:'3', label:'Desodorante'},
-        {value:'4', label:'Sabonete'}
-    ]
-    
+
     // const [cep,setCep ] = useState<string>('')
     
     async function foundCep(cep:string){
@@ -95,7 +103,7 @@ export function SignUpUserHomeless(){
             setValue("uf",uf)
             clearErrors("uf")
             clearErrors("number")
-            console.log(obj)
+          
           
            
         }catch(error){
@@ -124,9 +132,69 @@ export function SignUpUserHomeless(){
         }
     } 
 
-    function onSubmit(data: FormData){
+    async function onSubmit(data: FormData){
 
-         data.checks.forEach(v => console.log(listBox[parseInt(v) - 1]) ) 
+        
+
+       const items =  data.checks.map(v =>{
+        if(v === "others") v = checkBox.length
+
+        
+        return ({
+        
+            name: checkBox[parseInt(v) - 1].label,
+            quantity:checkBox[parseInt(v) - 1].quantity
+        } )}) 
+        const adress = {
+          
+            cep:data.cep,
+            state:data.uf,
+            city:data.city,
+            street:data.street,
+            district:data.district,
+            number:data.number,
+            description:data.reference
+        }
+
+
+        const donate =  {
+            'title':data.title,
+            'description':data.description,
+            'nickname':data.nickname,
+            'location':adress,
+            'items':items,
+            'file':files,
+            type:"D",
+            user_id:user.id
+        }
+
+        try {
+           
+            await api.post('donates/save_new_donates',donate ,{
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                  },
+            }  )
+            
+            toast({
+                title:'Cadastrado com sucesso',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+        
+        } catch (error) {
+            toast({
+                title: error?.response.data.message,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+        }
         
     }
     
@@ -233,7 +301,7 @@ export function SignUpUserHomeless(){
                     <Flex maxW={'500px'}>
                         <Text fontSize={'h5'} color={'dark_light'}>Foto(s) do Local e/ou Pessoa</Text>   
                     </Flex>
-                    <InputFile name="images" placeholder="images" useControl={control}/>
+                    <InputFile name="file" placeholderImg="escolha sua imagem ..." useControl={control} setFiles={setFiles}/>
             </Flex>
             <Flex 
                 flexDirection={'column'}
@@ -247,9 +315,10 @@ export function SignUpUserHomeless(){
                         <InputCheckBox 
                                 error={errors}
                                 name={'checks'}
-                                listCheckBox={listBox}
+                                listCheckBox={checkBox}
                                 useControl={register("checks")}    
                                 hasOthers
+                                setCheckBox={setCheckBox}
                         />                       
                     </Flex>
             </Flex>

@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Grid } from '@chakra-ui/react'
+import { Box, Flex, Text, Grid, useToast } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from './../components/footer'
 import { CardHomerless, CardHomerlessProps } from './../components/cardHomeless'
@@ -7,8 +7,33 @@ import { SelectMain } from '../components/select'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useEffect,useState } from "react";
+import { useAuth } from '../hooks/useAuth'
 
 export function Home() {
+   const {user,logOut} = useAuth()
+   const toast = useToast()
+
+   function checkTypeUser(){
+      if(user.type != 'P'){
+         logOut()
+         toast({
+            title:'favor Acessar novamente',
+            status: 'warning',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+            
+        })
+
+
+      }
+   }
+
+
+   useEffect(()=>{
+      checkTypeUser()
+   },[])
 
    const schema = yup.object({
       select: yup.string()
