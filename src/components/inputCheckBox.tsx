@@ -17,23 +17,23 @@ interface InputCheckBoxProps extends CheckboxProps{
 	error?:any,
 	hasOthers?:boolean,
 	setCheckBox?:any,
+	canEdit?:boolean
 	
 }
 
 
-export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = false,setCheckBox,...rest }:InputCheckBoxProps) {
+export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = false,setCheckBox,canEdit = true,...rest }:InputCheckBoxProps) {
 	
 	const [valueInputList,setValueInputList] = useState<checkBoxProps[]>(listCheckBox)
 	const [valueInput,setValueInput] = useState<string>("")
 	const [valueQuantity,setValueQuantity] = useState<string>("")
-
 
 	
 	useEffect(()=>{
 		listCheckBox[4] = {label:valueInput,quantity:valueQuantity}
 		setCheckBox(listCheckBox)
 		setValueInputList(valueInputList)
-		console.log(valueQuantity)
+	
 		
 	},[valueInput,valueQuantity])
 
@@ -53,6 +53,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 						{...useControl}
 						value={"others"}
 						// key={key}
+						
 						colorScheme={'green'} 
 						isInvalid={false} 
 						{...rest}
@@ -60,7 +61,9 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 					</Checkbox>
 						
 					<Input value={valueInput} w={'150px'} variant={'flushed'} onChange={e => setValueInput(e.target.value)} />	
-					<Text>QTD:</Text><Input value={valueQuantity} variant={'flushed'} w={10} onChange={e => setValueQuantity(e.target.value)} /> 
+					<Text>QTD:</Text>
+					
+					<Input value={valueQuantity} variant={'flushed'} w={10} onChange={e => setValueQuantity(e.target.value)} /> 
 					
 			</HStack>
 		))
@@ -68,30 +71,53 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 
 	function list(){
 		const lists: ReactNode[] = []
+		console.log(listCheckBox)
 		listCheckBox.forEach((v,key) =>{ 
+			// console.log(v)
+				if(key < listCheckBox.length){
+					lists.push( 
+						<Flex gap={5} key={key} alignItems={'center'}>
+							<Checkbox 
+								{...useControl}
+								value={key}
+								colorScheme={'green'} 
+								defaultChecked={v.checked}
+								isInvalid={false} 
+								{...rest}
+							>
+								<Text fontSize={'h6'} fontWeight={500}>{v.label}</Text>
+							</Checkbox>		
+							
+							<Text>QTD:</Text>
+							
+							
+							{canEdit?<Input value={(v.quantity || 0)} variant={'flushed'} w={10} onChange={e => updateQuantity(key,e.target.value)}/> :<Text>{v.quantity}</Text> }
+							
+						</Flex>
+							
+					)
+				}
 
-			if(key < 4){
-				lists.push( 
-					<Flex gap={5}  alignItems={'center'}>
-						<Checkbox 
-							{...useControl}
-							value={v.value}
-							key={key}
-							colorScheme={'green'} 
-							defaultChecked={v.checked}
-							isInvalid={false} 
-							{...rest}
-						>
-							<Text fontSize={'h6'} fontWeight={500}>{v.label}</Text>
-						</Checkbox>		
-						
-						<Text>QTD:</Text><Input variant={'flushed'} w={10} onChange={e => updateQuantity(key,e.target.value)}/> 
-					
-						
-					</Flex>
-						
-				)
-			}
+					lists.push( 
+						<Flex gap={5}  alignItems={'center'} display={'none'}>
+							<Checkbox 
+								{...useControl}
+								value={v.value}
+								key={key}
+								colorScheme={'green'} 
+								defaultChecked={v.checked}
+								isInvalid={false} 
+								{...rest}
+							>
+								<Text fontSize={'h6'} fontWeight={500}>teste</Text>
+							</Checkbox>		
+							
+							<Text>QTD:</Text>
+							
+						</Flex>
+							
+					)
+				
 			}
 		 )
 		 				

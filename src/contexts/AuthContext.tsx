@@ -36,22 +36,28 @@ export function AuthContextProvider({children}:propsProviderAuth){
     const toast = useToast()
     const [isUserLoading, setIsUserLoading] = useState(false)
     const [user, setUser] = useState<userProps>({} as userProps)
-    
 
-    useEffect(()=>{
+    const validationToken = async ()=>{
         try {
             const storage = localStorage.getItem('signIn')
             const usersStorage = storage? storage : {} as userProps
             const json = JSON.parse(usersStorage)
-            if(usersStorage) setUser(json)
             api.defaults.headers.common['Authorization'] = `Bearer ${json.token}`
+            await api.get('auth/validate')
+            if(usersStorage) setUser(json)
+            
 
 
 
         } catch (error) {
-            
+            logOut()
         }
-      
+    }
+    
+
+    useEffect(()=>{
+       
+        validationToken()
     },[])
 
 
