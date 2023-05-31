@@ -117,7 +117,7 @@ export function FormNgos(){
             const {data} = await api.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`)
 
             data.forEach((value)=>{
-                console.log(value)
+                
                 const {nome} = value
                 selectCity.push({label:nome,value:nome})
             })

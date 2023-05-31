@@ -26,7 +26,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 	
 	const [valueInputList,setValueInputList] = useState<checkBoxProps[]>(listCheckBox)
 	const [valueInput,setValueInput] = useState<string>("")
-	const [valueQuantity,setValueQuantity] = useState<string>("")
+	const [valueQuantity,setValueQuantity] = useState<string>("0")
 
 	
 	useEffect(()=>{
@@ -71,7 +71,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 
 	function list(){
 		const lists: ReactNode[] = []
-		console.log(listCheckBox)
+		
 		listCheckBox.forEach((v,key) =>{ 
 			// console.log(v)
 				if(key < listCheckBox.length){
@@ -84,6 +84,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 								defaultChecked={v.checked}
 								isInvalid={false} 
 								{...rest}
+								isDisabled={v.checked}
 							>
 								<Text fontSize={'h6'} fontWeight={500}>{v.label}</Text>
 							</Checkbox>		
@@ -91,7 +92,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 							<Text>QTD:</Text>
 							
 							
-							{canEdit?<Input value={(v.quantity || 0)} variant={'flushed'} w={10} onChange={e => updateQuantity(key,e.target.value)}/> :<Text>{v.quantity}</Text> }
+							{canEdit?<Input value={(v.quantity)} variant={'flushed'} w={10} onChange={e => updateQuantity(key,e.target.value)}/> :<Text>{v.quantity}</Text> }
 							
 						</Flex>
 							

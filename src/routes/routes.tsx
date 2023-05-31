@@ -44,7 +44,7 @@ function PrivateRoute({children }: PrivateProps){
 const router = createBrowserRouter([
     {
       path: "/home",
-      element:<PrivateRoute><Home/></PrivateRoute>,
+      element:<PrivateRoute><Home/></PrivateRoute>//ok,
     },
     {
       path: "/",
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
     },
     {
       path: "/my_events",
-      element: <PrivateRoute><MyEvents/></PrivateRoute> ,
+      element: <PrivateRoute><MyEvents/></PrivateRoute> ,// found integration backend
     },
     {
       path: "/edit_my_event",

@@ -69,7 +69,7 @@ export function AuthContextProvider({children}:propsProviderAuth){
             const {id,email,name,type,state_or_province,city} = dataResponse.data
             api.defaults.headers.common['Authorization'] = `Bearer ${dataResponse.data.access_token}`
             await setUser({id,email,name,type,state_or_province,city})
-            localStorage.setItem("signIn", JSON.stringify({id,email,name,type, token: dataResponse.data.access_token}) )
+            localStorage.setItem("signIn", JSON.stringify({id,email,name,type, token: dataResponse.data.access_token, state_or_province,city}) )
 
         } catch (error) {
             

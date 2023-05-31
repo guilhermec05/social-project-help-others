@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Grid, useToast } from '@chakra-ui/react'
+import { Box, Flex, useToast } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from './../components/footer'
 import { CardHomerless, CardHomerlessProps } from './../components/cardHomeless'
@@ -9,10 +9,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useEffect,useState } from "react";
 import { useAuth } from '../hooks/useAuth'
+import { api } from '../services/api/axios'
+import { Loading } from '../components/loading'
 
 export function Home() {
+   const [load, setLoad] = useState<boolean>(false)
    const {user,logOut} = useAuth()
    const toast = useToast()
+   const [list,setList] = useState<CardHomerlessProps[]>([] as CardHomerlessProps[])
 
    function checkTypeUser(){
       if(user.type != 'P'){
@@ -30,11 +34,56 @@ export function Home() {
       }
    }
 
+   async function getHomeless(){
+      try {
+         setLoad(true)
+         setList([] as CardHomerlessProps[])
+         const result = await api.post('/donates/get_list_homeless',{
+            adress:{
+               state:user.state_or_province,
+               city: user.city
+            }
+         }).then(res => res.data)
+         
+         const resultList = []
+
+         result.forEach(element => {
+            
+            resultList.push({
+                  title:element.title,
+                  city:element.local_by_donate.city,
+                  description:element.description,
+                  id:element.id,
+                  image:element.picture,
+                  link:`/homeless_help/${element.id}`,
+                  state:element.local_by_donate.state
+               }
+            )
+         });
+
+
+         setList(resultList)
+      } catch (error) {
+         toast({
+            title: error?.response.data.message,
+            status: 'warning',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+            
+        })
+      }finally{
+         setLoad(false)
+      }
+   }
+
 
    useEffect(()=>{
       checkTypeUser()
+      getHomeless()
    },[])
 
+   console.log(list)
    const schema = yup.object({
       select: yup.string()
    })
@@ -44,29 +93,6 @@ export function Home() {
    const { control} = useForm<FormData>({
       resolver: yupResolver(schema)
     });
-
-   const card: CardHomerlessProps = {
-      id: '1',
-      title: 'Ajude o José!',
-      city: 'Porto Alegre',
-      state: 'RS',
-      description:
-         'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
-      image: 'https://bit.ly/dan-abramov',
-      link:`/homeless_help/${2}`
-   }
-
-   const list: CardHomerlessProps[] = [
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-   ]
 
    function ListaCard() {
       const lists: ReactNode[] = []
@@ -83,6 +109,7 @@ export function Home() {
       justifyContent={'center'}
       gap={5}>
          <Header />
+         {load &&<Loading/>}
             <Flex flexDirection={'column'} maxW={'1400px'}>
                <Flex justifyContent={'flex-end'}   p={'30px'} >
                   <Box p={2}></Box>

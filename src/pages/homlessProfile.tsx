@@ -17,6 +17,8 @@ import {  useParams } from 'react-router-dom';
 import { api } from '../services/api/axios';
 import { useAuth } from '../hooks/useAuth';
 import { Loading } from '../components/loading';
+import { useToast } from "@chakra-ui/react";
+import { InputFile } from '../components/inputFile';
 
 
 interface resultProps{
@@ -26,6 +28,8 @@ interface resultProps{
    start_date:string
    isOwner:boolean
    picture:string
+   my_process: boolean
+   is_process_concluded:boolean
    locale:{
       city:string
       description:string
@@ -42,15 +46,29 @@ interface resultProps{
 }
 
 export function HomlessProfile() {
-
+   const toast = useToast()
    const  {id} = useParams();
 
    const {user} = useAuth()
    const [load, setLoad] = useState<boolean>(false)
    const [checkBox, setCheckBox] = useState<checkBoxProps[]>([] as checkBoxProps[])
    const [donates,setDonates] = useState<resultProps>({} as resultProps)
-   const [typeSubmit,setTypeSubmit] = useState<"D"|"U"|"I">()
+   const [typeSubmit,setTypeSubmit] = useState<"D"|"U"|"I"|"P">()
+   const [files, setFiles] = useState(null)
 
+   
+   const schema = yup.object({
+      checks: yup.array().min(1,"você deve selecionar um").required("você deve selecionar um").typeError("você deve selecionar um"),
+      file:yup.string()
+    });
+
+   
+   type FormData = yup.InferType<typeof schema>
+
+  
+   const { control,setValue,setError, clearErrors,handleSubmit,register,formState:{errors}} = useForm<FormData>({
+       resolver: yupResolver(schema)
+     });
 
    const   listBox:checkBoxProps[] = [
       {value:'1', label:'Cobertor'},
@@ -77,18 +95,42 @@ export function HomlessProfile() {
          result.locale = donate.local_by_donate
 
          result.picture = donate.picture
-         result.process_begin = true
+         result.process_begin = false
+         result.my_process = false
+         result.is_process_concluded = false
+         let is_user_process = [] ;
+   
 
          const itens = donate.item_by_donate.map(v =>{
-            const len = v.item_donate_by_user.filter(values => values.item_donate.id_item ==  v.item.id && values.user.id == user.id)
-            result.process_begin = v.item_donate_by_user.filter(process => process.status == "A").lenght > 0
+
+
+            const len = v.item_donate_by_user.filter(values => values.user_id == user.id)
             
-            if(len.lenght > 0){
+           
+            if(v.item_donate_by_user.filter(process => process.status == "A").length > 0){
+               result.process_begin = true
+            }
+
+            console.log(v.item_donate_by_user)
+
+            if(v.item_donate_by_user.filter(process => process.donate  && process.user_id  == user.id ).length > 0){
+           
+               result.is_process_concluded = true
+            }
+
+            if(len.length > 0 ){
+               result.my_process = true
+               is_user_process.push(v.id)
+               setValue('checks',['0'])
+               clearErrors('checks')
+            }
+            
+            if(result.process_begin){
                return {
                   value:v.id,
                   label:v.item.name,
                   quantity:v.quantity,
-                  checked:true
+                  checked:(v.item_donate_by_user.filter(process => process.status == "A").length > 0)
                }
             }else{
                return {
@@ -114,8 +156,9 @@ export function HomlessProfile() {
          
          const itemSelect =  !result.process_begin && result.isOwner ?  listBox : itens
 
+          
 
-         setCheckBox(itemSelect)
+         setCheckBox(itemSelect.filter(v => ( is_user_process.length == 0 ||  is_user_process.includes(v.value)) ))
          setDonates(result)
          
       } catch (error) {
@@ -128,45 +171,152 @@ export function HomlessProfile() {
 
    useEffect(()=>{
       getHomeProfile()
-      console.log(donates)
-      
    },[])
 
 
-   const schema = yup.object({
-      checks: yup.array().min(1,"você deve selecionar um").required("você deve selecionar um").typeError("você deve selecionar um"),
-    });
 
+   async function Deleted(){
+      await api.delete(`donates/inactivate_donate/${donates.id}`).then(res => res.data)
+   }  
+
+
+   async function EditDonate(data: FormData){
+      const checkSelected = checkBox.filter((v,k) => data.checks.includes((k).toString()))
+      const items = checkSelected.map(v => ({name:v.label, quantity:v.quantity}))
+      await api.patch(`item_donates/edit_item_donate/${donates.id}`,{
+         items
+      })
+   }
+
+   async function beginProcessDonate(data: FormData){
+      const checkSelected = checkBox.filter((v,k) => data.checks.includes((k).toString()))
+      const items = checkSelected.map(v => ({
+         id:v.value, 
+         name:v.label, 
+         quantity:v.quantity,
+         user_id:user.id
+      }))
    
-   type FormData = yup.InferType<typeof schema>
 
-  
-   const { handleSubmit,register,formState:{errors}} = useForm<FormData>({
-       resolver: yupResolver(schema)
-     });
+      await api.post(`item_donates/insert_process_donate`,{
+         items
+      })
+   }
 
-   function onSubmit(data: FormData){
+   async function insertSubmitDonate(data: FormData){
+      if(!data.file){
+         setError("file",{message:"favor enviar uma foto"})
+         
+      }
+
+      clearErrors("file")
+      const items = checkBox.map(v => ({
+         id:v.value, 
+         name:v.label, 
+         quantity:v.quantity,
+         user_id:user.id
+      }))
+
+
+      const body = {items,file:files}
+
+      await api.put(`item_donates/concluded_item_by_donate`,body,{
+         headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+      }).then(res => res.data)
+     
+      // console.log(da)
+   }
+
+
+   function actualState(){
+      if(donates.isOwner){
+         return <>
+                  <ButtonMain fontSize={'h6'}  title="Editar" px={'30px'} bg={'primaryDark'} type={'submit'} isDisabled={ donates.process_begin } onClick={e => setTypeSubmit("U")} />
+                  <ButtonMain fontSize={'h6'} 
+                     title="Excluir" 
+                     px={'30px'} 
+                     bg={'danger'} 
+                     type={'submit'} 
+                     isDisabled={ donates.process_begin }  
+                     onClick={e => setTypeSubmit("D")}
+                     _hover={{
+                        bg:'danger'
+                     }}
+                  />
+               </> 
+      }else if(donates.my_process){
+         return <Flex flexDirection={'column'} gap={10}>
+             <InputFile
+              name="file" 
+              placeholderImg="escolha sua imagem ..." 
+              useControl={control} 
+              setFiles={setFiles}
+              isDisabled={(donates.is_process_concluded)}
+              />
+            <ButtonMain 
+                     fontSize={'h6'}  
+                     title="Concluir Doação" 
+                     px={'30px'} 
+                     bg={'primaryDark'} 
+                     type={'submit'} 
+                     isDisabled={(donates.is_process_concluded)}
+                     onClick={e =>{ 
+                        setTypeSubmit("P") 
+                        setValue('checks',['0'])
+                     }} 
+                  />
+         </Flex> 
+      }else{
+         return <ButtonMain 
+                     fontSize={'h6'}  
+                     title="Doar" 
+                     px={'30px'} 
+                     bg={'primaryDark'} 
+                     type={'submit'} 
+                     onClick={e => setTypeSubmit("I")} 
+                     // isDisabled={donates.process_begin}
+                  />
+      }
+   }
+
+   async function onSubmit(data: FormData){
+      console.log(files)
       console.log(data)
-
+      
       try {
          setLoad(true)
          switch (typeSubmit) {
+            case "P":
+               await insertSubmitDonate(data)
+               break;
             case "I":
-               
+               await beginProcessDonate(data)
                break;
             case "U":
-               
+               await EditDonate(data)
                break;
             case "D":
-               
+               await Deleted()
                break;
             default:
                break;
          }
 
       } catch (error) {
+
+         toast({
+            title: error?.response.data.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+            
+        })
          
       }finally{
+         await getHomeProfile()
          setLoad(false)
       }    
          // data.checks.forEach(v => console.log(listBox[parseInt(v) - 1]) ) 
@@ -233,19 +383,13 @@ export function HomlessProfile() {
                                  error={errors} 
                                  listCheckBox={checkBox}  
                                  setCheckBox={setCheckBox}  
-                                 isDisabled={false} 
                                  canEdit={donates.isOwner && !donates.process_begin}
                               />
 
                            </Box>
 
                            <Flex justifyContent={'absolute'} mt={4} gap={10}>
-                              {donates.isOwner? 
-                              (<>
-                                 <ButtonMain fontSize={'h6'}  title="Editar" px={'30px'} bg={'primaryDark'} type={'submit'} isDisabled={ donates.process_begin } onClick={e => setTypeSubmit("U")} />
-                                 <ButtonMain fontSize={'h6'}  title="Excluir" px={'30px'} bg={'danger'} type={'submit'} isDisabled={ donates.process_begin }  onClick={e => setTypeSubmit("D")}/>
-                              </> ):
-                              <ButtonMain fontSize={'h6'}  title="Doar" px={'30px'} bg={'primaryDark'} type={'submit'} onClick={e => setTypeSubmit("I")} />  }
+                              {actualState()}
                               
                            </Flex>
 

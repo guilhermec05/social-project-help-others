@@ -137,13 +137,14 @@ export function SignUpUserHomeless(){
         
 
        const items =  data.checks.map(v =>{
-        if(v === "others") v = checkBox.length
+        if(v === "others") v = checkBox.length - 1
+        console.log(checkBox[parseInt(v)])
+        console.log(parseInt(v))
 
-        
         return ({
         
-            name: checkBox[parseInt(v) - 1].label,
-            quantity:checkBox[parseInt(v) - 1].quantity
+            name: checkBox[parseInt(v) ].label,
+            quantity:checkBox[parseInt(v)].quantity
         } )}) 
         const adress = {
           
@@ -184,6 +185,18 @@ export function SignUpUserHomeless(){
                 position:'top-right',
                 
             })
+            setValue("cep","")
+            setValue("title","")
+            setValue("city","")
+            setValue("description","")
+            setValue("district","")
+            setValue("file","")
+            setValue("street","")
+            setValue("number","")
+            setValue("nickname","")
+            setValue("reference","")
+            setValue("checks",[])
+
         
         } catch (error) {
             toast({
