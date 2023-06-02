@@ -3,20 +3,18 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
   HStack,
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
+  Image
+ 
 } from '@chakra-ui/react'
+import {saveAs} from "file-saver";
 import { Button, ButtonProps } from '@chakra-ui/react'
 import { ButtonMain } from './button'
 import { useDisclosure } from '@chakra-ui/react'
@@ -27,10 +25,35 @@ import { Text } from '@chakra-ui/react'
 import { Logo } from './logo'
 import { Flex, Spacer } from '@chakra-ui/react'
 import { TextAreaMain } from './textArea'
-import { ArrowBackIcon } from '@chakra-ui/icons'
+import { ArrowBackIcon, CheckIcon, DownloadIcon } from '@chakra-ui/icons'
+import React from 'react';
+import { api } from '../services/api/axios';
 
-export function DonorList() {
+interface DonateListProps{
+   donate_id:string
+}
+
+export function DonateList({donate_id}:DonateListProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [result, setResult] = React.useState([])
+
+  function HandleDownload(picture:string){
+   const sufix = Date.now()+"_"+Math.round(Math.random() * 1e9)
+   saveAs(picture,sufix)
+  }
+
+  async function initial(){
+      try {
+         const res =  await api.get(`/item_donates/get_item_donate_by_users/${donate_id}`).then(res => res.data)
+         setResult(res)
+      } catch (error) {
+         
+      }
+   }
+
+   React.useEffect(()=>{
+      initial()
+   },[])
 
   return (
      <>
@@ -57,10 +80,10 @@ export function DonorList() {
            closeOnOverlayClick={false}
            isOpen={isOpen}
            onClose={onClose}
-           size={'2xl'}
+           size={'3xl'}
         >
            <ModalOverlay />
-           <ModalContent p={10}>
+           <ModalContent p={3}>
               <ArrowBackIcon
                  fontSize={'h3'}
                  cursor={'pointer'}
@@ -78,31 +101,28 @@ export function DonorList() {
                  </Flex>
               </ModalHeader>
 
-              <ModalBody pb={6}>
-                 <TableContainer>
-                    <Table variant="simple">
-                       <Thead bg={'primaryDark'}>
-                          <Tr>
-                             <Th color={'white'}>Nome</Th>
-                             <Th color={'white'}>Item Doado</Th>
-                          </Tr>
-                       </Thead>
-                       <Tbody>
-                          <Tr>
-                             <Td>Bruno</Td>
-                             <Td>Sabonete</Td>
-                          </Tr>
-                          <Tr>
-                             <Td>Lucas</Td>
-                             <Td>Shampoo</Td>
-                          </Tr>
-                          <Tr>
-                             <Td>Guilherme</Td>
-                             <Td>Toalha</Td>
-                          </Tr>
-                       </Tbody>
-                    </Table>
-                 </TableContainer>
+              <ModalBody >
+              <Accordion allowToggle>
+                 {result.map(res =>{
+                     console.log(res)
+                     return <AccordionItem>
+                           <h2>
+                              <AccordionButton>
+                                 <Box as="span" flex='1' display={'flex'} justifyContent={'space-between'} textAlign='left'>
+                                    <Text>{res.name}</Text><Text>{(res.picture !="") && <DownloadIcon onClick={e => HandleDownload(res.picture)} />}</Text>
+                                 </Box>
+                              <AccordionIcon />
+                              </AccordionButton>   
+                           </h2>
+                           <AccordionPanel pb={4}>
+                              <Box display={'flex'} flexDirection={'column'}>
+                                 {res.item.map(v => <Text>{v.item.name} , {v.quantity}</Text> )}
+                              </Box>
+                           </AccordionPanel>
+                     </AccordionItem>
+                 })}
+                
+               </Accordion>
               </ModalBody>
            </ModalContent>
         </Modal>

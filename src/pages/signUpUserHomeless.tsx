@@ -136,16 +136,7 @@ export function SignUpUserHomeless(){
 
         
 
-       const items =  data.checks.map(v =>{
-        if(v === "others") v = checkBox.length - 1
-        console.log(checkBox[parseInt(v)])
-        console.log(parseInt(v))
-
-        return ({
-        
-            name: checkBox[parseInt(v) ].label,
-            quantity:checkBox[parseInt(v)].quantity
-        } )}) 
+   
         const adress = {
           
             cep:data.cep,

@@ -19,6 +19,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Loading } from '../components/loading';
 import { useToast } from "@chakra-ui/react";
 import { InputFile } from '../components/inputFile';
+import { DonateList } from '../components/pop-upDonorList';
 
 
 interface resultProps{
@@ -110,8 +111,6 @@ export function HomlessProfile() {
             if(v.item_donate_by_user.filter(process => process.status == "A").length > 0){
                result.process_begin = true
             }
-
-            console.log(v.item_donate_by_user)
 
             if(v.item_donate_by_user.filter(process => process.donate  && process.user_id  == user.id ).length > 0){
            
@@ -394,8 +393,9 @@ export function HomlessProfile() {
                            </Flex>
 
                            <Flex mt={6} w={'100%'}  fontSize={'xs'} fontWeight={'900'}   textAlign={'center'}>
-                                 {!donates.isOwner && <Complaint /> }
-                              
+                                 {!donates.isOwner && <Complaint id={donates.id} user_id={user.id} /> }
+                                 {(donates.isOwner && (donates.process_begin || donates.is_process_concluded) &&  <DonateList donate_id={donates.id}/>)}
+                                 
 
                            </Flex>
                         </Box>

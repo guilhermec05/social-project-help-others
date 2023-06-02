@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, CheckboxGroup, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Checkbox, CheckboxGroup, Flex, Text, useToast } from "@chakra-ui/react";
 import { Back } from "../components/back";
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
@@ -15,7 +15,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useValidationsBR } from 'validations-br';
-import { InputCheckBox } from "../components/inputCheckBox";
+import { checkBoxProps, InputCheckBox } from "../components/inputCheckBox";
+import { useAuth } from "../hooks/useAuth";
 
 
 interface localidade{
@@ -28,10 +29,24 @@ interface localidade{
 
 
 export function SignUpEventOng(){
+
+    const   listBox = [
+        {value:'1', label:'Cobertor'},
+        {value:'2', label:'Comida'},
+        {value:'3', label:'Desodorante'},
+        {value:'4', label:'Sabonete'}
+    ]
+
+    const {user} = useAuth()
     
+    const toast = useToast()
+
     const [load, setLoad] = useState<boolean>(false)
     const [select,setSelect ] = useState<optionProps[]>([] as optionProps[])
     const [localidades,setLocalidades ] = useState<localidade>({} as localidade)
+    const [checkBox, setCheckBox] = useState<checkBoxProps[]>(listBox)
+    const [files, setFiles] = useState(null)
+
 
     const getFormatedDate = (currentDate) => {
         return currentDate.split('/').reverse().join('-');
@@ -41,8 +56,6 @@ export function SignUpEventOng(){
         title: yup.string()
         .min(10,"o campo deve conter pelo ou menos 10 caracteres")
         .required("o campo não deve estar vazio"),
-        nickname: yup.string().min(10,"o campo deve conter pelo ou menos 3 caracteres").
-        required("o campo não deve estar vazio"),
         number: yup.string().required("o campo não deve estar vazio"),
         city:yup.string()
         .min(5,"o campo deve conter pelo ou menos 5 caracteres")
@@ -50,7 +63,7 @@ export function SignUpEventOng(){
         district:yup.string()
         .min(5,"o campo deve conter pelo ou menos 5 caracteres")
         .required("o campo não deve estar vazio"),
-        // reference:yup.string()
+        reference:yup.string(),
         // .min(10,"o campo deve conter pelo ou menos 10 caracteres"),
         street:yup.string()
         .min(10,"o campo deve conter pelo ou menos 10 caracteres")
@@ -61,24 +74,27 @@ export function SignUpEventOng(){
         checks: yup.array().min(1,"você deve selecionar um").required("você deve selecionar um").typeError("você deve selecionar um"),
         images:yup.string().required("o campo não deve estar vazio"),
         start_date:yup.date().min(getFormatedDate(new Date().toLocaleDateString()), 'a data deve ser deve começar a partir de hoje').required("o campo não deve estar vazio"),
-        end_date:yup.date().min(getFormatedDate(new Date().toLocaleDateString()), 'a data deve ser deve começar a partir de hoje').required("o campo não deve estar vazio"),
+        end_date:yup.date().min(yup.ref('start_date'), 'a data deve ser maior que a data inicial').test('endDate', 'A data de término deve ser superior ao dia atual',(value)=>{
+            const currentDate = new Date();
+            return value >= currentDate;
+        }).required("o campo não deve estar vazio"),
       });
 
+    //   getFormatedDate(new Date().toLocaleDateString())
     
 
     type FormData = yup.InferType<typeof schema>
 
   
-    const { handleSubmit,control,setValue,clearErrors,register,formState:{errors}} = useForm<FormData>({
+    const { handleSubmit,control,setValue,clearErrors,watch,register,formState:{errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
       });
 
-    const   listBox = [
-        {value:'1', label:'Cobertor'},
-        {value:'2', label:'Comida'},
-        {value:'3', label:'Desodorante'},
-        {value:'4', label:'Sabonete'}
-    ]
+      const startDate = watch('start_date');
+      const endDate = watch('end_date');
+
+
+  
     
     // const [cep,setCep ] = useState<string>('')
     
@@ -130,10 +146,86 @@ export function SignUpEventOng(){
         }
     } 
 
-    function onSubmit(data: FormData){
+    async function onSubmit(data: FormData){
 
-         data.checks.forEach(v => console.log(listBox[parseInt(v) - 1]) ) 
-        
+        const items =  data.checks.map(v =>{
+            if(v === "others") v = checkBox.length - 1
+    
+            return ({
+            
+                name: checkBox[parseInt(v) ].label,
+                quantity:checkBox[parseInt(v)].quantity
+            } )}) 
+
+            const {start_date,end_date} = data
+
+            const adress = {
+          
+                cep:data.cep,
+                state:data.uf,
+                city:data.city,
+                street:data.street,
+                district:data.district,
+                number:data.number,
+                description:data.reference
+            }
+    
+         
+    
+            const donate =  {
+                'title':data.title,
+                'description':data.description,
+                'location':adress,
+                'items':items,
+                'file':files,
+                type:"E",
+                start_date,
+                end_date,
+                user_id:user.id
+            }
+
+        try {
+          await api.post('/donates/save_new_donates',donate,{ headers: {
+            'Content-Type': 'multipart/form-data',
+          }})  
+
+          setValue("cep","")
+          setValue("checks",[])
+          setValue("city","")
+          setValue("description","")
+          setValue("district","")
+        //   setValue("end_date","")
+          setValue("end_date",new Date())
+
+          setValue("images","")
+          setValue("number","")
+          setValue("reference","")
+          setValue("start_date",new Date())
+          setValue("street","")
+          setValue("title","")
+          setValue("uf","")
+        //   setValue("","")
+
+          toast({
+            title:'Cadastrado com sucesso',
+            status: 'success',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+            
+        })
+
+        } catch (error) {
+            toast({
+                title:error?.response.data.message,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+        }
+       
     }
     
     useEffect(()=>{
@@ -255,7 +347,7 @@ export function SignUpEventOng(){
                     <Flex maxW={'500px'}>
                         <Text fontSize={'h5'} color={'dark_light'}>Foto(s) do Local e/ou Pessoa</Text>   
                     </Flex>
-                    <InputFile name="images" placeholder="images" useControl={control}/>
+                    <InputFile name="images" setFiles={setFiles}  placeholder="images" useControl={control}/>
             </Flex>
             <Flex 
                 flexDirection={'column'}
@@ -269,9 +361,10 @@ export function SignUpEventOng(){
                         <InputCheckBox 
                                 error={errors}
                                 name={'checks'}
-                                listCheckBox={listBox}
+                                listCheckBox={checkBox}
                                 useControl={register("checks")}    
                                 hasOthers
+                                setCheckBox={setCheckBox}
                         />                       
                     </Flex>
             </Flex>

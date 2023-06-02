@@ -7,12 +7,10 @@ import {
   ModalBody,
   ModalCloseButton,
   HStack,
+  useToast,
 } from '@chakra-ui/react'
-import { Button, ButtonProps } from '@chakra-ui/react'
 import { ButtonMain } from "../components/button";
 import { useDisclosure } from '@chakra-ui/react'
-import { Back } from './back';
-import { Textarea } from '@chakra-ui/react'
 import { InputMain } from "./input";
 import { Text } from '@chakra-ui/react'
 import { Logo } from "../components/logo";
@@ -22,11 +20,16 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { api } from '../services/api/axios';
 
+interface ComplaintProps{
+  id:string
+  user_id:string
+}
 
-
-export function Complaint() {
+export function Complaint({id,user_id}:ComplaintProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = useToast()
 
   const schema = yup.object({
     title: yup.string()
@@ -40,13 +43,35 @@ export function Complaint() {
   type FormData = yup.InferType<typeof schema>
 
   
-  const { handleSubmit,control } = useForm<FormData>({
+  const { handleSubmit,control,setValue } = useForm<FormData>({
       resolver: yupResolver(schema)
   });
 
-  function onSubmit(data: FormData){
-    console.log("aqui")
-    console.log(data)
+  async function onSubmit(data: FormData){
+    
+
+    try {
+      await api.post(`/donates/insert_reports/${id}`,{subject:data.title,description:data.description,user_id}).then(res=> res.data)
+      setValue("title","")
+      setValue("description","")
+      toast({
+        title: "enviado com sucesso",
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position:'top-right',
+        
+    })
+    } catch (error) {
+      toast({
+        title: error?.response.data.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position:'top-right',
+        
+    })
+    }
     
   }
 

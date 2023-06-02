@@ -6,7 +6,7 @@ import { Footer } from '../components/footer'
 import { Back } from '../components/back'
 import { ButtonMain } from '../components/button'
 import { EventExclusion } from '../components/pop-upExclusion'
-import { DonorList } from '../components/pop-upDonorList'
+// import { DonorList } from '../components/pop-upDonorList'
 import location_icon from '../assets/location-icon.png'
 import { InputCheckBox } from '../components/inputCheckBox'
 import { Link } from '@chakra-ui/react'
@@ -156,7 +156,7 @@ export function EditMyEvent() {
                         <Text >{'31 de maio de 2023'}</Text>
                      </HStack>
 
-                     <DonorList />
+                     {/* <DonorList /> */}
          
                      <EventExclusion />
 

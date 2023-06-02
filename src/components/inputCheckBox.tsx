@@ -72,9 +72,10 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 	function list(){
 		const lists: ReactNode[] = []
 		
+		
 		listCheckBox.forEach((v,key) =>{ 
-			// console.log(v)
-				if(key < listCheckBox.length){
+		
+				if(key < listCheckBox.length - (hasOthers? 1:0)){
 					lists.push( 
 						<Flex gap={5} key={key} alignItems={'center'}>
 							<Checkbox 

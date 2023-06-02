@@ -1,5 +1,5 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { Button, Icon,  Menu, MenuButton, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react'
+import { Button, Icon,  Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure } from '@chakra-ui/react'
 import { Box, Flex } from "@chakra-ui/react";
 import { useAuth } from "../hooks/useAuth";
 
@@ -24,7 +24,7 @@ export interface HeaderProps{
 
 export function Header({hasAdm = false,hasNGOs= false}:HeaderProps){
 
-    const {logOut} = useAuth()
+    const {logOut,user} = useAuth()
     const navigate = useNavigate();  
 
     function hasNGO(){
@@ -140,7 +140,7 @@ export function Header({hasAdm = false,hasNGOs= false}:HeaderProps){
                         bg={'none'}
                         _hover={{bg:'none'}}
                         _active={{bg:'none'}}
-                       
+                      
                         >
                             <Icon 
                                     as={FaRegUserCircle} 
@@ -150,7 +150,9 @@ export function Header({hasAdm = false,hasNGOs= false}:HeaderProps){
                                         color:'dark_light'
                                     }}
                                 />
+                                <Text color={'white'}>{user.name}</Text>
                         </MenuButton>
+                        
                      <MenuList bg={'secondary'}>           
                         <Link to='/profile'><MenuItem>Minha Conta</MenuItem></Link>
                         <MenuItem onClick={exit}>Sair</MenuItem>
