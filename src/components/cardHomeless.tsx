@@ -4,6 +4,7 @@ import { VscLocation, VscChevronRight } from 'react-icons/vsc'
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import location_icon from '../assets/location-icon.png'
+import { CalendarIcon } from '@chakra-ui/icons'
 
 export interface CardHomerlessProps {
 	id: string;
@@ -13,6 +14,8 @@ export interface CardHomerlessProps {
 	state: string;
 	description: string;
 	link:string
+	date_ini?:string
+	date_end?:string
 }
 
 export function CardHomerless({
@@ -22,11 +25,13 @@ export function CardHomerless({
 	city,
 	state,
 	description,
-	link
+	link,
+	date_ini,
+	date_end
 }: CardHomerlessProps) {
 	return (
 		<Box display={'flex'} flexDirection={'column'}>
-			<Box maxW={'350px'} maxH={'460px'} overflow="hidden">
+			<Box maxW={'350px'} overflow="hidden">
 				<Image
 					src={image}
 					boxSize={'410px'}
@@ -39,7 +44,7 @@ export function CardHomerless({
 					p={5}
 					display={'flex'}
 					flexDirection={'column'}
-					gap={5}
+					gap={3}
 				>
 					<Text fontSize={'h5'} fontWeight={'700'} noOfLines={1}>
 						{title}
@@ -49,8 +54,19 @@ export function CardHomerless({
 						<Text fontSize={'h6'}>
 							{city} - {state}
 						</Text>
+						
+					</Flex>
+					<Flex justifyContent={'center'} alignItems={'center'} gap={5}>
+						
+							{date_ini &&<Text fontSize={'xs'}><CalendarIcon marginRight={2}/>{date_ini}</Text>}
+						
+						{(date_ini && date_end) && "-"}
+					
+							{date_end && <Text fontSize={'xs'}><CalendarIcon marginRight={2}/>{date_end}</Text>}
+						
 					</Flex>
 					<Flex align={"end"}>
+						
 						<Text fontSize={'p'} fontWeight={'300'} noOfLines={3}>
 							{description}
 						</Text>

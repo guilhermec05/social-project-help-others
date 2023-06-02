@@ -20,17 +20,19 @@ import { Loading } from '../components/loading';
 import { useToast } from "@chakra-ui/react";
 import { InputFile } from '../components/inputFile';
 import { DonateList } from '../components/pop-upDonorList';
+import { CalendarIcon } from '@chakra-ui/icons';
 
 
 interface resultProps{
    id:string
    title:string
    description:string
-   start_date:string
    isOwner:boolean
    picture:string
    my_process: boolean
-   is_process_concluded:boolean
+   is_process_concluded:boolean,
+   date_ini?:string,
+   date_end?:string,
    locale:{
       city:string
       description:string
@@ -57,6 +59,31 @@ export function HomlessProfile() {
    const [typeSubmit,setTypeSubmit] = useState<"D"|"U"|"I"|"P">()
    const [files, setFiles] = useState(null)
 
+
+   
+   function format(inputDate) {
+      let date, month, year;
+    
+      date = inputDate.getDate();
+      month = inputDate.getMonth() + 1;
+      year = inputDate.getFullYear();
+    
+        date = date
+            .toString()
+            .padStart(2, '0');
+    
+        month = month
+            .toString()
+            .padStart(2, '0');
+
+      console.log(month)
+    
+      return `${date}/${month}/${year}`;
+    }
+    
+
+
+   // console.log(checkBox)
    
    const schema = yup.object({
       checks: yup.array().min(1,"você deve selecionar um").required("você deve selecionar um").typeError("você deve selecionar um"),
@@ -90,7 +117,8 @@ export function HomlessProfile() {
          result.id = donate.id
          result.title = donate.title
          result.description = donate.description
-         result.start_date = donate.start_date
+         result.date_ini = donate.start_date
+         result.date_end = donate.end_date
          result.isOwner = donate.user_id == user.id
          // result.isOwner = false
          result.locale = donate.local_by_donate
@@ -345,10 +373,10 @@ export function HomlessProfile() {
                      maxW={'1301px'}
                      m={['0 auto']}
                      gap={10}
-                     p={'20px'}
+                     p={'10px'}
                      flexWrap={'wrap'}
                   >
-                     <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
+                     <Box maxW={'850px'} overflow="hidden">
                         <Image
                            src={( donates.picture || '')}
                            boxSize={'800px'}
@@ -364,6 +392,9 @@ export function HomlessProfile() {
                               <Text mt={8} fontSize={'h6'}>
                                  {donates.locale?.street}, {donates.locale?.number} - {donates.locale?.district}, {donates.locale?.city} - {donates.locale?.state}
                               </Text>
+                           </Flex>
+                           <Flex my={5} gap={3} alignItems={'center'} justifyContent={'center'}>
+                              {donates.date_ini && <Text fontSize={'h6'}><CalendarIcon m={1}/>{format(new Date(donates.date_ini))}</Text>}{(donates.date_end && donates.date_ini) && <Text fontSize={'h6'}>-</Text>}  {donates.date_end && <Text fontSize={'h6'}><CalendarIcon m={1}/>{format(new Date(donates.date_end))}</Text>}
                            </Flex>
                            <Flex align={"end"}>
                               <Text mt={8} fontSize={'h7'} fontWeight={'300'}>

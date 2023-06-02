@@ -147,14 +147,14 @@ export function SignUpEventOng(){
     } 
 
     async function onSubmit(data: FormData){
-
+        console.log(data)
         const items =  data.checks.map(v =>{
             if(v === "others") v = checkBox.length - 1
-    
+            console.log(v)
             return ({
             
                 name: checkBox[parseInt(v) ].label,
-                quantity:checkBox[parseInt(v)].quantity
+                quantity:checkBox[parseInt(v)]?.quantity
             } )}) 
 
             const {start_date,end_date} = data

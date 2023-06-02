@@ -1,8 +1,6 @@
 import {  Checkbox, CheckboxProps, Flex, FormControl, FormErrorMessage, HStack, Input, Text, VStack } from '@chakra-ui/react'
 import { ReactNode, useEffect, useState } from 'react';
-import { Controller, useController } from "react-hook-form";
-import { FaPlusCircle } from 'react-icons/fa';
-import { ButtonMain } from './button';
+
 export interface checkBoxProps{
 	label:string;
 	value:string;
@@ -21,31 +19,74 @@ interface InputCheckBoxProps extends CheckboxProps{
 	
 }
 
+interface InputCountNumberCheckerProps extends CheckboxProps{ 
+	useControl:any
+	number:number
+	checked:boolean
+	label:string
+	quantity:string|number 
+	canEdit:boolean
+	setCheckBox:any,
+	listCheckBox: checkBoxProps[];
+}
 
-export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = false,setCheckBox,canEdit = true,...rest }:InputCheckBoxProps) {
-	
-	const [valueInputList,setValueInputList] = useState<checkBoxProps[]>(listCheckBox)
-	const [valueInput,setValueInput] = useState<string>("")
-	const [valueQuantity,setValueQuantity] = useState<string>("0")
 
+function InputCountNumberChecker({useControl,number,checked,quantity,canEdit,label,setCheckBox,listCheckBox,...rest}:InputCountNumberCheckerProps){
 	
+	console.log(quantity)
+	const [valueQuantity,setValueQuantity] = useState<string|number>(quantity)
+
+
 	useEffect(()=>{
-		listCheckBox[4] = {label:valueInput,quantity:valueQuantity}
-		setCheckBox(listCheckBox)
-		setValueInputList(valueInputList)
-	
+		setValueQuantity(quantity)
+	},[])
+
+	function updateNumber(num:string){
 		
-	},[valueInput,valueQuantity])
-
-
-
-	const updateQuantity = (key:number, quantity:string)=>{
-		listCheckBox[key].quantity =  quantity
+		setValueQuantity(num)
+		listCheckBox[number].quantity = num
 		setCheckBox(listCheckBox)
 	}
 
 
-	// console.log(num)
+	return (
+		<Flex gap={5}  alignItems={'center'}>
+			<Checkbox 
+				{...useControl}
+				value={number}
+				colorScheme={'green'} 
+				defaultChecked={checked}
+				isInvalid={false} 
+				{...rest}
+				isDisabled={checked}
+			>
+				<Text fontSize={'h6'} fontWeight={500}>{label}</Text>
+			</Checkbox>		
+			
+			<Text>QTD:</Text>
+			
+			
+			{canEdit?<Input  value={valueQuantity} variant={'flushed'} w={10} onChange={e => updateNumber(e.target.value)} /> :<Text>{quantity}</Text> }
+			
+		</Flex>
+	)
+}
+
+
+export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = false,setCheckBox,canEdit = true,...rest }:InputCheckBoxProps) {
+		const [valueInput,setValueInput] = useState<string>("")
+	const [valueQuantity,setValueQuantity] = useState<string>("0")
+	
+	useEffect(()=>{
+		listCheckBox[4] = {label:valueInput,quantity:valueQuantity}
+		setCheckBox(listCheckBox)
+	
+		
+	},[valueInput,valueQuantity,listCheckBox])
+
+
+
+
 	function HasOthers(){	
 		return (hasOthers &&(
 			<HStack>
@@ -69,33 +110,15 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 		))
 	}
 
-	function list(){
+	const List =  ()=>{
 		const lists: ReactNode[] = []
 		
-		
 		listCheckBox.forEach((v,key) =>{ 
-		
-				if(key < listCheckBox.length - (hasOthers? 1:0)){
+			
+				if(key < listCheckBox.length -  (hasOthers?1:0)){
+					// console.log(v.quantity)
 					lists.push( 
-						<Flex gap={5} key={key} alignItems={'center'}>
-							<Checkbox 
-								{...useControl}
-								value={key}
-								colorScheme={'green'} 
-								defaultChecked={v.checked}
-								isInvalid={false} 
-								{...rest}
-								isDisabled={v.checked}
-							>
-								<Text fontSize={'h6'} fontWeight={500}>{v.label}</Text>
-							</Checkbox>		
-							
-							<Text>QTD:</Text>
-							
-							
-							{canEdit?<Input value={(v.quantity)} variant={'flushed'} w={10} onChange={e => updateQuantity(key,e.target.value)}/> :<Text>{v.quantity}</Text> }
-							
-						</Flex>
+						<InputCountNumberChecker canEdit={canEdit}  listCheckBox={listCheckBox} key={key}  checked={v.checked}  number={key} label={v.label} quantity={(v.quantity || 0)} useControl={useControl} setCheckBox={setCheckBox} />
 							
 					)
 				}
@@ -135,7 +158,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 			isInvalid={ (error?.checks != undefined)} 
 			display={'flex'} 
 			flexDirection={'column'}>
-				{list()}
+				{List()}
 				{HasOthers()}
 				<FormErrorMessage fontWeight={800}>{error?.checks?.message}</FormErrorMessage>
 			</FormControl>

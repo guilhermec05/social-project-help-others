@@ -45,6 +45,8 @@ export function SignUpUserHomeless(){
     const [localidades,setLocalidades ] = useState<localidade>({} as localidade)
     const [files, setFiles] = useState(null)
     const {user} = useAuth()
+
+   
     
     const schema = yup.object({
         title: yup.string()
@@ -81,7 +83,7 @@ export function SignUpUserHomeless(){
         resolver: yupResolver(schema)
       });
 
-
+    
     // const [cep,setCep ] = useState<string>('')
     
     async function foundCep(cep:string){
@@ -136,7 +138,18 @@ export function SignUpUserHomeless(){
 
         
 
-   
+        const items =  data.checks.map(v =>{
+            if(v === "others") v = checkBox.length - 1
+            console.log(checkBox[parseInt(v)])
+            console.log(parseInt(v))
+    
+            return ({
+            
+                name: checkBox[parseInt(v) ].label,
+                quantity:checkBox[parseInt(v)].quantity
+            } )}) 
+
+
         const adress = {
           
             cep:data.cep,

@@ -18,6 +18,27 @@ export function Home() {
    const toast = useToast()
    const [list,setList] = useState<CardHomerlessProps[]>([] as CardHomerlessProps[])
 
+   function format(inputDate) {
+      let date, month, year;
+    
+      date = inputDate.getDate();
+      month = inputDate.getMonth() + 1;
+      year = inputDate.getFullYear();
+    
+        date = date
+            .toString()
+            .padStart(2, '0');
+    
+        month = month
+            .toString()
+            .padStart(2, '0');
+
+      console.log(month)
+    
+      return `${date}/${month}/${year}`;
+    }
+    
+
    function checkTypeUser(){
       if(user.type != 'P'){
          logOut()
@@ -56,7 +77,9 @@ export function Home() {
                   id:element.id,
                   image:element.picture,
                   link:`/homeless_help/${element.id}`,
-                  state:element.local_by_donate.state
+                  state:element.local_by_donate.state,
+                  date_ini:(element.type == "E") && format(new Date(element.start_date)),
+                  date_end:(element.type == "E") && format(new Date(element.end_date))
                }
             )
          });
