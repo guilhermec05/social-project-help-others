@@ -2,7 +2,7 @@ import { Box, Flex, Text, Grid, useDisclosure, IconButton, Modal, ModalOverlay, 
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
 import { CardHomerless, CardHomerlessProps } from '../components/cardHomeless'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useState, useEffect } from 'react'
 import { SelectMain } from '../components/select'
 import { SearchInput } from '../components/searchInput'
 import { CiFilter } from 'react-icons/ci'
@@ -11,35 +11,67 @@ import { Logo } from '../components/logo'
 import { CheckBox } from '../components/checkBox'
 import { InputCheckBox } from '../components/inputCheckBox'
 import { ButtonMain } from '../components/button'
+import { useAuth } from '../hooks/useAuth'
+import { api } from '../services/api/axios'
+import { format } from '../util/formatDate'
 
 export function MyEvents() {
+   const [list, setList] = useState <CardHomerlessProps[]>([] as CardHomerlessProps[])
 
    const { isOpen, onOpen, onClose } = useDisclosure()
 
-
-
-   const card: CardHomerlessProps = {
-      id: '1',
-      title: 'Banho Solidário Poa',
-      city: 'Porto Alegre',
-      state: 'RS',
-      description:
-         'Um projeto da ONG Centro Social da Rua para estimular a autoestima e inclusão.',
-      image: 'https://bit.ly/dan-abramov',
-      link:`/edit_my_event`
+   const {user} = useAuth()
+   async function getEvents() {
+      try {
+         const result = await api.get(`/donates/get_list_events/${user.id}`).then(e => e.data)
+         const resultList = []
+         result.forEach(element => {
+            resultList.push({
+               title:element.title,
+               city:element.local_by_donate.city,
+               description:element.description,
+               id:element.id,
+               image:element.picture,
+               link:`/homeless_help/${element.id}`,
+               state:element.local_by_donate.state,
+               date_ini:(element.type == "E") && format(new Date(element.start_date)),
+               date_end:(element.type == "E") && format(new Date(element.end_date))
+            }
+         )
+         })
+         setList(resultList)
+      } catch (e) {
+         
+      }
    }
+   
+   useEffect(() => {
+      getEvents()
+   }, [])
 
-   const list: CardHomerlessProps[] = [
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-      card,
-   ]
+
+   // const card: CardHomerlessProps = {
+   //    id: '1',
+   //    title: 'Banho Solidário Poa',
+   //    city: 'Porto Alegre',
+   //    state: 'RS',
+   //    description:
+   //       'Um projeto da ONG Centro Social da Rua para estimular a autoestima e inclusão.',
+   //    image: 'https://bit.ly/dan-abramov',
+   //    link:`/edit_my_event`
+   // }
+
+   // const list: CardHomerlessProps[] = [
+   //    card,
+   //    card,
+   //    card,
+   //    card,
+   //    card,
+   //    card,
+   //    card,
+   //    card,
+   //    card,
+   // ]
 
    function ListaCard() {
       const lists: ReactNode[] = []

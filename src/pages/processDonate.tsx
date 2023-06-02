@@ -13,8 +13,24 @@ import { InputFile } from '../components/inputFile';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useEffect } from 'react';
+import { api } from '../services/api/axios';
+import { useAuth } from '../hooks/useAuth';
 
 export function ProcessDonate() {
+   const {user} = useAuth()
+   async function getEvents() {
+      try {
+         const result = await api.get(`/donates/get_list_events/${user.id}`).then(e => e.data)
+         console.log(result)
+      } catch (e) {
+         
+      }
+   }
+   
+   useEffect(() => {
+      getEvents()
+   }, [])
 
    const schema = yup.object({
       checks: yup.array().min(1,"você deve selecionar um").typeError(""),
