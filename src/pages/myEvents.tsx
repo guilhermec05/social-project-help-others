@@ -49,30 +49,6 @@ export function MyEvents() {
       getEvents()
    }, [])
 
-
-   // const card: CardHomerlessProps = {
-   //    id: '1',
-   //    title: 'Banho Solidário Poa',
-   //    city: 'Porto Alegre',
-   //    state: 'RS',
-   //    description:
-   //       'Um projeto da ONG Centro Social da Rua para estimular a autoestima e inclusão.',
-   //    image: 'https://bit.ly/dan-abramov',
-   //    link:`/edit_my_event`
-   // }
-
-   // const list: CardHomerlessProps[] = [
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   //    card,
-   // ]
-
    function ListaCard() {
       const lists: ReactNode[] = []
 
@@ -90,7 +66,7 @@ export function MyEvents() {
       gap={15}>
          <Header  hasNGOs/>
             <Flex flexDirection={'column'} maxW={'1300px'}  >
-               <Flex justifyContent={'space-between'}  wrap={'wrap'} p={'10px'} gap={5} >
+               {/* <Flex justifyContent={'space-between'}  wrap={'wrap'} p={'10px'} gap={5} >
                  <SearchInput />
                  <IconButton 
                      aria-label='Search' 
@@ -138,7 +114,7 @@ export function MyEvents() {
                   <Text fontSize={'h7'} fontWeight={'700'}  p={'10px'} mt={'20px'}>
                     Total de {'9'} eventos
 						      </Text>
-               </Flex>
+               </Flex> */}
                
                <Flex
                  

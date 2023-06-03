@@ -242,9 +242,9 @@ export function HomlessProfile() {
          name:v.label, 
          quantity:v.quantity,
          user_id:user.id
-      }))
+      })).filter(v => v.id)
 
-
+      console.log(items)
       const body = {items,file:files}
 
       await api.put(`item_donates/concluded_item_by_donate`,body,{
@@ -308,10 +308,7 @@ export function HomlessProfile() {
       }
    }
 
-   async function onSubmit(data: FormData){
-      console.log(files)
-      console.log(data)
-      
+   async function onSubmit(data: FormData){    
       try {
          setLoad(true)
          switch (typeSubmit) {
@@ -359,11 +356,11 @@ export function HomlessProfile() {
       justifyContent={'center'}
    
       gap={5}>
-         <Header/>
+         <Header hasNGOs={user.type == "N"} />
          {load &&<Loading/>}
             
             <Flex justifyContent={'flex-start'} maxW={'1400px'} w={'100%'}  p={'10px'} >
-               <Back link={'/home'}/>
+               <Back link={(user.type == "N")?'/my_events':'/home'}/>
             </Flex>
             <Flex flexDirection={'column'} maxW={'1400px'}>
                <form  onSubmit={handleSubmit(onSubmit)} >

@@ -114,9 +114,11 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 		const lists: ReactNode[] = []
 		
 		listCheckBox.forEach((v,key) =>{ 
-			
-				if(key < listCheckBox.length -  (hasOthers?1:0)){
+				console.log(v)
+				if(key < listCheckBox.length -  (hasOthers?1:0) && v.label != ""){
 					// console.log(v.quantity)
+
+
 					lists.push( 
 						<InputCountNumberChecker canEdit={canEdit}  listCheckBox={listCheckBox} key={key}  checked={v.checked}  number={key} label={v.label} quantity={(v.quantity || 0)} useControl={useControl} setCheckBox={setCheckBox} />
 							
