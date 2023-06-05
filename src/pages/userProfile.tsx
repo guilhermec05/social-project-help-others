@@ -13,8 +13,8 @@ import { useAuth } from "../hooks/useAuth";
 
 
 export function UserPropfile({hasAdm = false}:HeaderProps){
-    
     const {user} = useAuth()
+    hasAdm = (user.type === "A")
     function HasAdm(){
         return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza" text="você passarar por um processo de avaliação com outros adms." >
             <Text textDecoration={'underline'} color={'primary'} cursor={'pointer'}>Quero Ser adm!</Text>
@@ -53,7 +53,7 @@ export function UserPropfile({hasAdm = false}:HeaderProps){
         // justifyContent={'center'} 
         // alignItems={'center'}
      >
-        <Header  hasAdm={hasAdm}/>
+        <Header  hasAdm={hasAdm} />
 
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box 

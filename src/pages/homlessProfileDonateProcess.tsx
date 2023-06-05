@@ -233,8 +233,8 @@ export function HomlessProfileDonateProcess() {
                      </Box>
                   </Box>
                </Flex>
-               <Footer />
             </Flex>
+               <Footer />
       </Flex>
       
    )

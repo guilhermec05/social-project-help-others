@@ -469,8 +469,8 @@ export function HomeAdm() {
                      </TabPanels>
                   </Tabs>
                </Flex>
-            <Footer />
             </Flex>
+            <Footer />
       </Flex>
    )
 }
