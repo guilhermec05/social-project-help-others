@@ -164,8 +164,8 @@ export function Home() {
                >
                   {ListaCard()}
                </Flex>
-               <Footer />
             </Flex>
+               <Footer />
       </Flex>
    )
 }

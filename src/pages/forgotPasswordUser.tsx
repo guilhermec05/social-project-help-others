@@ -7,9 +7,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { api } from "../services/api/axios";
+import { useState } from 'react';
+import { Loading } from "../components/loading";
 
 export function FogotPasswordUser(){
+    
+    const [load, setLoad] = useState(false)
     const toast = useToast()
+
+
     const navigate = useNavigate();  
 
 
@@ -32,6 +38,7 @@ export function FogotPasswordUser(){
         // alert(submit)
         console.log(data)
         try {
+            setLoad(true)
             await api.post('/auth/send_forgot',{email:data.email}).then(res=> res.data)
             toast({
                 title: 'senha alterada com sucesso',
@@ -43,6 +50,7 @@ export function FogotPasswordUser(){
             })
             navigate('/')
         } catch (error) {
+            
             console.log(error)
             toast({
                 title: error?.response.data.message,
@@ -52,6 +60,8 @@ export function FogotPasswordUser(){
                 position:'top-right',
                 
             })
+        }finally{
+            setLoad(false)
         }
        
         
@@ -68,6 +78,7 @@ export function FogotPasswordUser(){
             p={5}
             px={2}
         >
+            {load && <Loading/>}
         <Box 
             bg={'secondary'}
             display={'flex'}
@@ -80,6 +91,7 @@ export function FogotPasswordUser(){
             p={12}
             px={2}
         >
+            
                 <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}> 
                     <Logo width={'100px'} />
                     
