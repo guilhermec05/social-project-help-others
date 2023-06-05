@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useState, useEffect } from 'react';
-import {  useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import { api } from '../services/api/axios';
 import { useAuth } from '../hooks/useAuth';
 import { Loading } from '../components/loading';
@@ -43,15 +43,20 @@ interface resultProps{
       postal_code:string
       state:string
       street:string
-   }
-   process_begin:boolean
-   item:checkBoxProps[]
+   },
+   complete_donate_by_donor:boolean,
+   there_donate: boolean,
+   process_begin:boolean,
+   donation_done:boolean,
+   number_process:number
+   item:checkBoxProps[],
+   owner:string
 }
 
 export function HomlessProfile() {
    const toast = useToast()
    const  {id} = useParams();
-
+   const navigate = useNavigate();
    const {user} = useAuth()
    const [load, setLoad] = useState<boolean>(false)
    const [checkBox, setCheckBox] = useState<checkBoxProps[]>([] as checkBoxProps[])
@@ -127,15 +132,29 @@ export function HomlessProfile() {
          result.process_begin = false
          result.my_process = false
          result.is_process_concluded = false
-         let is_user_process = [] ;
+         result.donation_done = donate.status == "C"
+         if(donate.type === "D"){
+               result.owner = donate.user.Persons.name+" "+donate.user.Persons.lastName
+         }else{
+            result.owner = donate.user.NGOS.name
+         }
+
+         let is_user_process: string[] = [] ;
    
 
          const itens = donate.item_by_donate.map(v =>{
 
 
             const len = v.item_donate_by_user.filter(values => values.user_id == user.id)
+
+            if(v.item_donate_by_user.filter(process => process.donate).length > 0){
+               result.there_donate = true
+            }
+
+            if(v.item_donate_by_user.filter(values => values.user_id == user.id && v.is_donate).length > 0 ){
+               result.complete_donate_by_donor = true
+            }
             
-           
             if(v.item_donate_by_user.filter(process => process.status == "A").length > 0){
                result.process_begin = true
             }
@@ -183,10 +202,45 @@ export function HomlessProfile() {
          
          const itemSelect =  !result.process_begin && result.isOwner ?  listBox : itens
 
+         result.number_process = 0
+
+         if(result.isOwner ){
+            
+            if(result.process_begin){
+               result.number_process = 1
+            }
+
+            if(result.there_donate){
+               result.number_process = 2
+            }
+   
+            
+            if(result.donation_done){
+               result.number_process = 3
+            }
+   
+         }
+   
+         if(result.is_process_concluded || result.my_process){     
           
+            if(result.my_process){
+               result.number_process = 1
+            }
+   
+   
+            if(result.is_process_concluded){
+               result.number_process = 2
+            }
+   
+            
+            if(result.complete_donate_by_donor){
+               result.number_process = 3
+            }
+         }
 
          setCheckBox(itemSelect.filter(v => ( is_user_process.length == 0 ||  is_user_process.includes(v.value)) ))
          setDonates(result)
+         // stepsDonation()
          
       } catch (error) {
          
@@ -194,6 +248,7 @@ export function HomlessProfile() {
          setLoad(false)
       }
    }
+
 
 
    useEffect(()=>{
@@ -244,7 +299,6 @@ export function HomlessProfile() {
          user_id:user.id
       })).filter(v => v.id)
 
-      console.log(items)
       const body = {items,file:files}
 
       await api.put(`item_donates/concluded_item_by_donate`,body,{
@@ -253,6 +307,7 @@ export function HomlessProfile() {
           }
       }).then(res => res.data)
      
+      // navigate('/home')
       // console.log(da)
    }
 
@@ -266,6 +321,7 @@ export function HomlessProfile() {
                      px={'30px'} 
                      bg={'danger'} 
                      type={'submit'} 
+                     
                      isDisabled={ donates.process_begin }  
                      onClick={e => setTypeSubmit("D")}
                      _hover={{
@@ -283,6 +339,7 @@ export function HomlessProfile() {
               isDisabled={(donates.is_process_concluded)}
               />
             <ButtonMain 
+
                      fontSize={'h6'}  
                      title="Concluir Doação" 
                      px={'30px'} 
@@ -381,7 +438,7 @@ export function HomlessProfile() {
                            alt="homeless image"
                         />
                         <Box m={5}>
-                           <Text mt={6} fontSize={'h5'} fontWeight={'700'} noOfLines={1}>
+                           <Text mt={6} fontSize={'h5'} fontWeight={'700'} noOfLines={1} >
                               {donates.title}
                            </Text>
                            <Flex>
@@ -391,16 +448,17 @@ export function HomlessProfile() {
                               </Text>
                            </Flex>
                            <Flex my={5} gap={3} alignItems={'center'} justifyContent={'center'}>
-                              {donates.date_ini && <Text fontSize={'h6'}><CalendarIcon m={1}/>{format(new Date(donates.date_ini))}</Text>}{(donates.date_end && donates.date_ini) && <Text fontSize={'h6'}>-</Text>}  {donates.date_end && <Text fontSize={'h6'}><CalendarIcon m={1}/>{format(new Date(donates.date_end))}</Text>}
+                              {(donates.date_end && donates.date_ini)  && <><Text fontSize={'h6'}><CalendarIcon m={1}/>{format(new Date(donates.date_ini))}</Text><Text fontSize={'h6'}>-</Text><Text fontSize={'h6'}><CalendarIcon m={1}/>{format(new Date(donates.date_end))}</Text></>}
                            </Flex>
                            <Flex align={"end"}>
-                              <Text mt={8} fontSize={'h7'} fontWeight={'300'}>
+                              <Text mt={8} fontSize={'h7'}   fontWeight={'300'}>
                                  {donates.description}
                               </Text>
                            </Flex>
-
+                          
                            <Box mt={6} display={'flex'} flexDirection={'column'} gap={5}>
-                              {/* <StepsMain variant='circles' state={1} /> */}
+                              <Box display={'flex'} gap={1}><Text  fontSize={'h7'} fontWeight={'900'} >criado por:</Text> <Text>{donates.owner}</Text> </Box>
+                              {(donates.isOwner || ((donates.is_process_concluded || donates.my_process))) && <StepsMain state={donates.number_process}/> }
                               <Text fontSize={'h7'} fontWeight={'900'} >
                                  Itens necessitados:
                               </Text>

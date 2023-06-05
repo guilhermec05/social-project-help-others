@@ -24,7 +24,8 @@ export function HomeAdm() {
       titulo: string
       Origem:string
       Destino:string
-      id:string
+      id:string,
+      user_id:string
    }
 
    const [usersAcess,setUsersAcess] = useState<tableReponse[]>([] as tableReponse[] )
@@ -116,6 +117,64 @@ export function HomeAdm() {
       }
 
 
+      async function ApprovedUser(id:string){
+         try { 
+            setIsLoading(true)
+            await api.get(`user/approved/${id}`).then(res=> res.data)
+   
+            toast({
+               title: "usuário aprovado com sucesso",
+               status: 'success',
+               duration: 5000,
+               isClosable: true,
+               position:'top-right',
+               
+           })
+   
+           await AccessSelect()
+         } catch (error) {
+            toast({
+               title: error?.response.data.message,
+               status: 'error',
+               duration: 5000,
+               isClosable: true,
+               position:'top-right',
+               
+           })
+         }finally{
+            setIsLoading(false)
+         }
+      }
+
+      async function RejectUser(id:string){
+         try {
+            setIsLoading(true)
+            await api.get(`user/rejected/${id}`).then(res=> res.data)
+            toast({
+               title: "usuário recusado com sucesso",
+               status: 'success',
+               duration: 5000,
+               isClosable: true,
+               position:'top-right',
+               
+           })
+   
+           await AccessSelect()
+         } catch (error) {
+            toast({
+               title: error?.response.data.message,
+               status: 'error',
+               duration: 5000,
+               isClosable: true,
+               position:'top-right',
+               
+           })
+         }finally{
+            setIsLoading(false)
+         }
+      }
+
+
       function resultTbody(){
          const list: ReactNode[] = []
          if(usersAcess){
@@ -129,10 +188,17 @@ export function HomeAdm() {
                         color={'primary'}
                         fontSize={'h3'}
                         cursor={'pointer'}
+                        onClick={e => ApprovedUser(v.id)}
                         _active={{color:'dark_light'}}
                      />
+                      <Icon as={AiFillDelete}
+                        color={'danger'}
+                        fontSize={'h3'}
+                        cursor={'pointer'}
+                        onClick={e => RejectUser(v.id)}
+                        _active={{color:'danger_dark'}}
+                     />
    
-                     <ExcludeComplaint />
                   </Td>
                </Tr>)
             })  
@@ -178,7 +244,7 @@ export function HomeAdm() {
          setDonateProcess([])
          donates.forEach(e=>{
 
-            data.push({id: e.id,titulo:e.title, Origem:e.origin, Destino:  e.destiny})
+            data.push({id: e.id,titulo:e.title, Origem:e.origin, Destino:  e.destiny, user_id: e.user_id})
 
          })
 
@@ -214,15 +280,9 @@ export function HomeAdm() {
                <Td>{v.Origem}</Td>
                <Td>{v.Destino}</Td>
                <Td>
-                  <Icon as={FaCheck}
-                     color={'primary'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                  />
-                  <ExcludeComplaint />
+     
 
-                   <Link to={'/donate_process/1'}>
+                   <Link to={`/donate_process/${v.id}/user/${v.user_id}`}>
                      <Icon as={AiFillEye}
                         color={'primary'}
                         fontSize={'h3'}
@@ -369,7 +429,7 @@ export function HomeAdm() {
    }
 
 
-   {isLoading && <Loading />}
+   
 
    return (<Flex
       display={'flex'}  
@@ -377,6 +437,7 @@ export function HomeAdm() {
       alignItems={'center'}
       justifyContent={'center'}
       gap={5}>
+         {isLoading && <Loading />}
          <Header hasAdm={true} />
             <Flex flexDirection={'column'} maxW={'1400px'}>
                <Flex justifyContent={'flex-end'}   p={'30px'} >
@@ -408,7 +469,7 @@ export function HomeAdm() {
                      </TabPanels>
                   </Tabs>
                </Flex>
-               <Footer />
+            <Footer />
             </Flex>
       </Flex>
    )

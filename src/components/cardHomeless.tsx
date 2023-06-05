@@ -5,6 +5,7 @@ import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import location_icon from '../assets/location-icon.png'
 import { CalendarIcon } from '@chakra-ui/icons'
+import { FaUserTie } from "react-icons/fa";
 
 export interface CardHomerlessProps {
 	id: string;
@@ -16,6 +17,7 @@ export interface CardHomerlessProps {
 	link:string
 	date_ini?:string
 	date_end?:string
+	isOnwer?:boolean
 }
 
 export function CardHomerless({
@@ -27,7 +29,8 @@ export function CardHomerless({
 	description,
 	link,
 	date_ini,
-	date_end
+	date_end,
+	isOnwer
 }: CardHomerlessProps) {
 	return (
 		<Box display={'flex'} flexDirection={'column'}>
@@ -51,10 +54,10 @@ export function CardHomerless({
 					</Text>
 					<Flex>
 						<Image mr={3} src={location_icon} />
-						<Text fontSize={'h6'}>
+						<Text fontSize={'h6'} mx={3}>
 							{city} - {state}
 						</Text>
-						
+						{isOnwer && <Icon as={FaUserTie} />}
 					</Flex>
 					<Flex justifyContent={'center'} alignItems={'center'} gap={5}>
 						

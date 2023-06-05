@@ -23,6 +23,12 @@ export function AlertDialogConfirm({ children, func,title,text}:AlertDiologConfi
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
 
+
+    function confirm(){
+        onClose()
+        console.log('peidei')
+    }
+
     return (
         <>
            <Box onClick={onOpen}  >
@@ -44,7 +50,7 @@ export function AlertDialogConfirm({ children, func,title,text}:AlertDiologConfi
                         </AlertDialogBody>
                         <AlertDialogFooter>
                             <ButtonMain title='não' bg={'secondaryLight'} color={'dark'} ref={cancelRef} onClick={onClose}/>
-                            <ButtonMain title='sim'  bg={'secondaryLight'} color={'dark'} onClick={onClose} ml={3}/>
+                            <ButtonMain title='sim'  bg={'secondaryLight'} color={'dark'} onClick={e => confirm()} ml={3}/>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialogOverlay>

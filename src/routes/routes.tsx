@@ -88,7 +88,7 @@ const router = createBrowserRouter([
       element:  <PrivateRoute><HomlessProfileReport/></PrivateRoute>,
     },
     {
-      path: "/donate_process/:id",
+      path: "/donate_process/:id/user/:user_id",
       element: <PrivateRoute> <HomlessProfileDonateProcess/></PrivateRoute>,
     },
     {

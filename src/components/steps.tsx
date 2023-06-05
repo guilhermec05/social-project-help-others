@@ -1,42 +1,56 @@
-// import { useColorModeValue } from "@chakra-ui/color-mode";
-// import { Box } from "@chakra-ui/layout";
-import { Button, Flex, Heading } from "@chakra-ui/react";
-import { Step, Steps, useSteps } from "chakra-ui-steps";
+import {  Flex, Heading, Box  } from "@chakra-ui/react";
+import {Step,Stepper, useSteps ,StepIndicator,StepStatus,StepSeparator,StepTitle} from '@chakra-ui/stepper'
 import { GrInProgress } from "react-icons/gr";
 import { BiDonateHeart } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
-// GrInProgress
+import { useEffect } from "react";
 
 const steps = [
-  { label: "Em processo", icon: GrInProgress },
-  { label: "Doado", icon: BiDonateHeart },
-  { label: "Completo", icon: FaCheck },
+  { title: "Em processo", },
+  { title: "Doado", },
+  { title: "Completo" },
 ];
 
 interface stepProps{
-  variant: "circles" | "circles-alt" | "simple" | undefined;
   state: number
 }
 
-export function StepsMain({variant,state}:stepProps){
-
-  const { activeStep, setStep } = useSteps({
-    initialStep: state,
-  });
+export function StepsMain({state}:stepProps){
  
+  const { activeStep,setActiveStep  } = useSteps({
+    index: state,
+    count: steps.length, 
+  })
+
+  useEffect(()=>{
+    setActiveStep(state)
+  },[state])
+  
   return (
     <Flex flexDir="column" width="100%">
-      <Steps
-        variant={variant}
-        // orientation={'vertical'}
+      <Stepper
+        index={activeStep}
         colorScheme="green"
-        activeStep={activeStep}
+        height='200px'
+        orientation='vertical'
+        gap='0'
       >
-        {steps.map(({ label, icon }, index) => (
-          <Step label={label} key={label} icon={icon}>
+        {steps.map((v,k) =>{
+         return  <Step key={k} >
+            <StepIndicator>
+              <StepStatus
+                  complete={<GrInProgress />}
+                  incomplete={<BiDonateHeart />}
+                  active={<FaCheck />}
+              />
+            </StepIndicator>
+            <Box flexShrink='0'>
+              <StepTitle>{v.title}</StepTitle>
+            </Box>
+            <StepSeparator/>
           </Step>
-        ))}
-      </Steps>
+        })}
+      </Stepper>
     </Flex>
   );
 };

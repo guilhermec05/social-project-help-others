@@ -51,7 +51,7 @@ export function Complaint({id,user_id}:ComplaintProps) {
     
 
     try {
-      await api.post(`/donates/insert_reports/${id}`,{subject:data.title,description:data.description,user_id}).then(res=> res.data)
+      await api.post(`/report/insert_reports/${id}`,{subject:data.title,description:data.description,user_id}).then(res=> res.data)
       setValue("title","")
       setValue("description","")
       toast({
@@ -94,7 +94,7 @@ export function Complaint({id,user_id}:ComplaintProps) {
           
         >
           <ModalOverlay />
-          <ModalContent p={10} >
+          <ModalContent p={2} >
             <form onSubmit={handleSubmit(onSubmit)}>
               <ArrowBackIcon 
                   fontSize={'h3'}   
@@ -118,8 +118,8 @@ export function Complaint({id,user_id}:ComplaintProps) {
                     Por qual motivo você esta<br/>denunciando este anúncio ?
                   </Text>
                 </Flex>
-                <InputMain  useControl={control}  name="title"  mb={5} placeholder='Titulo' w={'450px'} h={'50px'} />
-                <TextAreaMain useControl={control} name='description' placeholder='Descricão' w={'450px'} />
+                <InputMain  useControl={control}  name="title"  mb={5} placeholder='Titulo' maxW={'450px'} h={'50px'} />
+                <TextAreaMain useControl={control} name='description' placeholder='Descricão' maxW={'450px'} />
               </ModalBody>
 
               <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'} >

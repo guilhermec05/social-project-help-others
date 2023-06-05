@@ -1,9 +1,6 @@
 import {extendTheme } from '@chakra-ui/react'
-import chakraTheme from '@chakra-ui/theme'
-import "@fontsource/roboto"
 
-const { Button, Input } = chakraTheme.components
-import { StepsTheme as Steps } from "chakra-ui-steps";
+import "@fontsource/roboto"
 
 
 const theme = extendTheme({
@@ -16,8 +13,10 @@ const theme = extendTheme({
       secondary:'#FFFFFF',
       secondaryLight:'#e0e0e0',
       danger:'#EA4335',
+      danger_dark:'#db4335',
       success:'#5CA95F',
-      warning:'#FBBC05'
+      warning:'#FBBC05',
+      warning_danger: '#e0a800'
     },
     fontSizes:{
       'h1':'48px',
@@ -36,12 +35,7 @@ const theme = extendTheme({
           fontFamily:`'Roboto', sans-serif`
         }
       }
-    },
-    components: {
-      Button,
-      Input,
-      Steps
-    },
+    }
  })
 
 

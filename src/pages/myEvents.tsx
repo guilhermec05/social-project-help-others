@@ -128,8 +128,8 @@ export function MyEvents() {
                >
                   {ListaCard()}
                </Flex>
-               <Footer />
             </Flex>
+               <Footer />
            
       </Flex>
    )

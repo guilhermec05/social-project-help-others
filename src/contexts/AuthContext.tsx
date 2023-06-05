@@ -12,7 +12,8 @@ interface userProps{
     email:string;
     type:'P'|'A'|'N',
     state_or_province?:string,
-    city?:string
+    city?:string,
+    send_administrador:boolean
 }
 
 interface propsProviderAuth{
@@ -66,9 +67,9 @@ export function AuthContextProvider({children}:propsProviderAuth){
        try {
           
             const dataResponse =  await api.post('http://localhost:3000/auth/login',{username:user, password:password })
-            const {id,email,name,type,state_or_province,city} = dataResponse.data
+            const {id,email,name,type,state_or_province,city,send_administrador} = dataResponse.data
             api.defaults.headers.common['Authorization'] = `Bearer ${dataResponse.data.access_token}`
-            await setUser({id,email,name,type,state_or_province,city})
+            await setUser({id,email,name,type,state_or_province,city,send_administrador})
             localStorage.setItem("signIn", JSON.stringify({id,email,name,type, token: dataResponse.data.access_token, state_or_province,city}) )
 
         } catch (error) {

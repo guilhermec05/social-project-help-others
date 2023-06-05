@@ -64,7 +64,7 @@ export function SignUpUserHomeless(){
         // reference:yup.string()
         // .min(10,"o campo deve conter pelo ou menos 10 caracteres"),
         street:yup.string()
-        .min(10,"o campo deve conter pelo ou menos 10 caracteres")
+        .min(4,"o campo deve conter pelo ou menos 4 caracteres")
         .required("o campo não deve estar vazio"),
         cep:yup.string().required("o campo não deve estar vazio").test("cep","cep não é valido",(value) => useValidationsBR('cep',value) ),
         uf:yup.string().required("o campo não deve estar vazio"),

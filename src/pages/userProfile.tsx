@@ -7,15 +7,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { AlertDialogConfirm } from "../components/alertDialogConfirm";
+import { useAuth } from "../hooks/useAuth";
 
 
 
 
 export function UserPropfile({hasAdm = false}:HeaderProps){
     
-
+    const {user} = useAuth()
     function HasAdm(){
-        return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza" text="você passarar por um processo de avaliação com outros adms.">
+        return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza" text="você passarar por um processo de avaliação com outros adms." >
             <Text textDecoration={'underline'} color={'primary'} cursor={'pointer'}>Quero Ser adm!</Text>
         </AlertDialogConfirm>) 
     }
@@ -68,7 +69,7 @@ export function UserPropfile({hasAdm = false}:HeaderProps){
                
                 <Flex maxW={'500px'} flexDirection={'column'}  gap={3} px={5}>
                     <Flex justifyContent={'flex-end'} >
-                         {HasAdm()}
+                         {((user.type == "P" && !user.send_administrador) && HasAdm())}
                     </Flex>
                     <Text fontSize={'h4'} >Atualizar seus dados</Text>
                 </Flex>

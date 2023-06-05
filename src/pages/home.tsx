@@ -15,6 +15,7 @@ import { Loading } from '../components/loading'
 export function Home() {
    const [load, setLoad] = useState<boolean>(false)
    const {user,logOut} = useAuth()
+
    const toast = useToast()
    const [list,setList] = useState<CardHomerlessProps[]>([] as CardHomerlessProps[])
 
@@ -79,7 +80,8 @@ export function Home() {
                   link:`/homeless_help/${element.id}`,
                   state:element.local_by_donate.state,
                   date_ini:(element.type == "E") && format(new Date(element.start_date)),
-                  date_end:(element.type == "E") && format(new Date(element.end_date))
+                  date_end:(element.type == "E") && format(new Date(element.end_date)),
+                  isOnwer: element.user_id ==  user.id
                }
             )
          });

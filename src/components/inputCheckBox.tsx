@@ -33,7 +33,6 @@ interface InputCountNumberCheckerProps extends CheckboxProps{
 
 function InputCountNumberChecker({useControl,number,checked,quantity,canEdit,label,setCheckBox,listCheckBox,...rest}:InputCountNumberCheckerProps){
 	
-	console.log(quantity)
 	const [valueQuantity,setValueQuantity] = useState<string|number>(quantity)
 
 
@@ -114,7 +113,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 		const lists: ReactNode[] = []
 		
 		listCheckBox.forEach((v,key) =>{ 
-				console.log(v)
+		
 				if(key < listCheckBox.length -  (hasOthers?1:0) && v.label != ""){
 					// console.log(v.quantity)
 
@@ -125,25 +124,7 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 					)
 				}
 
-					lists.push( 
-						<Flex gap={5}  alignItems={'center'} display={'none'}>
-							<Checkbox 
-								{...useControl}
-								value={v.value}
-								key={key}
-								colorScheme={'green'} 
-								defaultChecked={v.checked}
-								isInvalid={false} 
-								{...rest}
-							>
-								<Text fontSize={'h6'} fontWeight={500}>teste</Text>
-							</Checkbox>		
-							
-							<Text>QTD:</Text>
-							
-						</Flex>
-							
-					)
+				
 				
 			}
 		 )
@@ -161,6 +142,20 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 			display={'flex'} 
 			flexDirection={'column'}>
 				{List()}
+						<Flex gap={5}  alignItems={'center'} display={'none'}>
+									<Checkbox 
+										
+										value={""}	
+										colorScheme={'green'} 
+										isInvalid={false} 
+										{...rest}
+									>
+										<Text fontSize={'h6'} fontWeight={500}>teste</Text>
+									</Checkbox>		
+									
+									<Text>QTD:</Text>
+									
+						</Flex>
 				{HasOthers()}
 				<FormErrorMessage fontWeight={800}>{error?.checks?.message}</FormErrorMessage>
 			</FormControl>

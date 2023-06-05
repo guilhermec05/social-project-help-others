@@ -1,4 +1,4 @@
-import { Box, Flex, Text, ModalContent, Image, HStack, useDisclosure, Modal, ModalOverlay, ModalHeader, ModalBody, ModalFooter } from '@chakra-ui/react'
+import { Box, Flex, Text, ModalContent, Image, HStack, useDisclosure, Modal, ModalOverlay, ModalHeader, ModalBody, ModalFooter, useToast } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
 
@@ -9,11 +9,115 @@ import { InputCheckBox } from '../components/inputCheckBox';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Logo } from '../components/logo';
 import { ExcludeHomless } from '../components/excludePopup-ProfileHomless'
+import { useNavigate, useParams } from 'react-router-dom';
+import   { useEffect, useState }  from 'react'
+import { api } from '../services/api/axios';
+import { Loading } from '../components/loading';
 
+
+interface HomlessProfileReportProps{
+   id:string
+   title:string
+   description:string
+   picture:string
+   date_ini?:string,
+   date_end?:string,
+   email:string,
+   reports:{
+      ids:string,
+      title:string,
+      text:string
+   },
+   locale:{
+      city:string
+      description:string
+      district:string
+      donate_id:string
+      id:string
+      number:string
+      postal_code:string
+      state:string
+      street:string
+   }
+   item:{id:string,quantity:string,name:string}[],
+ 
+ 
+}
 
 export function HomlessProfileReport() {
 
    const { isOpen, onOpen, onClose } = useDisclosure()
+   const toast = useToast()
+   const  {id} = useParams();
+   const navigate = useNavigate();
+   const [donates,setDonates] = useState<HomlessProfileReportProps>({} as HomlessProfileReportProps)
+   const [isLoading,setIsLoading] = useState<Boolean>(false)
+
+   async function initial(){
+      try {
+         setIsLoading(true)
+         const displayShow :HomlessProfileReportProps = {} as HomlessProfileReportProps
+         const result = await api.get(`report/get_report/${id}`).then(res=> res.data)
+         displayShow.id = result.donates.id
+         displayShow.title = result.donates.title
+         displayShow.description = result.donates.description
+         displayShow.locale = result.donates.local_by_donate
+         displayShow.date_ini = result.donates.start_date
+         displayShow.date_end = result.donates.end_date
+         displayShow.picture = result.donates.picture
+         displayShow.item = result.donates.item_by_donate.map(v =>{   
+            return {
+               id:v.id,
+               name:v.item.name,
+               quantity:v.quantity
+         }})
+
+         displayShow.reports = {
+            ids: result.id,
+            text: result.text,
+            title: result.title
+         }
+
+         displayShow.locale = result.donates.local_by_donate
+         
+         setDonates(displayShow)
+      } catch (error) {
+         toast({
+            title: error?.response.data.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+            
+        })
+        navigate('/home_adm')
+      }finally{
+         setIsLoading(false)
+      }
+   }
+
+   async function brockDonate(){
+      try {
+         setIsLoading(true)
+         await api.put('report/disable_donate',{id:donates.id, text: donates.reports.title })
+      } catch (error) {
+         toast({
+            title: error?.response.data.message,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+            
+        })
+        navigate('/home_adm')
+      }finally{
+         setIsLoading(false)
+      }
+   }
+
+   useEffect(()=>{
+      initial()
+   },[])
 
    return (
       <Flex
@@ -24,7 +128,7 @@ export function HomlessProfileReport() {
       
       gap={5}>
          <Header hasAdm={true}/>
-            
+            {isLoading && <Loading />}
             <Flex justifyContent={'flex-start'} maxW={'1400px'} w={'100%'}  p={'10px'} >
                <Back link={'/home_adm'}/>
             </Flex>
@@ -40,24 +144,24 @@ export function HomlessProfileReport() {
                >
                   <Box maxW={'850px'} maxH={'1250px'} overflow="hidden">
                      <Image
-                        src={'https://bit.ly/dan-abramov'}
+                        src={donates.picture}
                         boxSize={'800px'}
                         h={'370px'}
                         alt="homeless image"
                      />
                      <Box m={5}>
                         <Text mt={6} fontSize={'h5'} fontWeight={'700'} noOfLines={1}>
-                           {'Ajude o José'}
+                           {donates.title}
                         </Text>
                         <Flex>
                            <Image mt={8} mr={3} src={location_icon} />
                            <Text mt={8} fontSize={'h6'}>
-                              {'Rua Silveira'} , {'500'} - {'São João'} - {'Porto Alegre'} - {'RS'}
+                              {donates?.locale?.street} , {donates?.locale?.number} - {donates?.locale?.district} - {donates?.locale?.city} - {donates?.locale?.state}
                            </Text>
                         </Flex>
                         <Flex align={"end"}>
                            <Text mt={8} fontSize={'h7'} fontWeight={'300'}>
-                              {'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.'}
+                              {donates.description}
                            </Text>
                         </Flex>
 
@@ -65,13 +169,24 @@ export function HomlessProfileReport() {
                            <Text fontSize={'h7'} fontWeight={'900'} >
                               Itens necessitados:
                            </Text>
-                           <InputCheckBox listCheckBox={[{value:'1', label:'Comida',checked:true},{value:'7', label:'Cobertor'},{value:'6', label:'Saco de dormir'},{value:'55', label:'Sabonete'},{value:'4', label:'Escova de dentes'}]} isDisabled/>
-
+                           <Flex flexDirection={'column'}>
+                              {donates?.item && donates?.item.map(v =>{
+                                 return<><Text fontSize={'h6'}>{v.name} - {v.quantity}</Text></> 
+                              })}
+                           </Flex>
                         </Box>
                         <Box flexDirection={'row'}>
                         <Flex justifyContent={'absolute'} mt={4} gap={5} flexDirection={'row'}>
-                           <ButtonMain fontSize={'h6'} title="Ok" px={'30px'} bg={'primaryDark'} />
-                           <ExcludeHomless/>
+                           <ButtonMain 
+                              fontSize={'sx'} 
+                              title="Bloquear doação" 
+                              px={'30px'} 
+                              bg={'danger'} 
+                              _hover={{bg:'danger_dark'}}
+                              _active={{bg:'danger_dark'}} 
+                              onClick={brockDonate}
+                           />
+                           <ExcludeHomless id={donates?.reports?.ids} text={donates?.reports?.text} title={donates?.reports?.title} setLoad={setIsLoading}/>
                         </Flex>                        
 
                         </Box>
@@ -115,17 +230,8 @@ export function HomlessProfileReport() {
                                  <ModalBody pb={6}>
                                     <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'} gap={6}>
                                        
-                                       <Text fontSize={'h3'}>Titulo</Text>
-                                       <Text fontSize={'p'}>Ut reprehenderit voluptate laborum excepteur Lorem qui nisi dolore aute nisi cillum magna aliqua. 
-                                       Deserunt sint et cupidatat nisi ex aute cupidatat officia ea labore qui. Id occaecat laborum consequat nisi officia. 
-                                       In labore laborum enim ex aliquip. Cupidatat pariatur do excepteur sit Lorem veniam. Occaecat cupidatat nulla esse commodo culpa quis incididunt consectetur nulla.
-                                       Qui Lorem labore adipisicing ex tempor do. Exercitation Lorem et non sit anim labore. Excepteur ad sint consectetur consequat ut amet pariatur Lorem. Labore labore eu 
-                                       nisi voluptate sit fugiat Lorem fugiat. Nostrud eu occaecat nisi ad anim incididunt consequat magna.
-                                       Voluptate aliquip voluptate nulla nulla. Nostrud aliquip ex adipisicing sit laboris consectetur. Aliqua dolor
-                                        aute ex enim incididunt laboris excepteur irure ad nisi. Eu officia voluptate fugiat
-                                       nisi laboris eiusmod adipisicing. Et eu do culpa magna aute tempor consectetur est non est. Deserunt eu laboris do eiusmod.
-                                       Esse deserunt Lorem proident sunt sint qui veniam exercitation culpa sint elit. Sint cillum mollit est eiusmod fugiat veniam quis irure
-                                       et do deserunt ea. Lorem aute consequat ea eiusmod quis id dolore aliqua. Cillum ut nisi duis et ex adipisicing minim tempor.</Text>
+                                       <Text fontSize={'h3'}>{donates?.reports?.title}</Text>
+                                       <Text fontSize={'p'}>{donates?.reports?.text}</Text>
                                     </Flex>
                                  </ModalBody>
                               </ModalContent>

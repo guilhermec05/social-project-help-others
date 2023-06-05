@@ -6,10 +6,11 @@ export function Footer(){
                 p={'20px'}
                w={'100%'}
             >
-        <Box border={'1px solid'} borderColor={'dark_light'} opacity={'0.2'}/>
+        <Box border={'1px solid'} borderColor={'dark_light'}  opacity={'0.2'}/>
             <Box    
                     height={'120px'}
                     width={'100%'}
+                    maxW={'100vw'}
                     display={'flex'}
                     alignItems={'center'}
                     justifyContent={'center'}

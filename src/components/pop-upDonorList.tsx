@@ -15,8 +15,6 @@ import {
  
 } from '@chakra-ui/react'
 import {saveAs} from "file-saver";
-import { Button, ButtonProps } from '@chakra-ui/react'
-import { ButtonMain } from './button'
 import { useDisclosure } from '@chakra-ui/react'
 import { Back } from './back'
 import { Textarea } from '@chakra-ui/react'
@@ -37,10 +35,7 @@ export function DonateList({donate_id}:DonateListProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [result, setResult] = React.useState([])
 
-  function HandleDownload(picture:string){
-   const sufix = Date.now()+"_"+Math.round(Math.random() * 1e9)
-   saveAs(picture,sufix)
-  }
+
 
   async function initial(){
       try {
@@ -57,11 +52,13 @@ export function DonateList({donate_id}:DonateListProps) {
 
   return (
      <>
-        <HStack mt={4} mb={4}>
+        <Box mt={4} mb={4} display={'flex'} gap={1}>
            <Text
               fontWeight="bold"
               justifyContent={'center'}
               alignItems={'center'}
+              fontSize={'sx'}
+            //   fontSize={{'base':'xs', 'md':'p','lg':'p'}}
            >
               Clique aqui para visualizar os doadores:
            </Text>
@@ -71,10 +68,11 @@ export function DonateList({donate_id}:DonateListProps) {
               variant="link"
               textDecoration={'underline'}
               cursor={'pointer'}
+              fontSize={'sx'}
            >
               clique aqui!
            </Text>
-        </HStack>
+        </Box>
 
         <Modal
            closeOnOverlayClick={false}
@@ -104,12 +102,12 @@ export function DonateList({donate_id}:DonateListProps) {
               <ModalBody >
               <Accordion allowToggle>
                  {result.map(res =>{
-                     console.log(res)
+                  
                      return <AccordionItem>
                            <h2>
-                              <AccordionButton>
+                              <AccordionButton bg={'blackAlpha.50'} _hover={{bg:'blackAlpha.100'}}>
                                  <Box as="span" flex='1' display={'flex'} justifyContent={'space-between'} textAlign='left'>
-                                    <Text>{res.name}</Text><Text>{(res.picture !="") && <DownloadIcon onClick={e => HandleDownload(res.picture)} />}</Text>
+                                    <Text>{res.name}</Text><Text>{(res.picture !="") && <Box><CheckIcon mx={'5px'} color={'primary'}/></Box>}</Text>
                                  </Box>
                               <AccordionIcon />
                               </AccordionButton>   
