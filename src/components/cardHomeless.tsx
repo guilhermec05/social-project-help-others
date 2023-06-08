@@ -20,6 +20,7 @@ export interface CardHomerlessProps {
 	date_ini?:string
 	date_end?:string
 	isOnwer?:boolean
+	type:"E"|"D"
 }
 
 export function CardHomerless({

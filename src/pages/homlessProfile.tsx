@@ -488,8 +488,8 @@ export function HomlessProfile() {
                      </Box>
                   </Flex>
                </form>
-               <Footer />
             </Flex>
+               <Footer />
       </Flex>
       
    )

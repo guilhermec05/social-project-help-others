@@ -1,22 +1,22 @@
-import { Box, Flex, Text, Grid, useDisclosure, IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Center } from '@chakra-ui/react'
+import { Box, Flex, Text, Grid, useDisclosure, IconButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Center, Stack } from '@chakra-ui/react'
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
 import { CardHomerless, CardHomerlessProps } from '../components/cardHomeless'
 import { ReactNode, useState } from 'react'
-import { SelectMain } from '../components/select'
 import { SearchInput } from '../components/searchInput'
 import { CiFilter } from 'react-icons/ci'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Logo } from '../components/logo'
-import { CheckBox } from '../components/checkBox'
-import { InputCheckBox } from '../components/inputCheckBox'
+import { checkBoxProps, InputCheckBox } from '../components/inputCheckBox'
 import { ButtonMain } from '../components/button'
+
+import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 
 export function MyDonations() {
 
+   const [filterByName, setFilterByName] = useState()
+
    const { isOpen, onOpen, onClose } = useDisclosure()
-
-
 
    const card: CardHomerlessProps = {
       id: '1',
@@ -26,7 +26,8 @@ export function MyDonations() {
       description:
          'Está em situação de rua a 1 ano, veio do interior do RS em busca de emprego.',
       image: 'https://bit.ly/dan-abramov',
-      link:`/process_donate/${2}`
+      link:`/process_donate/${2}`,
+      type:"D"
    }
 
    const list: CardHomerlessProps[] = [
@@ -90,11 +91,25 @@ export function MyDonations() {
                                  <ModalBody>
                                     <Center flexDirection={'column'} gap={5} mb={5}>
                                        <Text fontSize={'h3'} textAlign={'center'}>Tipo:</Text>
-                                       <InputCheckBox listCheckBox={[{value:'1', label:'Pessoas',checked:true},{value:'2', label:'Ongs',checked:true}]} />
+                                       <Stack spacing={5} direction='row'>
+                                          <Checkbox colorScheme='green' defaultChecked>
+                                             Pessoas
+                                          </Checkbox>
+                                          <Checkbox colorScheme='green' defaultChecked>
+                                             Ongs
+                                          </Checkbox>
+                                       </Stack>
                                     </Center >
                                     <Center flexDirection={'column'} gap={5}  mb={5}>
                                        <Text fontSize={'h3'} textAlign={'center'}>Dono:</Text>
-                                       <InputCheckBox listCheckBox={[{value:'1', label:'Meus',checked:true},{value:'2', label:'Terceiro',checked:true}]} />
+                                       <Stack spacing={5} direction='row'>
+                                          <Checkbox colorScheme='green' defaultChecked>
+                                             Meu
+                                          </Checkbox>
+                                          <Checkbox colorScheme='green' defaultChecked>
+                                             Outros
+                                          </Checkbox>
+                                       </Stack>
                                     </Center>
                                     <Center>
                                        <ButtonMain fontSize={'p'} title="Filtrar" px={'30px'} bg={'primaryDark'} />   

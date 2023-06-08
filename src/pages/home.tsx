@@ -14,6 +14,7 @@ import { Loading } from '../components/loading'
 
 export function Home() {
    const [load, setLoad] = useState<boolean>(false)
+   const [filter, setFilter] = useState<"E"|"D">()
    const {user,logOut} = useAuth()
 
    const toast = useToast()
@@ -33,8 +34,6 @@ export function Home() {
         month = month
             .toString()
             .padStart(2, '0');
-
-      console.log(month)
     
       return `${date}/${month}/${year}`;
     }
@@ -72,6 +71,7 @@ export function Home() {
          result.forEach(element => {
             
             resultList.push({
+                  type: element.type,
                   title:element.title,
                   city:element.local_by_donate.city,
                   description:element.description,
@@ -108,7 +108,6 @@ export function Home() {
       getHomeless()
    },[])
 
-   console.log(list)
    const schema = yup.object({
       select: yup.string()
    })
@@ -119,10 +118,15 @@ export function Home() {
       resolver: yupResolver(schema)
     });
 
+
    function ListaCard() {
       const lists: ReactNode[] = []
 
-      list.forEach((v) => lists.push(<CardHomerless {...v} />))
+      list.forEach((v) => {
+         if(!filter || v.type == filter){
+            lists.push(<CardHomerless {...v} />)
+         }  
+      } )
       return lists
    }
 
@@ -139,6 +143,7 @@ export function Home() {
                <Flex justifyContent={'flex-end'}   p={'30px'} >
                   <Box p={2}></Box>
                   <SelectMain 
+                     onChange={e => setFilter(e.target.value)}
                      useControl={control}
                      name={'select'}
                      text='Selecione'
@@ -146,9 +151,9 @@ export function Home() {
                      borderColor={'dark'} 
                      bg={'Primary'}
                      maxW={'200px'}
-                  option={[{value:'option1',label:'Todos'},
-                  {value:'option2',label:'Pessoas'},
-                  {value:'option3',label:'ONGS'}]}>
+                  option={[
+                  {value:'D',label:'Pessoas'},
+                  {value:'E',label:'ONGS'}]}>
                   </SelectMain>
                   
                </Flex>

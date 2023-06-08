@@ -27,6 +27,7 @@ export function MyEvents() {
          const resultList = []
          result.forEach(element => {
             resultList.push({
+               type:element.type,
                title:element.title,
                city:element.local_by_donate.city,
                description:element.description,

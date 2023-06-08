@@ -107,7 +107,7 @@ export function DonateList({donate_id}:DonateListProps) {
                            <h2>
                               <AccordionButton bg={'blackAlpha.50'} _hover={{bg:'blackAlpha.100'}}>
                                  <Box as="span" flex='1' display={'flex'} justifyContent={'space-between'} textAlign='left'>
-                                    <Text>{res.name}</Text><Text>{(res.picture !="") && <Box><CheckIcon mx={'5px'} color={'primary'}/></Box>}</Text>
+                                    <Text>{res.name}</Text><Text>{(res.is_donate) && <Box><CheckIcon mx={'5px'} color={'primary'}/></Box>}</Text>
                                  </Box>
                               <AccordionIcon />
                               </AccordionButton>   

@@ -32,7 +32,8 @@ const theme = extendTheme({
     styles: {
       global:{
         body: {
-          fontFamily:`'Roboto', sans-serif`
+          fontFamily:`'Roboto', sans-serif`,
+
         }
       }
     }

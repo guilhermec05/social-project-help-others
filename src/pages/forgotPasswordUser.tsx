@@ -36,7 +36,6 @@ export function FogotPasswordUser(){
 
     async function onSubmit(data: FormData){
         // alert(submit)
-        console.log(data)
         try {
             setLoad(true)
             await api.post('/auth/send_forgot',{email:data.email}).then(res=> res.data)
@@ -50,8 +49,7 @@ export function FogotPasswordUser(){
             })
             navigate('/')
         } catch (error) {
-            
-            console.log(error)
+
             toast({
                 title: error?.response.data.message,
                 status: 'error',
@@ -69,64 +67,64 @@ export function FogotPasswordUser(){
 
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
-        <Box  
-            bg={'primary'}
-            minHeight={'100vh'}
-            display={'flex'} 
-            justifyContent={'center'} 
-            alignItems={'center'}
-            p={5}
-            px={2}
-        >
-            {load && <Loading/>}
-        <Box 
-            bg={'secondary'}
-            display={'flex'}
-            flexDirection={'column'}
-            borderRadius={5}
-            py={'100px'}
-            w={'100%'}
-            maxW={'700px'}
-            gap={7}
-            p={12}
-            px={2}
-        >
-            
-                <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}> 
-                    <Logo width={'100px'} />
-                    
-                    
-                </Flex> 
-      
-                <Flex 
+            <Box
+                bg={'primary'}
+                minHeight={'100vh'}
+                display={'flex'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                p={5}
+                px={2}
+            >
+                {load && <Loading/>}
+                <Box
+                    bg={'secondary'}
+                    display={'flex'}
                     flexDirection={'column'}
+                    borderRadius={5}
+                    py={'100px'}
                     w={'100%'}
-                    gap={5} 
-                    transition={'all 1s'}
-                    alignItems={'center'}
-                    justifyContent={'center'}
+                    maxW={'700px'}
+                    gap={7}
+                    p={12}
+                    px={2}
+                >
+            
+                    <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
+                        <Logo width={'100px'} />
+                    
+                    
+                    </Flex>
+      
+                    <Flex
+                        flexDirection={'column'}
+                        w={'100%'}
+                        gap={5}
+                        transition={'all 1s'}
+                        alignItems={'center'}
+                        justifyContent={'center'}
 
-                > 
-                    <InputMain placeholder="Email" name={'email'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
+                    >
+                        <InputMain placeholder="Email" name={'email'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
                     
-                    <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
+                        <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
                         
-                    </Flex>                    
+                        </Flex>
                     
-                </Flex>
-                <Flex justifyContent={'center'}>
-                    <ButtonMain title="Enviar" bg={'primaryDark'} p={'25px'} w={'100%'} maxW={'200px'} type={'submit'} />
-                </Flex>
-                <Flex 
-                    w={'100%'}
-                    alignItems={'center'}
-                    justifyContent={'center'}
-                    gap={1}
+                    </Flex>
+                    <Flex justifyContent={'center'}>
+                        <ButtonMain title="Enviar" bg={'primaryDark'} p={'25px'} w={'100%'} maxW={'200px'} type={'submit'} />
+                    </Flex>
+                    <Flex
+                        w={'100%'}
+                        alignItems={'center'}
+                        justifyContent={'center'}
+                        gap={1}
                     >
                         
-                </Flex>     
-        </Box>
-    </Box>
+                    </Flex>
+                </Box>
+            </Box>
         </form>
       
     )

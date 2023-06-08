@@ -241,7 +241,7 @@ export function HomlessProfileReport() {
                   </Box>
                </Flex>
             </Flex>
-               <Footer />
+            <Footer />
       </Flex>
       
    )
