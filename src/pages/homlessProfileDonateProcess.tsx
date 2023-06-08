@@ -123,7 +123,7 @@ export function HomlessProfileDonateProcess() {
 
    async function desableDonation(){
       try {
-         await api.put(`item_donates/desable_process}`,{items:donates.item.map(v => v.id)}).then(res=> res.data)
+         await api.put(`item_donates/desable_process`,{items:donates.item.map(v => v.id)}).then(res=> res.data)
 
          toast({
             title: "doação de doação com sucesso",
