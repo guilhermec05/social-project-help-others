@@ -77,8 +77,12 @@ export function InputCheckBox({listCheckBox,useControl,name,error,hasOthers = fa
 	const [valueQuantity,setValueQuantity] = useState<string>("0")
 	
 	useEffect(()=>{
-		listCheckBox[4] = {label:valueInput,quantity:valueQuantity}
-		setCheckBox(listCheckBox)
+
+		if(hasOthers){
+			listCheckBox[4] = {label:valueInput,quantity:valueQuantity}
+			setCheckBox(listCheckBox)
+		}
+		
 	
 		
 	},[valueInput,valueQuantity,listCheckBox])

@@ -61,7 +61,7 @@ export function HomlessProfile() {
    const [load, setLoad] = useState<boolean>(false)
    const [checkBox, setCheckBox] = useState<checkBoxProps[]>([] as checkBoxProps[])
    const [donates,setDonates] = useState<resultProps>({} as resultProps)
-   const [typeSubmit,setTypeSubmit] = useState<"D"|"U"|"I"|"P">()
+   const [typeSubmit,setTypeSubmit] = useState<"D"|"U"|"I"|"P"|"M">()
    const [files, setFiles] = useState(null)
 
 
@@ -271,6 +271,7 @@ export function HomlessProfile() {
    }
 
    async function beginProcessDonate(data: FormData){
+
       const checkSelected = checkBox.filter((v,k) => data.checks.includes((k).toString()))
       const items = checkSelected.map(v => ({
          id:v.value, 
@@ -311,6 +312,12 @@ export function HomlessProfile() {
       // console.log(da)
    }
 
+   async function cancelDonate(){
+      
+      await api.get(`item_donates/cancel_process/${donates.id}/user_id/${user.id}`)
+
+      
+   }
 
    function actualState(){
       if(donates.isOwner){
@@ -338,8 +345,8 @@ export function HomlessProfile() {
               setFiles={setFiles}
               isDisabled={(donates.is_process_concluded)}
               />
-            <ButtonMain 
-
+              <Box display={'flex'} gap={2}>
+                  <ButtonMain 
                      fontSize={'h6'}  
                      title="Concluir Doação" 
                      px={'30px'} 
@@ -351,6 +358,21 @@ export function HomlessProfile() {
                         setValue('checks',['0'])
                      }} 
                   />
+                   <ButtonMain 
+                     fontSize={'h6'}  
+                     title="Cancelar Doação" 
+                     px={'30px'} 
+                     bg={'danger'} 
+                     _hover={{bg:'danger_dark'}}
+                     type={'submit'} 
+                     isDisabled={(donates.is_process_concluded)}
+                     onClick={e =>{ 
+                        setTypeSubmit("M") 
+                        setValue('checks',['0'])
+                     }} 
+                  />
+              </Box>
+            
          </Flex> 
       }else{
          return <ButtonMain 
@@ -364,6 +386,8 @@ export function HomlessProfile() {
                   />
       }
    }
+
+   
 
    async function onSubmit(data: FormData){    
       try {
@@ -380,6 +404,9 @@ export function HomlessProfile() {
                break;
             case "D":
                await Deleted()
+               break;
+            case "M":
+               await cancelDonate()
                break;
             default:
                break;

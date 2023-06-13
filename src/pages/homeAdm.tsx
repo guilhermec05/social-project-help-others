@@ -239,7 +239,7 @@ export function HomeAdm() {
          setIsLoading(true)
          const data:tableReponseDonate[] = []    
          const donates =  await api.get('donates/donate_process').then(res=> res.data)
-
+         
          
          setDonateProcess([])
          donates.forEach(e=>{
