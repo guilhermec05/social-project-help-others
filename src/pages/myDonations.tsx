@@ -99,7 +99,7 @@ export function MyDonations() {
       }
       if (filter.type.ongs && v.type == "E")
          return true
-      if (filter.type.persons && !v.type =="D")
+      if (filter.type.persons && v.type =="D")
          return true
 
       return false
