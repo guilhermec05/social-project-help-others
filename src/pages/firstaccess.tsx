@@ -18,21 +18,18 @@ export function FirstAccess() {
   const schema = yup.object({
     password: yup
       .string()
-      .required("A senha é obrigatória")
-      .min(8, "A senha deve ter no mínimo 8 caracteres")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-        "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial"
-      ),
+      .required("A senha é obrigatória"),
     confirmPassword: yup
       .string()
       .required("Confirme a senha")
       .oneOf([yup.ref("password")], "As senhas devem coincidir"),
   });
+
   type FormData = yup.InferType<typeof schema>;
   const { handleSubmit, control } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
+  
   function onSubmit(data: FormData) {
     console.log(data);
     navigate("/home");

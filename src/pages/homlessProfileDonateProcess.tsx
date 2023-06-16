@@ -63,16 +63,21 @@ export function HomlessProfileDonateProcess() {
          const displayShow :HomlessProfileDonateProcessProps = {} as HomlessProfileDonateProcessProps
 
          const result =  await api.get(`item_donates/get_donate_process_by_user/${id}/user_id/${user_id}`).then(res => res.data)
+
+         const item_by_donate_by_user = result.item_by_donate.filter(res => res.item_donate_by_user.length > 0 ).map(res => res.item_donate_by_user)[0]
+         const items =   result.item_by_donate.filter(res => res.item_donate_by_user.length > 0 )
+
+
          displayShow.id = result.id
          displayShow.title = result.title
          displayShow.description = result.description
          displayShow.locale = result.local_by_donate
          displayShow.date_ini = result.start_date
          displayShow.date_end = result.end_date
-         displayShow.proof = result.item_by_donate[0].item_donate_by_user[0].picture
+         displayShow.proof = item_by_donate_by_user[0].picture
          displayShow.picture = result.picture
-         displayShow.email = result.item_by_donate[0].item_donate_by_user[0].user.email
-         displayShow.item = result.item_by_donate.map(v =>{
+         displayShow.email = item_by_donate_by_user[0].user.email
+         displayShow.item = items.map(v =>{
             
             return {
                id:v.id,
@@ -84,6 +89,7 @@ export function HomlessProfileDonateProcess() {
 
          setDonates(displayShow)
       } catch (error) {
+         
          toast({
             title: error?.response.data.message,
             status: 'error',

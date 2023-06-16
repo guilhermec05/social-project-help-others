@@ -64,7 +64,7 @@ const router = createBrowserRouter([
       element: <PrivateRoute><SignUpUserHomeless /></PrivateRoute>, // ok
     },
     {
-      path: "/first_access_adm",
+      path: "/first_access_adm/:id",
       element: < FirstAccess /> ,
     },
     {

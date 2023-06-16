@@ -86,7 +86,7 @@ export function Login(){
                     justifyContent={'center'}
 
                 > 
-                    <InputMain placeholder="CPF ou CNPJ" name={'name'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
+                    <InputMain placeholder="Login" name={'name'} useControl={control} id={'name'} maxW={'400px'} w={'100%'} h={'50px'} my={5}/>
                     <InputMain placeholder="******************" name={'pass'}  maxW={'400px'} useControl={control} type={'password'}  h={'50px'} marginBottom={'2'} />
                     <Flex justifyContent={'flex-end'} w={'100%'}  maxW={'400px'} >
                         <Link to={'/forgot_pass_user'}><Text color={'primaryDark'} fontSize={'s'} textDecoration={'underline'}>Esqueceu sua senha?</Text></Link>

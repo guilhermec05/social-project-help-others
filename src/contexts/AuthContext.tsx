@@ -26,6 +26,7 @@ export interface AuthContextProps {
     isUserLoading:boolean;
     signIn:(user:string,pass:string)=> Promise<void>,
     logOut:()=>void
+    setUser:(user:userProps)=> void
 }
 
 
@@ -60,6 +61,9 @@ export function AuthContextProvider({children}:propsProviderAuth){
        
         validationToken()
     },[])
+
+
+  
 
 
     async function signIn(user:string,password:string){
@@ -98,7 +102,8 @@ export function AuthContextProvider({children}:propsProviderAuth){
         user,
         isUserLoading,
         signIn,
-        logOut
+        logOut,
+        setUser
     }}>
         {children}
     </AuthContext.Provider>)

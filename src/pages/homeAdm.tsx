@@ -10,6 +10,7 @@ import { useEffect,useState } from "react";
 import { useAuth } from '../hooks/useAuth'
 import { api } from '../services/api/axios'
 import { Loading } from '../components/loading'
+import { MinusIcon } from '@chakra-ui/icons'
 
 
 export function HomeAdm() {
@@ -88,6 +89,8 @@ export function HomeAdm() {
                }
             }else{
                e.type = "ADM"
+               e.name = e.user
+               e.document = <MinusIcon/>
             }
 
             dataRes.push({id: e.id, document:e.document, name:e.name,type:e.type})

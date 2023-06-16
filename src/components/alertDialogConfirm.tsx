@@ -16,7 +16,7 @@ interface AlertDiologConfim {
     title: string;
     text?: string
     children: ReactNode;
-    func?: (...res: any) => void
+    func?: () => void
 }
 
 export function AlertDialogConfirm({ children, func,title,text}:AlertDiologConfim) {
@@ -25,8 +25,8 @@ export function AlertDialogConfirm({ children, func,title,text}:AlertDiologConfi
 
 
     function confirm(){
+        func()
         onClose()
-        console.log('peidei')
     }
 
     return (

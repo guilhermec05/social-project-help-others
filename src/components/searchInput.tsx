@@ -3,7 +3,11 @@ import { IconButton, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react"
 import { useRef,useEffect, useState } from "react";
 import { InputMain } from "./input";
 
-export function SearchInput(){
+interface props {
+  setFilter: (str:string)=>void
+}
+
+export function SearchInput({setFilter}:props){
 
     const [closeInput, setCloseInput] = useState<boolean>(false)
     const [search, setSearch] = useState<string>("")
@@ -21,6 +25,7 @@ export function SearchInput(){
           }
           // Bind the event listener
           document.addEventListener("mousedown", handleClickOutside);
+          setFilter(search)
           return () => {
             // Unbind the event listener on clean up
             document.removeEventListener("mousedown", handleClickOutside);

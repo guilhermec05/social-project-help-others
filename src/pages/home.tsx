@@ -122,9 +122,9 @@ export function Home() {
    function ListaCard() {
       const lists: ReactNode[] = []
 
-      list.forEach((v) => {
+      list.forEach((v,i) => {
          if(!filter || v.type == filter){
-            lists.push(<CardHomerless {...v} />)
+            lists.push(<CardHomerless key={i} {...v} />)
          }  
       } )
       return lists

@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { api } from '../services/api/axios';
 import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 class ExcludeHomlessProps{
     id:string
@@ -21,6 +22,7 @@ class ExcludeHomlessProps{
 
 
 export function ExcludeHomless({id,title,text,setLoad}:ExcludeHomlessProps) {
+    const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {user } = useAuth()
     const toast = useToast()
@@ -50,6 +52,7 @@ export function ExcludeHomless({id,title,text,setLoad}:ExcludeHomlessProps) {
                 position:'top-right',
                 
             })
+            navigate('/home_adm')
             
         } catch (error) {
             toast({
@@ -61,6 +64,7 @@ export function ExcludeHomless({id,title,text,setLoad}:ExcludeHomlessProps) {
                 
             })
         }finally{
+            
             setLoad(false)
         }
     

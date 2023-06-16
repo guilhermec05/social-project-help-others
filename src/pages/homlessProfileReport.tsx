@@ -100,6 +100,15 @@ export function HomlessProfileReport() {
       try {
          setIsLoading(true)
          await api.put('report/disable_donate',{id:donates.id, text: donates.reports.title })
+         toast({
+            title: 'denuncia bloqueada com sucesso',
+            status: 'warning',
+            duration: 5000,
+            isClosable: true,
+            position:'top-right',
+            
+        })
+         navigate('/home_adm')
       } catch (error) {
          toast({
             title: error?.response.data.message,
@@ -110,6 +119,7 @@ export function HomlessProfileReport() {
             
         })
         navigate('/home_adm')
+      
       }finally{
          setIsLoading(false)
       }
@@ -198,7 +208,7 @@ export function HomlessProfileReport() {
                            {/* <Complaint /> */}
                            <HStack  >
                               <Text fontWeight='bold' justifyContent={'center'} alignItems={'center'}  >
-                                 Para denunciar este anúncio:
+                                 Para ver a denuncia:
                               </Text >
                               <Text onClick={onOpen} color={'danger'} variant='link' textDecoration={'underline'} cursor={'pointer'} >clique aqui!</Text>
                            </HStack>

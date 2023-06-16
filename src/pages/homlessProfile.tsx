@@ -339,13 +339,13 @@ export function HomlessProfile() {
       }else if(donates.my_process){
          return <Flex flexDirection={'column'} gap={10}>
              <InputFile
-              name="file" 
-              placeholderImg="escolha sua imagem ..." 
-              useControl={control} 
-              setFiles={setFiles}
-              isDisabled={(donates.is_process_concluded)}
+               name="file" 
+               placeholderImg="escolha sua imagem ..." 
+               useControl={control} 
+               setFiles={setFiles}
+               isDisabled={(donates.is_process_concluded)}
               />
-              <Box display={'flex'} gap={2}>
+              <Box display={'flex'} gap={2} flexWrap={'wrap'}>
                   <ButtonMain 
                      fontSize={'h6'}  
                      title="Concluir Doação" 

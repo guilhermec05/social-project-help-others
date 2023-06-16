@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useToast } from "@chakra-ui/react";
 import { Footer } from "../components/footer";
 import { Header, HeaderProps } from "../components/header";
 import { InputMain } from "../components/input";
@@ -8,15 +8,53 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { AlertDialogConfirm } from "../components/alertDialogConfirm";
 import { useAuth } from "../hooks/useAuth";
+import { api } from "../services/api/axios";
+import { useState } from 'react';
+import { Loading } from "../components/loading";
+
 
 
 
 
 export function UserPropfile({hasAdm = false}:HeaderProps){
-    const {user} = useAuth()
-    hasAdm = (user.type === "A")
+    const {user,setUser} = useAuth()
+
+    
+    const [load, setLoad] = useState(false)
+
+    console.log(user)
+   
+    const toast = useToast()
+
+    async function beAdministrator(){
+
+        
+        try {
+            setLoad(true)
+           const body = {
+                id:user.id
+           }     
+
+           await api.post(`/user/be_administrator`,body).then(res => res.data)
+           setUser({...user, send_administrador:true})
+        
+           localStorage.setItem("signIn", JSON.stringify(user) )
+        } catch (error) {
+            toast({
+                title: error?.response.data.message,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right',
+                
+            })
+        }finally{
+            setLoad(false)
+        }
+    }
+
     function HasAdm(){
-        return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza" text="você passarar por um processo de avaliação com outros adms." >
+        return(!hasAdm && <AlertDialogConfirm title="Você tem Certeza" text="você passarar por um processo de avaliação com outros adms." func={beAdministrator}>
             <Text textDecoration={'underline'} color={'primary'} cursor={'pointer'}>Quero Ser adm!</Text>
         </AlertDialogConfirm>) 
     }
@@ -54,7 +92,7 @@ export function UserPropfile({hasAdm = false}:HeaderProps){
         // alignItems={'center'}
      >
         <Header  hasAdm={hasAdm} />
-
+        {load && <Loading/>}
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box 
                 display={'flex'}
@@ -79,7 +117,6 @@ export function UserPropfile({hasAdm = false}:HeaderProps){
                     maxW={'500px'}
                     w={'100%'}
                 >
-                    
                         <InputMain useControl={control} name={'pass'} placeholder="Senha Atual" type={'password'} />
                         <InputMain useControl={control} name={'new_pass'} placeholder="Nova Senha" type={'password'} />
                         <InputMain useControl={control} name={'confirm_pass'} placeholder="Confirma Senha" type={'password'} />
