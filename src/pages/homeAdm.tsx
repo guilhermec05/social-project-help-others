@@ -29,8 +29,17 @@ export function HomeAdm() {
       user_id:string
    }
 
+   interface tableReponseReport{
+      titulo: string
+      observacao:any
+      user:string
+      postagemTitulo:string
+      id:string
+   }
+
    const [usersAcess,setUsersAcess] = useState<tableReponse[]>([] as tableReponse[] )
    const [donateProcess,setDonateProcess] = useState<tableReponseDonate[]>([] as tableReponseDonate[] )
+   const [reportTable,setReportTable] = useState<tableReponseReport[]>([] as tableReponseReport[] )
    const [isLoading,setIsLoading] = useState<Boolean>(false)
   const {user,logOut} = useAuth()   
    const toast = useToast()
@@ -327,82 +336,69 @@ export function HomeAdm() {
 
    
 
-      interface tableReponse{
-         titulo: string
-         observacao:any
-         user:string
-         postagemTitulo:string
-         id:string
+      useEffect(()=>{
+         AccessSelect()       
+      },[])
+   
+
+      async function AccessSelect(){
+         try {
+         setIsLoading(true)
+         const data:tableReponseReport[] = []    
+         const report =  await api.get('report/get_reports').then(res=> res.data)
+         
+         
+         setReportTable([])
+         report.forEach(e=>{
+
+            data.push({id: e.id,titulo:e.title, observacao: e.text, user: e.user.user, postagemTitulo: e.donates.title})
+
+         })
+         setReportTable(data)
+         // setDonateProcess(data)
+         // setUsersAcess(data)
+         
+         // console.log(donateProcess)
+
+         resultTbodyReport()
+         return true
+            
+         } catch (error) {
+            console.log(error)
+            toast({
+               title: error?.response.data.message,
+               status: 'error',
+               duration: 5000,
+               isClosable: true,
+               position:'top-right',
+           })
+         }finally{
+            setIsLoading(false)
+         }
+         
       }
 
-      const reponse:tableReponse[] = [
-         {
-            id:'1',
-            titulo:'titulo 1',
-            observacao:'Laborum elit dolore sint amet sit.',
-            user:'usuário 2',
-            postagemTitulo:'postagem 1'
-         },
-        {
-         id:'1',
-         titulo:'titulo 1',
-         observacao:<Text noOfLines={2} w={'300px'} >Lorem cupidatat eu consequat exercitation aliquip culpa exercitation fugiat deserunt elit ipsum.
-         Sunt excepteur irure anim sit. Lorem ut voluptate voluptate laborum minim in eiusmod. Dolore in tempor elit do.
-          Sint veniam minim reprehenderit laborum culpa duis excepteur qui est fugiat non. Aute fugiat ipsum quis 
-          reprehenderit. Magna pariatur tempor adipisicing aliquip voluptate tempor in 
-          ipsum sit.Esse ea dolore esse do consectetur cupidatat cillum officia cillum. Mollit laboris 
-          commodo velit non Lorem sint magna velit commodo dolore cillum adipisicing commodo ex. 
-          In nostrud quis ut sunt exercitation proident magna pariatur. 
-          Labore aute veniam ex non pariatur ad Lorem cillum ea proident.
-           Magna nulla laborum elit reprehenderit dolore. Ullamco id non esse ex. Dolor minim non aute velit anim adipisicing nisi ex.</Text>,
-         user:'usuário 2',
-         postagemTitulo:'postagem 1'
-         },
-         {
-            id:'1',
-            titulo:'titulo 1',
-            observacao:'Laborum elit dolore sint amet sit.',
-            user:'usuário 2',
-            postagemTitulo:'postagem 1'
-         },
-         {
-            id:'1',
-            titulo:'titulo 1',
-            observacao:'Laborum elit dolore sint amet sit.',
-            user:'usuário 2',
-            postagemTitulo:'postagem 1'
-         }
-      ]
 
-
-      function resultTbody(){
+      function resultTbodyReport(){
          const list: ReactNode[] = []
-         reponse.forEach(v=>{
+         reportTable.forEach(v=>{
             list.push(<Tr>
                <Td>{v.titulo}</Td>
                <Td>{v.observacao}</Td>
                <Td>{v.user}</Td>
-               <Td ><Text noOfLines={[1,2,3]} >{v.postagemTitulo}</Text></Td>
+               <Td>{v.postagemTitulo}</Td>
                <Td>
-                  <Icon as={FaCheck}
-                     color={'primary'}
-                     fontSize={'h3'}
-                     cursor={'pointer'}
-                     _active={{color:'dark_light'}}
-                     
-                  />
-                  
-                  <ExcludeComplaint />
+     
 
-                  <Link to={'/report_profile/1'}>
+                   <Link to={`/report_profile/${v.id}`}>
                      <Icon as={AiFillEye}
                         color={'primary'}
                         fontSize={'h3'}
                         cursor={'pointer'}
                         _active={{color:'dark_light'}}
-                     />
-                  </Link>
-                   
+                        />
+                   </Link>
+                  
 
                </Td>
             </Tr>)
@@ -424,7 +420,7 @@ export function HomeAdm() {
                   </Tr>
                </Thead>
                <Tbody>
-                  {resultTbody()}
+                  {resultTbodyReport()}
                </Tbody>
             </Table>
          </TableContainer>
