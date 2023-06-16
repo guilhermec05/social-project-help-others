@@ -13,6 +13,7 @@ import { ButtonMain } from '../components/button'
 import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 import { api } from '../services/api/axios'
 import { useAuth } from '../hooks/useAuth'
+import { format } from '../util/formatDate'
 
 interface filterProps {
    type: { persons: boolean, ongs: boolean }
@@ -61,6 +62,7 @@ export function MyDonations() {
 
          setList(resultList)
       } catch (error) {
+         console.log(error)
          toast({
             title: error?.response.data.message,
             status: 'warning',

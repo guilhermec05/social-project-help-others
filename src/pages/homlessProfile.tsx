@@ -192,7 +192,7 @@ export function HomlessProfile() {
          itens.map(value => {   
 
           
-            if(listBox.filter(v => v.label === value.label).length == 0) listBox.push({label:value.label, quantity:value.quantity,value:value.value })
+            if(listBox.filter(v => v.label === value.label).length == 0) listBox.push({label:value.label, quantity:value.quantity,value:value.value,checked:true })
             
             return listBox.map(V =>{
                if(V.label == value.label) V.quantity = value.quantity

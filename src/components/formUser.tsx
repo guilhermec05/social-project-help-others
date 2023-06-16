@@ -16,12 +16,15 @@ export function FormUser(){
     const toast = useToast()
     const navigate = useNavigate();
 
+    const [load, setLoad] = useState<boolean>(false)
+
     const [select,setSelect ] = useState<optionProps[]>([] as optionProps[])
     const [selectCity,setSelectCity ] = useState<optionProps[]>([] as optionProps[])
 
     const schema = yup.object({
         name: yup.string().required("o campo não deve estar vazio"),
         last_name: yup.string().required("o campo não deve estar vazio"),
+        user: yup.string().required("o campo não deve estar vazio"),
         email: yup.string().required("o campo não deve estar vazio").email("o campo deve ser um tipo email"),
         cpf:yup.string().required("o campo não deve estar vazio").test("cpf","cpf não é valido",(value) => useValidationsBR('cpf',value) ),
         new_pass: yup.string().required("o campo não deve estar vazio"),
@@ -42,7 +45,8 @@ export function FormUser(){
 
       async function fetchUF(){
         try{
-            // setLoad(true)
+            setLoad(true)
+            
             setSelect([])
             const {data} = await api.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
             data.forEach((value)=>{
@@ -54,7 +58,7 @@ export function FormUser(){
         }catch(error){
 
         }finally{
-            // await setLoad(false)
+            await setLoad(false)
         }
     } 
     
@@ -65,18 +69,19 @@ export function FormUser(){
 
     async function SelectCities(state:string){
         try{
-            // setLoad(true)
+            setLoad(true)
+            const city:optionProps[] = []
             setValue("uf",state)
             clearErrors("uf")
             setSelectCity([])
             const {data} = await api.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`)
 
             data.forEach((value)=>{
-                console.log(value)
+                
                 const {nome} = value
-                selectCity.push({label:nome,value:nome})
+                city.push({label:nome,value:nome})
             })
-            await setSelectCity(selectCity)
+            await setSelectCity(city)
             // console.log(select)
         }catch(error){
             toast({
@@ -88,7 +93,7 @@ export function FormUser(){
                 
             })
         }finally{
-            // await setLoad(false)
+            await setLoad(false)
         }
     }
 
@@ -100,12 +105,15 @@ export function FormUser(){
             email:data.email,
             cpf:data.cpf,
             pass:data.new_pass,
+            user:data.user,
             adress:{
                 city:data.city,
                 state_or_provice:data.uf
             }
         }
         try {
+
+            setLoad(true)
             const user =  await api.post('/user/persons/signup',submit).then(res=> res.data)
             
             toast({
@@ -128,6 +136,8 @@ export function FormUser(){
                 position:'top-right',
                 
             })
+         }finally{
+            setLoad(false)
          }
     }
 
@@ -136,6 +146,7 @@ export function FormUser(){
             <Flex flexDirection={'column'} alignItems={'center'} mb={5} gap={5}> 
                 <InputMain placeholder="Nome" name="name" useControl={control}  maxWidth={'450px'} h={'50px'}/>
                 <InputMain placeholder="Sobrenome" name="last_name" useControl={control}  maxWidth={'450px'} h={'50px'}/>
+                <InputMain placeholder="usuário" name="user" useControl={control}  maxWidth={'450px'} h={'50px'}/>
                 <InputMain placeholder="Email"  name="email" useControl={control} maxWidth={'450px'} h={'50px'} type={'email'}/>
                 <InputNumber placeholder="CPF(apenas os números)" name="cpf" useControl={control} maxWidth={'450px'} h={'50px'}/>
                 <Flex maxWidth={'450px'} w={'100%'} justifyContent={'space-between'} gap={4}>
@@ -170,7 +181,7 @@ export function FormUser(){
 
             </Flex>
             <Flex justifyContent={'center'}>
-                <ButtonMain title="Cadastrar" type="submit"  p={'30px'}/>
+                <ButtonMain title="Cadastrar" type="submit"  p={'30px'} isLoading={load}/>
             </Flex> 
           
         </form>

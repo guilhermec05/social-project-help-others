@@ -17,7 +17,7 @@ export function HomeAdm() {
    interface tableReponse{
       type: 'ONGs'|'PESSOA'
       name:string
-      document:string
+      document:any
       id:string
    }
 
@@ -84,6 +84,8 @@ export function HomeAdm() {
        
          setUsersAcess([])
          user.forEach(e=>{
+
+            console.log(e)
            
             if(e.type == "N"){
                if(e.Persons){
@@ -94,8 +96,10 @@ export function HomeAdm() {
    
                if(e.NGOS){
                   e.type = "ONGS"
-                  e.document = e.Persons.cnpj
+                  e.name = e.NGOS.name
+                  e.document = e.NGOS.cnpj
                }
+
             }else{
                e.type = "ADM"
                e.name = e.user
@@ -103,8 +107,10 @@ export function HomeAdm() {
             }
 
             dataRes.push({id: e.id, document:e.document, name:e.name,type:e.type})
+            console.log(dataRes)
 
          })
+         console.log(dataRes)
 
          setUsersAcess(dataRes)
        
@@ -115,13 +121,17 @@ export function HomeAdm() {
             
          } catch (error) {
             console.log(error)
-            toast({
-               title: error?.response.data.message,
-               status: 'error',
-               duration: 5000,
-               isClosable: true,
-               position:'top-right',
-           })
+            if(error?.response){
+               toast({
+                  title: error?.response.data.message,
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                  position:'top-right',
+              })
+               
+            }
+            
          }finally{
             setIsLoading(false)
          }
@@ -145,14 +155,16 @@ export function HomeAdm() {
    
            await AccessSelect()
          } catch (error) {
-            toast({
-               title: error?.response.data.message,
-               status: 'error',
-               duration: 5000,
-               isClosable: true,
-               position:'top-right',
+            if(error?.response){
+               toast({
+                  title: error?.response.data.message,
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                  position:'top-right',
+              })
                
-           })
+            }
          }finally{
             setIsLoading(false)
          }
@@ -173,14 +185,16 @@ export function HomeAdm() {
    
            await AccessSelect()
          } catch (error) {
-            toast({
-               title: error?.response.data.message,
-               status: 'error',
-               duration: 5000,
-               isClosable: true,
-               position:'top-right',
+            if(error?.response){
+               toast({
+                  title: error?.response.data.message,
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                  position:'top-right',
+              })
                
-           })
+            }
          }finally{
             setIsLoading(false)
          }
@@ -189,6 +203,7 @@ export function HomeAdm() {
 
       function resultTbody(){
          const list: ReactNode[] = []
+         console.log(usersAcess)
          if(usersAcess){
             usersAcess.forEach(v=>{
                list.push(<Tr>
@@ -216,7 +231,7 @@ export function HomeAdm() {
             })  
          }
           
-
+         console.log(list)
          return list
       }
 
@@ -269,14 +284,16 @@ export function HomeAdm() {
          return true
             
          } catch (error) {
-            console.log(error)
-            toast({
-               title: error?.response.data.message,
-               status: 'error',
-               duration: 5000,
-               isClosable: true,
-               position:'top-right',
-           })
+            if(error?.response){
+               toast({
+                  title: error?.response.data.message,
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                  position:'top-right',
+              })
+               
+            }
          }finally{
             setIsLoading(false)
          }
@@ -384,7 +401,7 @@ export function HomeAdm() {
          reportTable.forEach(v=>{
             list.push(<Tr>
                <Td>{v.titulo}</Td>
-               <Td>{v.observacao}</Td>
+               <Td><Text noOfLines={2}>{v.observacao}</Text></Td>
                <Td>{v.user}</Td>
                <Td>{v.postagemTitulo}</Td>
                <Td>
@@ -413,7 +430,7 @@ export function HomeAdm() {
                <Thead>
                   <Tr>
                      <Th>titulo</Th>
-                     <Th>Observação</Th>
+                     <Th w={'400px'}>Observação</Th>
                      <Th>usuário</Th>
                      <Th>postagem</Th>
                      <Th>Ações</Th>
